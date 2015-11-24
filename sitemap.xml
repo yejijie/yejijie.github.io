@@ -2,18 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2015/11/24/%E7%94%A8node-http-proxy%E6%90%AD%E5%BB%BA%E8%B0%B7%E6%AD%8C%E4%BB%A3%E7%90%86/</loc>
+    <lastmod>2015-11-24T15:39:46.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/about/index.html</loc>
     <lastmod>2015-11-20T02:40:28.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.noobsky.com/2015/11/19/hello-world/</loc>
-    <lastmod>2015-11-19T04:32:49.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.noobsky.com/2015/11/18/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2015-11-18T11:35:45.000Z</lastmod>
   </url>
   
 </urlset>
