@@ -4,7 +4,7 @@
   <subtitle><![CDATA[废话少说，放码过来 - http://blog.noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2015-11-27T12:09:24.000Z</updated>
+  <updated>2015-11-27T12:13:40.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.noobsky.com/2015/11/27/%E5%88%A9%E7%94%A8AWS%E6%90%AD%E5%BB%BAShadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <id>http://blog.noobsky.com/2015/11/27/利用AWS搭建Shadowsocks服务器/</id>
     <published>2015-11-27T02:43:00.000Z</published>
-    <updated>2015-11-27T12:09:24.000Z</updated>
+    <updated>2015-11-27T12:13:40.000Z</updated>
     <content type="html"><![CDATA[<h1 id="aws、vps">aws、vps</h1><p>aws是亚马逊网络服务系统（英语：Amazon Web Services，简称为AWS），由亚马逊公司所创建的云计算平台，提供许多远程Web服务。Amazon EC2与Amazon S3都架构在这个平台上。在2002年7月首次公开运作，提供其他网站及客户端（client-side）的服务。aws的详细介绍见维基百科<a href="https://en.wikipedia.org/wiki/Amazon_Web_Services" target="_blank" rel="external">Amazon Web Services</a>。本文选择AWS的<em>EC2</em>搭建shadowsocks服务器。EC2详见<a href="https://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud" target="_blank" rel="external">Amazon Elastic Compute Cloud</a>。当然也可以用其他的vps搭建shadowsocks服务器。比如linode、digitalocean、<em>墙外</em>阿里云（比如美国节点）。vps是<br>虚拟专用服务器（英语：Virtual private server，缩写为 VPS），是指通过虚拟化技术在独立服务器中运行的专用服务器。每个使用VPS技术的虚拟独立服务器拥有各自独立的公网IP地址、操作系统、硬盘空间、内存空间、CPU资源等，还可以进行安装程序、重启服务器等操作，与运行一台独立服务器完全相同。更多介绍见维基百科<a href="https://en.wikipedia.org/wiki/Virtual_private_server" target="_blank" rel="external">Virtual private server</a><br>注：本文不对vps和云主机（云服务器）进行区分，两种类似。本文都称为vps。<br>为啥选择aws？aws可以免费提供一年的云服务，1G内存、1核，搭建shadowsocks服务器再跑个web足够了。需要注意的是aws注册时需要信用卡账号，如果你是学生党没有信用卡，可以到某宝上买个虚拟信用卡（只要10块钱左右）。还有就是aws应该选择日本或者新加坡节点，时延小，速度会快很多。阿里云的<em>国内节点</em>虽然有速度优势和价格优势（推出学生机，一个月9块钱），但其翻不了墙；阿里云还有一个蛋疼的地方就是绑定域名的话需要进行<em>备案</em>。linode和digitalocean口碑好像不错，博主没有用过，因为博主没钱，linode最便宜的是10刀一个月，digitalocean最低价是5刀每个月，不知是否有其他优惠，详情到官网去看吧，不差钱的主可以选择。</p>
 <h1 id="shadowsocks">shadowsocks</h1><p>再说一遍，程序员三大必备网站是：Google、Github、StackOverflow。如果你还在用Baidu搜索技术文章的话，我想说的是，少年你已经被鄙视很多年了，赶紧换成谷歌吧，不要再被鄙视了！Github、StackOverflow在国内能够正常访问，但是Google由于众所周知的原因，国内无法访问，所以我们需要翻墙访问Google。个人觉得shadowsocks的是目前最好用的代理，没有之一！shadowsocks有多牛？首先Github上shadowsocks开源代码一万多star，前段时间shadowsocks的作者被约谈了，还被要求删除在Github上的源码，你说有多牛！还有市场上卖shadowsocks代理的多的是，一方面shadowsocks是开源的，谁都可以在vps上搭建shadowsocks服务器；另一方面shadowsocks的速度真的很快（前提是vps不能太烂）。<br>shadowsocks有如下特点：</p>
 <ul>
@@ -55,7 +55,7 @@
 </li>
 </ul>
 <p>推荐使用以下的配置文件方式：<br>使用<code>sudu vim /etc/shadowsocks.json</code>命令创建<code>/etc/shadowsocks.json</code>文件(不是root用户请加入sudo)，比如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">server</span>":<span class="value"><span class="string">"0.0.0.0"</span></span>,</span><br><span class="line">    "<span class="attribute">server_port</span>":<span class="value"><span class="number">8388</span></span>,</span><br><span class="line">    "<span class="attribute">local_address</span>": <span class="value"><span class="string">"127.0.0.1"</span></span>,</span><br><span class="line">    "<span class="attribute">local_port</span>":<span class="value"><span class="number">1080</span></span>,</span><br><span class="line">    "<span class="attribute">password</span>":<span class="value"><span class="string">"mypassword"</span></span>,</span><br><span class="line">    "<span class="attribute">timeout</span>":<span class="value"><span class="number">300</span></span>,</span><br><span class="line">    "<span class="attribute">method</span>":<span class="value"><span class="string">"aes-256-cfb"</span></span>,</span><br><span class="line">    "<span class="attribute">fast_open</span>": <span class="value"><span class="literal">false</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>各个字段代表的含义如下：<br>字段           | 含义<br>—————|————-<br>server         | 服务器监听地址<br>server_port    | 服务器端口<br>local_address  | 本地监听地址<br>local_port     | 本地端口<br>password       | 密码<br>timeout        | 超时时间<br>method         | 加密算法<br>fast_open      | 使用TCP_FASTOPEN，true/false<br>workers        | 工作线程数，Unix/Linux可用<br>配置文件写好之后就可以运行shadowsocks了：</p>
+<p>各个字段代表的含义如下：<br>字段            | 含义<br>————– | ————-<br>server         | 服务器监听地址<br>server_port    | 服务器端口<br>local_address  | 本地监听地址<br>local_port     | 本地端口<br>password       | 密码<br>timeout        | 超时时间<br>method         | 加密算法<br>fast_open      | 使用TCP_FASTOPEN，true/false<br>workers        | 工作线程数，Unix/Linux可用<br>配置文件写好之后就可以运行shadowsocks了：</p>
 <ul>
 <li><p>运行</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c <span class="regexp">/etc/</span>shadowsocks.json</span><br></pre></td></tr></table></figure>
