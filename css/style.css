@@ -197,7 +197,8 @@ a:focus {
     /*#FFF;*/
     /*color: #444;*/
     color: #555;
-    padding-top: 20px; }
+    padding-top: 20px;
+    text-align: justify; }
     .post .post-content h2, .post .post-content h3 {
       margin: 1.4em 0 1.1em; }
     .post .post-content pre code {
