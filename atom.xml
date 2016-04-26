@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://blog.noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-04-26T02:20:44.000Z</updated>
+  <updated>2016-04-26T03:08:17.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -15,11 +15,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Nim Game]]></title>
+    <link href="http://blog.noobsky.com/2016/04/26/Nim-Game/"/>
+    <id>http://blog.noobsky.com/2016/04/26/Nim-Game/</id>
+    <published>2016-04-26T03:03:39.000Z</published>
+    <updated>2016-04-26T03:08:17.000Z</updated>
+    <content type="html"><![CDATA[<p>今天遇到LeetCode上一道题叫Nim Game，虽然可以用程序解决，但感觉更像是一道数学题，游戏题。</p>
+<h3 id="题目描述">题目描述</h3><p>You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.</p>
+<p>Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.</p>
+<p>For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.</p>
+<p><strong>Hint:</strong></p>
+<p>If there are 5 stones in the heap, could you figure out a way to remove the stones such that you will always be the winner?</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天遇到LeetCode上一道题叫Nim Game，虽然可以用程序解决，但感觉更像是一道数学题，游戏题。</p>
+<h3 id="题目描述">题目描述</h3><p>You are playing the following Nim Game with your frien]]>
+    </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Reverse String 反转字符串]]></title>
     <link href="http://blog.noobsky.com/2016/04/26/Reverse-String-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>http://blog.noobsky.com/2016/04/26/Reverse-String-反转字符串/</id>
     <published>2016-04-26T01:41:43.000Z</published>
-    <updated>2016-04-26T02:20:44.000Z</updated>
+    <updated>2016-04-26T03:03:53.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Write a function that takes a string as input and returns the string reversed.</p>
 <p><strong>Example:</strong><br>Given s = “hello”, return “olleh”.</p>
 <p>首先我想到的思路是将输入字符串转换为char数组，然后将字符反转最后返回字符串。</p>
@@ -32,8 +58,8 @@
 <li>一个数异或自身恒等于0，比如6^6恒等于0；</li>
 <li>一个数异或0恒等于自身，比如6^0恒等于6。</li>
 </ul>
-<p>所以不使用临时变量的交互则代码如下：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">String</span> reverseString(<span class="built_in">String</span> s) &#123;</span><br><span class="line">        byte[] bytes = s.getBytes();</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">left</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">right</span> = bytes.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">left</span> &lt; <span class="built_in">right</span>)&#123;</span><br><span class="line">        	bytes[<span class="built_in">left</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>])</span><br><span class="line">        	bytes[<span class="built_in">right</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>]);</span><br><span class="line">        	bytes[<span class="built_in">left</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>]);</span><br><span class="line">        	<span class="built_in">left</span>++;</span><br><span class="line">        	<span class="built_in">right</span>--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return <span class="keyword">new</span> <span class="built_in">String</span>(bytes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其实自己不够熟悉StringBuffer或StringBuilder的api，自然想到用它们，就应该想起它们都有reverse方法，所以代码so easy：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String reverseString(String s) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuffer(s).<span class="keyword">reverse</span>().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以不使用临时变量的交互则代码如下：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">String</span> reverseString(<span class="built_in">String</span> s) &#123;</span><br><span class="line">        byte[] bytes = s.getBytes();</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">left</span> = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">right</span> = bytes.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">left</span> &lt; <span class="built_in">right</span>)&#123;</span><br><span class="line">        	bytes[<span class="built_in">left</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>]);</span><br><span class="line">        	bytes[<span class="built_in">right</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>]);</span><br><span class="line">        	bytes[<span class="built_in">left</span>] = (byte)(bytes[<span class="built_in">left</span>] ^ bytes[<span class="built_in">right</span>]);</span><br><span class="line">        	<span class="built_in">left</span>++;</span><br><span class="line">        	<span class="built_in">right</span>--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return <span class="keyword">new</span> <span class="built_in">String</span>(bytes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其实自己不够熟悉StringBuffer或StringBuilder的api，既然想到用它们，就应该想起它们都有reverse方法，所以代码so easy：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String reverseString(String s) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuffer(s).<span class="keyword">reverse</span>().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>最后也可以使用递归的方法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">reverseString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = s.length();</span><br><span class="line">        <span class="keyword">if</span>(length &lt;= <span class="number">1</span>) <span class="keyword">return</span> s;</span><br><span class="line">        String leftString = s.substring(<span class="number">0</span>, length &gt;&gt; <span class="number">2</span>);</span><br><span class="line">        String rightString = s.substring(length &gt;&gt; <span class="number">2</span>, length);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> reverseString(leftString) + reverseString(rightString);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
     <summary type="html">
