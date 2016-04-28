@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://blog.noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-04-26T10:26:48.000Z</updated>
+  <updated>2016-04-28T08:09:16.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -15,15 +15,206 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[罗马数字和阿拉伯数字的相互转换]]></title>
+    <link href="http://blog.noobsky.com/2016/04/28/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E5%92%8C%E9%98%BF%E6%8B%89%E4%BC%AF%E6%95%B0%E5%AD%97%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://blog.noobsky.com/2016/04/28/罗马数字和阿拉伯数字的相互转换/</id>
+    <published>2016-04-28T06:37:29.000Z</published>
+    <updated>2016-04-28T08:09:16.000Z</updated>
+    <content type="html"><![CDATA[<p>罗马数字基本字符和阿拉伯数字的对应关系</p>
+<table>
+<thead>
+<tr>
+<th>Roman Literal</th>
+<th>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>1</td>
+</tr>
+<tr>
+<td>V</td>
+<td>5</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+</tr>
+<tr>
+<td>L</td>
+<td>50</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+</tr>
+<tr>
+<td>D</td>
+<td>500</td>
+</tr>
+<tr>
+<td>M</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<h3 id="记数方法">记数方法</h3><ul>
+<li>相同的数字连写、所表示的数等于这些数字相加得到的数、如：Ⅲ=3；</li>
+<li>小的数字在大的数字的右边、所表示的数等于这些数字相加得到的数、 如：Ⅷ=8、Ⅻ=12；</li>
+<li>小的数字、（限于 Ⅰ、X 和 C）在大的数字的左边、所表示的数等于大数减小数得到的数、如：Ⅳ=4、Ⅸ=9；</li>
+<li>正常使用时、连写的数字重复不得超过三次；</li>
+<li>在一个数的上面画一条横线、表示这个数扩大 1000 倍。</li>
+</ul>
+<h3 id="组数规则">组数规则</h3><ul>
+<li>基本数字 Ⅰ、X 、C 中的任何一个、自身连用构成数目、或者放在大数的右边连用构成数目、都不能超过三个；放在大数的左边只能用一个；</li>
+<li>不能把基本数字 V 、L 、D 中的任何一个作为小数放在大数的左边采用相减的方法构成数目；放在大数的右边采用相加的方式构成数目、只能使用一个；</li>
+<li>V 和 X 左边的小数字只能用 Ⅰ；</li>
+<li>L 和 C 左边的小数字只能用X；</li>
+<li>D 和 M 左边的小数字只能用 C。</li>
+</ul>
+<h3 id="罗马数字转阿拉伯数字">罗马数字转阿拉伯数字</h3><h4 id="题目描述">题目描述</h4><p>Given a roman numeral, convert it to an integer.</p>
+<p>Input is guaranteed to be within the range from 1 to 3999.</p>
+<ul>
+<li>从左往右遍历转换</li>
+</ul>
+<p>初始化结果为0，然后从左往右遍历罗马数字，如果某个数比左边一个数小，则把该数加入到结果中；反之（即某个数比左边一个数大），则在结果中两次减去前一个数并加上当前这个数。这里解释一下后者，比如罗马数字IV，开始时遍历到I，然后将结果加1，接着遇到了V，我们知道V的前面出现了一个比V小的的I，所以我们需要从V中减去I，但是我们前面已经加过I，所以我们需要减去两倍的I。下面看一个更复杂的例子：</p>
+<table>
+<thead>
+<tr>
+<th>Roman literals from left to right</th>
+<th>Accumulated total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>1000 + 10 = 1010</td>
+</tr>
+<tr>
+<td>MXC</td>
+<td>1010 + (100 - 2 * 10) = 1010 + 80 = 1090</td>
+</tr>
+<tr>
+<td>MXCV</td>
+<td>1090 + 5 = 1095</td>
+</tr>
+<tr>
+<td>MXCVI</td>
+<td>1095 + 1 = 1096</td>
+</tr>
+</tbody>
+</table>
+<p>代码如下:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s == null || s.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'I'</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'V'</span>, <span class="number">5</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'X'</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'L'</span>, <span class="number">50</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'C'</span>, <span class="number">100</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'D'</span>, <span class="number">500</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'M'</span>, <span class="number">1000</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> length = s.length();</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>, sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> curr = <span class="built_in">map</span>.get(s.charAt(i));</span><br><span class="line">            sum += (curr &gt; pre) ? (curr - <span class="number">2</span> * pre):curr;</span><br><span class="line">            pre = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>从右往左遍历转换</li>
+</ul>
+<p>其实更直观的转换方式是从右往左转换，如果某个数大于等于右边的数，则直接加入到结果中；反之，从结果中减去该数。代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s == null || s.length() == <span class="number">0</span> ) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'I'</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'V'</span>, <span class="number">5</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'X'</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'L'</span>, <span class="number">50</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'C'</span>, <span class="number">100</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'D'</span>, <span class="number">500</span>);</span><br><span class="line">        <span class="built_in">map</span>.put(<span class="string">'M'</span>, <span class="number">1000</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> length = s.length();</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>, sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">int</span> curr = <span class="built_in">map</span>.get(s.charAt(i));</span><br><span class="line">            <span class="keyword">if</span>(curr &gt;= pre)&#123;</span><br><span class="line">                sum += curr;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                sum -= curr;</span><br><span class="line">            &#125;</span><br><span class="line">            pre = curr;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="阿拉伯数字转罗马数字">阿拉伯数字转罗马数字</h3><h4 id="题目描述-1">题目描述</h4><p>Given an integer, convert it to a roman numeral.</p>
+<p>Input is guaranteed to be within the range from 1 to 3999.</p>
+<p>把所有小数字在前的组合也作为基本数字，对应的数值表如下：</p>
+<table>
+<thead>
+<tr>
+<th>Roman Literal</th>
+<th>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>1</td>
+</tr>
+<tr>
+<td>IV</td>
+<td>4</td>
+</tr>
+<tr>
+<td>V</td>
+<td>5</td>
+</tr>
+<tr>
+<td>IX</td>
+<td>9</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+</tr>
+<tr>
+<td>XL</td>
+<td>40</td>
+</tr>
+<tr>
+<td>L</td>
+<td>50</td>
+</tr>
+<tr>
+<td>XC</td>
+<td>90</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+</tr>
+<tr>
+<td>CD</td>
+<td>400</td>
+</tr>
+<tr>
+<td>D</td>
+<td>500</td>
+</tr>
+<tr>
+<td>CM</td>
+<td>900</td>
+</tr>
+<tr>
+<td>M</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">intToRoman</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> values[] = &#123;<span class="number">1000</span>,<span class="number">900</span>,<span class="number">500</span>,<span class="number">400</span>,<span class="number">100</span>,<span class="number">90</span>,<span class="number">50</span>,<span class="number">40</span>,<span class="number">10</span>,<span class="number">9</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">1</span>&#125;;</span><br><span class="line">        String[] symbols = &#123;<span class="string">"M"</span>, <span class="string">"CM"</span>, <span class="string">"D"</span>, <span class="string">"CD"</span>, <span class="string">"C"</span>, <span class="string">"XC"</span>, <span class="string">"L"</span>, <span class="string">"XL"</span>, <span class="string">"X"</span>, <span class="string">"IX"</span>, <span class="string">"V"</span>, <span class="string">"IV"</span>, <span class="string">"I"</span>&#125;;</span><br><span class="line">        </span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(num &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> count = num / values[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; count; j++)&#123;</span><br><span class="line">                sb.append(symbols[i]);</span><br><span class="line">                num -= values[i];</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>罗马数字基本字符和阿拉伯数字的对应关系</p>
+<table>
+<thead>
+<tr>
+<th>Roman Literal</th>
+<th>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>1</td>
+</]]>
+    </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Maximum Depth of Binary Tree二叉树的深度]]></title>
     <link href="http://blog.noobsky.com/2016/04/26/Maximum-Depth-of-Binary-Tree%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/"/>
     <id>http://blog.noobsky.com/2016/04/26/Maximum-Depth-of-Binary-Tree二叉树的深度/</id>
     <published>2016-04-26T07:43:33.000Z</published>
-    <updated>2016-04-26T10:26:48.000Z</updated>
+    <updated>2016-04-27T02:32:10.000Z</updated>
     <content type="html"><![CDATA[<h3 id="问题描述">问题描述</h3><p>Given a binary tree, find its maximum depth.</p>
 <p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
 <p>最直接的方式是递归方法，树的深度为左右子树深度最大值+1<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == null) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> Math.max(maxDepth(root.left), maxDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>第二种方法是使用广度搜索的方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth2</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == null) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	Queue&lt;TreeNode&gt; <span class="built_in">queue</span> = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">	<span class="built_in">queue</span>.offer(root);</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(!<span class="built_in">queue</span>.isEmpty())&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">int</span> size = <span class="built_in">queue</span>.size();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">			TreeNode node = <span class="built_in">queue</span>.poll();</span><br><span class="line">			<span class="keyword">if</span>(node.left != null)&#123;</span><br><span class="line">				<span class="built_in">queue</span>.offer(node.left);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(node.right != null)&#123;</span><br><span class="line">				<span class="built_in">queue</span>.offer(node.right);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第二种方法是使用广度搜索的方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth2</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == null) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	Queue&lt;TreeNode&gt; <span class="built_in">queue</span> = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">	<span class="built_in">queue</span>.offer(root);</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(!<span class="built_in">queue</span>.isEmpty())&#123;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">int</span> size = <span class="built_in">queue</span>.size();</span><br><span class="line">		<span class="comment">//让每一层的节点依次出队列，并把左右子节点加入队列中</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">			TreeNode node = <span class="built_in">queue</span>.poll();</span><br><span class="line">			<span class="keyword">if</span>(node.left != null)&#123;</span><br><span class="line">				<span class="built_in">queue</span>.offer(node.left);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(node.right != null)&#123;</span><br><span class="line">				<span class="built_in">queue</span>.offer(node.right);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="问题描述">问题描述</h3><p>Given a binary tree, find its maximum depth.</p>
@@ -34,7 +225,7 @@
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
     
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
   </entry>
   
@@ -73,7 +264,7 @@
     <link href="http://blog.noobsky.com/2016/04/26/Reverse-String-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>http://blog.noobsky.com/2016/04/26/Reverse-String-反转字符串/</id>
     <published>2016-04-26T01:41:43.000Z</published>
-    <updated>2016-04-26T03:03:53.000Z</updated>
+    <updated>2016-04-27T02:31:56.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Write a function that takes a string as input and returns the string reversed.</p>
 <p><strong>Example:</strong><br>Given s = “hello”, return “olleh”.</p>
 <p>首先我想到的思路是将输入字符串转换为char数组，然后将字符反转最后返回字符串。</p>
@@ -99,7 +290,7 @@
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
     
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
   </entry>
   
