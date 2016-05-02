@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/05/02/LeetCode-Swap-Nodes-in-Pairs/</loc>
+    <lastmod>2016-05-02T13:19:03.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/</loc>
     <lastmod>2016-05-01T15:30:23.000Z</lastmod>
   </url>
