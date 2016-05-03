@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-05-02T13:19:03.000Z</updated>
+  <updated>2016-05-02T13:42:58.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,12 +19,12 @@
     <link href="http://blog.noobsky.com/2016/05/02/LeetCode-Swap-Nodes-in-Pairs/"/>
     <id>http://blog.noobsky.com/2016/05/02/LeetCode-Swap-Nodes-in-Pairs/</id>
     <published>2016-05-02T05:52:39.000Z</published>
-    <updated>2016-05-02T13:19:03.000Z</updated>
+    <updated>2016-05-02T13:42:58.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Given a linked list, swap every two adjacent nodes and return its head.</p>
 <p>For example,<br>Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.</p>
 <p>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
 <p>这个题目的思想很简单，但是要想写对代码还是有点繁琐的，稍微不慎可能就蒙圈了。<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ListNode swapPairs(ListNode head)&#123;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">if</span>(head == <span class="literal">null</span> || head.<span class="keyword">next</span> == <span class="literal">null</span>) <span class="keyword">return</span> head;</span><br><span class="line">       </span><br><span class="line">       ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">       dummy.<span class="keyword">next</span> = head;</span><br><span class="line">       ListNode current = dummy;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">while</span>(current.<span class="keyword">next</span> != <span class="literal">null</span> &amp;&amp; current.<span class="keyword">next</span>.<span class="keyword">next</span> != <span class="literal">null</span>)&#123;</span><br><span class="line">           ListNode first = current.<span class="keyword">next</span>;</span><br><span class="line">           ListNode second = current.<span class="keyword">next</span>.<span class="keyword">next</span>;</span><br><span class="line">           </span><br><span class="line">           first.<span class="keyword">next</span> = second.<span class="keyword">next</span>;</span><br><span class="line">           current.<span class="keyword">next</span> = second;</span><br><span class="line">           second.<span class="keyword">next</span> = first;//或者是current.<span class="keyword">next</span>.<span class="keyword">next</span> = first;</span><br><span class="line">           </span><br><span class="line">           current = current.<span class="keyword">next</span>.<span class="keyword">next</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">return</span> dummy.<span class="keyword">next</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们就以1-&gt;2-&gt;3-&gt;4为例，第一对邻接节点交换过程示意图如下：<br>初始化，执行<code>ListNode first = current.next; ListNode second = current.next.next;</code>之后：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/swapnodes1.png" alt=""></p>
+<p>我们就以1-&gt;2-&gt;3-&gt;4为例，第一对邻接节点1和2的交换过程示意图如下：<br>初始化，执行<code>ListNode first = current.next; ListNode second = current.next.next;</code>之后：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/swapnodes1.png" alt=""></p>
 <p>执行<code>first.next = second.next</code>之后：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/swapnodes2.png" alt=""></p>
 <p>执行<code>current.next = second</code>之后<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/swapnodes3.png" alt=""></p>
 <p>执行<code>second.next = first</code>之后：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/swapnodes4.png" alt=""></p>
@@ -37,6 +37,12 @@
 <p>For example,<br>Given 1-&gt;2-&gt;3]]>
     </summary>
     
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
+    
   </entry>
   
   <entry>
@@ -44,7 +50,7 @@
     <link href="http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/"/>
     <id>http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/</id>
     <published>2016-04-30T10:49:01.000Z</published>
-    <updated>2016-05-01T15:30:23.000Z</updated>
+    <updated>2016-05-02T13:42:34.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Best_Time_to_Buy_and_Sell_Stock">Best Time to Buy and Sell Stock</h2><h3 id="题目描述">题目描述</h3><p>Say you have an array for which the i<sup>th</sup> element is the price of a given stock on day i.</p>
 <p>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
 <p>开始我对这个题目不是很理解，存在一些误区，然后看了一个歪果仁的更清楚的说明：<br>If you were only permitted to complete at most one buy and at most one sell during the whole period of days, design an algorithm such that your profit, i.e., sell price minus buy price, is maximized. Note that you can only not sell a stock before you buy one.</p>
@@ -69,6 +75,12 @@
     <summary type="html">
     <![CDATA[<h2 id="Best_Time_to_Buy_and_Sell_Stock">Best Time to Buy and Sell Stock</h2><h3 id="题目描述">题目描述</h3><p>Say you have an array for which the i]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
   </entry>
   
