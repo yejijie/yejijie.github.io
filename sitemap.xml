@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/05/05/LeetCode%E5%AF%B9%E7%A7%B0%E6%A0%91-Symmetric-Tree/</loc>
+    <lastmod>2016-05-05T07:19:49.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/</loc>
     <lastmod>2016-05-05T03:47:18.000Z</lastmod>
   </url>
