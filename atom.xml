@@ -44,7 +44,7 @@
     <link href="http://blog.noobsky.com/2016/05/04/LeetCode-Implement-Queue-using-Stacks/"/>
     <id>http://blog.noobsky.com/2016/05/04/LeetCode-Implement-Queue-using-Stacks/</id>
     <published>2016-05-04T13:30:27.000Z</published>
-    <updated>2016-05-04T14:34:55.000Z</updated>
+    <updated>2016-05-05T03:34:11.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Implement the following operations of a queue using stacks.</p>
 <p>push(x) – Push element x to the back of queue.<br>pop() – Removes the element from in front of queue.<br>peek() – Get the front element.<br>empty() – Return whether the queue is empty.<br>Notes:<br>You must use only standard operations of a stack – which means only push to top, peek/pop from top, size, and is empty operations are valid.<br>Depending on your language, stack may not be supported natively. You may simulate a stack by using a list or deque (double-ended queue), as long as you use only standard operations of a stack.<br>You may assume that all operations are valid (for example, no pop or peek operations will be called on an empty queue).</p>
 <p>题意很容易理解，就是利用栈实现队列的功能，我们知道栈是FILO即先进后出，而队列是FIFO即先进先出，我们如何才能利用栈的先进后出实现队列的先进先出呢？答案就是利用两个栈，一个栈是先进后出，两个先进后出的结果就是先进先出就是队列的功能。先把元素压入（push）第一个栈inputStack，然后从第一个栈inputStack中弹栈（pop），接着将弹出的元素压入（push）到第二个栈outputStack中。这样做之后我们先进栈的元素将位于第二个栈outputStack中栈顶，当我们需要从队头取出元素时（pop）时，我们只要在第二个栈outputStack中弹栈（pop）即可。当我们需要向队尾放入元素（push）时，我们向第一个栈inputStack中压入元素（push）即可。这样第一个栈inputStack相当于队尾，第二个栈outputStack相当于队头。</p>
@@ -56,6 +56,12 @@
     <![CDATA[<h3 id="题目描述">题目描述</h3><p>Implement the following operations of a queue using stacks.</p>
 <p>push(x) – Push element x to the back of queue.<]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
   </entry>
   
@@ -95,7 +101,7 @@
     <link href="http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/"/>
     <id>http://blog.noobsky.com/2016/04/30/Best-Time-to-Buy-and-Sell-Stock/</id>
     <published>2016-04-30T10:49:01.000Z</published>
-    <updated>2016-05-02T13:42:34.000Z</updated>
+    <updated>2016-05-05T03:32:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Best_Time_to_Buy_and_Sell_Stock">Best Time to Buy and Sell Stock</h2><h3 id="题目描述">题目描述</h3><p>Say you have an array for which the i<sup>th</sup> element is the price of a given stock on day i.</p>
 <p>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
 <p>开始我对这个题目不是很理解，存在一些误区，然后看了一个歪果仁的更清楚的说明：<br>If you were only permitted to complete at most one buy and at most one sell during the whole period of days, design an algorithm such that your profit, i.e., sell price minus buy price, is maximized. Note that you can only not sell a stock before you buy one.</p>
@@ -123,7 +129,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
@@ -134,7 +140,7 @@
     <link href="http://blog.noobsky.com/2016/04/30/Happy-Number%E4%B8%8EFloyd%E5%88%A4%E5%9C%88%E7%AE%97%E6%B3%95/"/>
     <id>http://blog.noobsky.com/2016/04/30/Happy-Number与Floyd判圈算法/</id>
     <published>2016-04-30T04:46:38.000Z</published>
-    <updated>2016-04-30T06:49:40.000Z</updated>
+    <updated>2016-05-05T03:33:02.000Z</updated>
     <content type="html"><![CDATA[<p>最近在刷LeetCode的时候，遇到一题为Happy Number的题，该题最容易想到的思路就是利用集合，还有一个很巧妙的解法就是利用Floyd判圈算法来做，下面就来看看。</p>
 <h3 id="题目描述">题目描述</h3><p>Write an algorithm to determine if a number is “happy”.</p>
 <p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
@@ -160,7 +166,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
@@ -171,7 +177,7 @@
     <link href="http://blog.noobsky.com/2016/04/28/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E5%92%8C%E9%98%BF%E6%8B%89%E4%BC%AF%E6%95%B0%E5%AD%97%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"/>
     <id>http://blog.noobsky.com/2016/04/28/罗马数字和阿拉伯数字的相互转换/</id>
     <published>2016-04-28T06:37:29.000Z</published>
-    <updated>2016-04-28T08:09:16.000Z</updated>
+    <updated>2016-05-05T03:32:24.000Z</updated>
     <content type="html"><![CDATA[<p>罗马数字基本字符和阿拉伯数字的对应关系</p>
 <table>
 <thead>
@@ -351,7 +357,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
@@ -362,7 +368,7 @@
     <link href="http://blog.noobsky.com/2016/04/26/Maximum-Depth-of-Binary-Tree%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6/"/>
     <id>http://blog.noobsky.com/2016/04/26/Maximum-Depth-of-Binary-Tree二叉树的深度/</id>
     <published>2016-04-26T07:43:33.000Z</published>
-    <updated>2016-04-27T02:32:10.000Z</updated>
+    <updated>2016-05-05T03:33:29.000Z</updated>
     <content type="html"><![CDATA[<h3 id="问题描述">问题描述</h3><p>Given a binary tree, find its maximum depth.</p>
 <p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
 <p>最直接的方式是递归方法，树的深度为左右子树深度最大值+1<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == null) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> Math.max(maxDepth(root.left), maxDepth(root.right)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -375,7 +381,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
@@ -386,7 +392,7 @@
     <link href="http://blog.noobsky.com/2016/04/26/Nim-Game/"/>
     <id>http://blog.noobsky.com/2016/04/26/Nim-Game/</id>
     <published>2016-04-26T03:03:39.000Z</published>
-    <updated>2016-04-26T04:05:58.000Z</updated>
+    <updated>2016-05-05T03:33:37.000Z</updated>
     <content type="html"><![CDATA[<p>今天遇到LeetCode上一道题叫Nim Game，虽然可以用程序解决，但感觉更像是一道数学题，游戏题。</p>
 <h3 id="题目描述">题目描述</h3><p>You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.</p>
 <p>Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.</p>
@@ -405,7 +411,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
@@ -416,7 +422,7 @@
     <link href="http://blog.noobsky.com/2016/04/26/Reverse-String-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>http://blog.noobsky.com/2016/04/26/Reverse-String-反转字符串/</id>
     <published>2016-04-26T01:41:43.000Z</published>
-    <updated>2016-04-27T02:31:56.000Z</updated>
+    <updated>2016-05-05T03:33:44.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Write a function that takes a string as input and returns the string reversed.</p>
 <p><strong>Example:</strong><br>Given s = “hello”, return “olleh”.</p>
 <p>首先我想到的思路是将输入字符串转换为char数组，然后将字符反转最后返回字符串。</p>
@@ -440,7 +446,7 @@
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
-      <category term="LeetCode" scheme="http://blog.noobsky.com/tags/LeetCode/"/>
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="LeetCode" scheme="http://blog.noobsky.com/categories/LeetCode/"/>
     
