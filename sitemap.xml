@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/05/14/LeetCode-Number-of-1-Bits-%E5%92%8C-Counting-Bits/</loc>
+    <lastmod>2016-05-13T17:16:00.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/05/13/LeetCode-Single-Number-I-II-III/</loc>
-    <lastmod>2016-05-13T06:44:38.000Z</lastmod>
+    <lastmod>2016-05-13T06:48:21.000Z</lastmod>
   </url>
   
   <url>
