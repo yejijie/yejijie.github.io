@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/05/13/LeetCode-Single-Number-I-II-III/</loc>
+    <lastmod>2016-05-13T06:44:38.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/05/13/LeetCode-Word-Pattern/</loc>
     <lastmod>2016-05-12T16:28:58.000Z</lastmod>
   </url>
