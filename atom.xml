@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-05-16T07:59:25.000Z</updated>
+  <updated>2016-05-16T08:11:34.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.noobsky.com/2016/05/16/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode-js%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/</id>
     <published>2016-05-16T03:34:25.000Z</published>
-    <updated>2016-05-16T07:59:25.000Z</updated>
+    <updated>2016-05-16T08:11:34.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
 <li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
 <li>2009.5，Ryan Dahl在GitHub上发布了最初的版本。</li>
@@ -183,9 +183,11 @@
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var net = <span class="keyword">require</span>(<span class="string">'net'</span>);</span><br><span class="line">var server = net.createServer(function (<span class="keyword">socket</span>) &#123;</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">write</span>(<span class="string">'Echo server\r\n'</span>);</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">pipe</span>(<span class="keyword">socket</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.<span class="keyword">listen</span>(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="构建Web应用">构建Web应用</h2><p>构建Web应用过程中用到很多技术细节，如数据处理、路由、MVC、模板、RESTful等，详见以下脑图。实现这些细节就可以完成一个功能完备的Web开发框架。<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs2.png" alt=""></p>
 <h2 id="玩转进程">玩转进程</h2><h3 id="Node单线程">Node单线程</h3><p>好处：程序状态单一，没有多线程的锁、同步问题，操作系统调度较少的上下文切换，可以很好地提高CPU的使用率<br>问题：</p>
-<pre><code><span class="bullet">* </span>如何充分利用多核CPU服务器
-<span class="bullet">* </span>如何保证进程的健壮性和稳定性
-</code></pre><h3 id="多进程架构">多进程架构</h3><p>Node提供了child_process模块，并提供child_process.fork()实现进程的复制。<br>worker.js:http服务器，监听1000到2000之间的一个随机端口</p>
+<ul>
+<li>如何充分利用多核CPU服务器</li>
+<li>如何保证进程的健壮性和稳定性</li>
+</ul>
+<h3 id="多进程架构">多进程架构</h3><p>Node提供了child_process模块，并提供child_process.fork()实现进程的复制。<br>worker.js:http服务器，监听1000到2000之间的一个随机端口</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http  = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;);</span><br><span class="line">	res.end(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;).listen(<span class="built_in">Math</span>.round((<span class="number">1</span>+<span class="built_in">Math</span>.random())*<span class="number">1000</span>),<span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
 <p>master.js：根据当前机器上的CPU地数量复制出对应Node进程数</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">fork</span> = <span class="keyword">require</span>(<span class="string">'child_process'</span>).<span class="keyword">fork</span>;</span><br><span class="line">var cpus = <span class="keyword">require</span>(<span class="string">'os'</span>).cpus();</span><br><span class="line"><span class="keyword">for</span>(var i = <span class="number">0</span>; i &lt; cpus.<span class="keyword">length</span>; i++)&#123;</span><br><span class="line">	<span class="keyword">fork</span>(<span class="string">'./worker.js'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
