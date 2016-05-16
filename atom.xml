@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-05-16T07:39:41.000Z</updated>
+  <updated>2016-05-16T07:56:52.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.noobsky.com/2016/05/16/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode-js%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/</id>
     <published>2016-05-16T03:34:25.000Z</published>
-    <updated>2016-05-16T07:39:41.000Z</updated>
+    <updated>2016-05-16T07:56:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
 <li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
 <li>2009.5，Ryan Dahl在GitHub上发布了最初的版本。</li>
