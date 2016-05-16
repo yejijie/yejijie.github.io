@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="奔跑吧菜鸟"><title>深入浅出Node.js读书笔记 | NoobSky</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">深入浅出Node.js读书笔记</h1><a id="logo" href="/.">NoobSky</a><p class="description">Talk is cheap. Show me the code. - http://noobsky.com</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/guestbook/"><i class="fa fa-comments"> 留言</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">深入浅出Node.js读书笔记</h1><div class="post-meta">May 16, 2016<span> | </span><span class="category"><a href="/categories/Nodejs/">Nodejs</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/05/16/深入浅出Node-js读书笔记/" href="/2016/05/16/深入浅出Node-js读书笔记/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Node简介"><span class="toc-number">1.</span> <span class="toc-text">Node简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node诞生历程"><span class="toc-number">1.1.</span> <span class="toc-text">Node诞生历程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的命名与起源"><span class="toc-number">1.2.</span> <span class="toc-text">Node的命名与起源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么是JavaScript"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么是JavaScript</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么叫Node"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么叫Node</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node给JavaScript带来的意义"><span class="toc-number">1.3.</span> <span class="toc-text">Node给JavaScript带来的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的特点"><span class="toc-number">1.4.</span> <span class="toc-text">Node的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的应用场景"><span class="toc-number">1.5.</span> <span class="toc-text">Node的应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的使用者"><span class="toc-number">1.6.</span> <span class="toc-text">Node的使用者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块机制"><span class="toc-number">2.</span> <span class="toc-text">模块机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的模块"><span class="toc-number">2.1.</span> <span class="toc-text">Node的模块</span></a></li></ol></li></ol></div></div><div class="post-content"><h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
+<li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
+<li>2009.5，Ryan Dahl在GitHub上发布了最初的版本。</li>
+<li>2009.12和2010.4，两届JSConf大会都安排了Node的讲座。</li>
+<li>2010年年底，Node获得硅谷云计算服务商Joyent公司的资助，其创始人Ryan Dahl加入Joyent公司全职负责Node的发展。</li>
+<li>2011.7，Node在微软的支持下发布了其Windows版本。</li>
+<li>2011.11，Node超越Ruby on Rails，成为GitHub上关注度最高的项目（随后被Bootstrap项目超越，目前仍居第二）。</li>
+<li>2012.1，Ryan Dahl在对Node架构设计满意的情况下，将掌门人的身份转交给Isaac Z. Schlueter，自己转向一些研究项目。Isaac Z. Schlueter是Node的包管理器NPM的作者，之后Node的版本发布和bug修复等工作由他接手。</li>
+<li>2014.1.15 Node 掌门人更改为 TJ Fontaine, Isaac 成立公司 npm, Inc. 专注于 NPM 相关开发和维护.</li>
+<li>2014.3 Node.js 0.12(1.0-RC)发布, API锁定, 下一版本即为1.0</li>
+<li>2014.7.4 TJ Holowaychuk 离开Node世界， 转投Go怀抱</li>
+<li>2014.10 Node 项目被fork， node-forward创建社区，想用新的方式推动Node的发展</li>
+<li>2014.10.13 Node.js Advisory Board 以一种开发，自由的方式，推动 Node 项目发展</li>
+<li>随后Node的发布计划主要集中在性能提升上。</li>
+</ul>
+<h3 id="Node的命名与起源">Node的命名与起源</h3><h4 id="为什么是JavaScript">为什么是JavaScript</h4><ul>
+<li>高性能（Chrome浏览器JS的v8引擎性能在浏览器中第一）</li>
+<li>符合事件驱动（JavaScript在浏览器有广泛的事件驱动方面的应用）</li>
+<li>没有历史包袱（为其导入非阻塞的I/O库没有额外阻力）</li>
+</ul>
+<h4 id="为什么叫Node">为什么叫Node</h4><p>其目标是成为一个构建快速、可伸缩的网络应用平台。可以通过通信协议来组织许多Node，非常容易通过扩展来达成构建大型网络应用的目的。<br>每一个Node进程都构成这个网络应用的一个节点，这是它名字所含意义的真谛。</p>
+<h3 id="Node给JavaScript带来的意义">Node给JavaScript带来的意义</h3><ul>
+<li>Node结构与Chrome十分相似，基于事件驱动的异步结构</li>
+<li>Node中得JavaScript可以访问本地文件，搭建服务器，连接数据库，玩转多进程</li>
+<li>Node打破了过去JavaScript只能在浏览器中运行的局面，前后端统一</li>
+</ul>
+<h3 id="Node的特点">Node的特点</h3><ul>
+<li>异步I/O</li>
+<li>事件与回调函数</li>
+<li>单线程</li>
+<li>跨平台</li>
+</ul>
+<h3 id="Node的应用场景">Node的应用场景</h3><ul>
+<li>I/O密集型</li>
+<li>不是很擅长CPU密集型业务，但是可以合理调度</li>
+<li>分布式应用</li>
+</ul>
+<p>关于Node，探讨的较多的主要由I/O密集型和CPU密集型，Node面向网络且擅长并行I/O，总而言之，NodeJS适合运用在高并发、I/O密集、少量业务逻辑的场景。</p>
+<h3 id="Node的使用者">Node的使用者</h3><ul>
+<li>前后端编程语言环境统一：雅虎开放了Cocktail框架</li>
+<li>Node带来的高性能I/O用于实时应用：Voxer和腾讯</li>
+<li>并行I/O使得使用者可以更高效地利用分布式环境：阿里巴巴和eBay</li>
+<li>并行I/O，有效利用稳定接口提升Web渲染能力：雪球财经和LinkedIn</li>
+<li>云计算平台提供Node支持：微软、Joyent、阿里云…</li>
+<li>游戏开发领域：网易开源了pomelo实时框架</li>
+<li>工具类应用</li>
+</ul>
+<h2 id="模块机制">模块机制</h2><h3 id="Node的模块">Node的模块</h3><p>JavaScript先天就缺乏一项功能：模块，其他高级语言中Java、Python有import机制，Ruby有require，PHP有include和require……浏览器JavaScript通过<script>标签引入代码的方式显得杂乱无章，语言自身显得毫无组织和约束能力</p>
+<ul>
+<li>Node的模块分为两类：一类是Node提供的模块，称为核心（原生）模块；另一类是用户编写的模块，称为文件模块</li>
+<li>Node通过require引用模块</li>
+<li>对应引用的功能，通过exports对象来导出当前模块的方法或变量。模块中还存在一个module对象，exports实际上是module的属性。在Node中，一个文件就是一个模块，模块内的“全局变量”对外都不可见，只有挂载在exports上的属性才是公开的。exports 是指向的 module.exports 的引用</li>
+</ul>
+<h3 id="包与NPM">包与NPM</h3><ul>
+<li>包是在模块基础上更深一步的抽象,Node.js的包类似于 C/C++ 的函数库或者 Java/.Net 的类库。它将某个独立的功能封装起来,用于发布、更新、依赖管理和版本控制。</li>
+<li>严格符合CommonJS规范的包应该包含以下文件:<ul>
+<li>package.json:包描述文件</li>
+<li>bin：用于存放可执行二进制文件的目录</li>
+<li>lib：用于存放JavaScript代码的目录</li>
+<li>doc：用于存放文档的目录</li>
+<li>test：用于存放单元测试用例的代码 </li>
+</ul>
+</li>
+</ul>
+<h3 id="NPM：_Node包管理器（Node_Package_Manager）">NPM： Node包管理器（Node Package Manager）</h3><p>Node.js根据CommonJS规范实现了包机制,开发了npm来解决包的发布和获取需求。NPM常用功能：</p>
+<ul>
+<li>查看帮助：npm –h、npm help <command></li>
+<li>安装依赖包：npm install express –g(全局安装)、npm install <file>(本地安装)</li>
+<li>发布包</li>
+<li>分析包</li>
+</ul>
+<h2 id="异步I/O">异步I/O</h2><p>异步I/O就是I/O 操作不采用阻塞的策略。当线程遇到 I/O 操作时,不会以阻塞的方式等待 I/O 操作 的完成或数据的返回,而只是将 I/O<br>请求发送给操作系统,继续执行下一条语句。当操作系统完成 I/O 操作时,以事件的形式通知执行 I/O 操作的线程,线程会在特定时候处理这个事件。<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs1.png" alt=""></p>
+<p>为了处理异步 I/O,线程必须有事件循环,不断地检查有没有未处理的事件,依次予以处理。CPU与 I/O并行执行，计算设备与I/O设备互不干扰</p>
+<h3 id="为什么要异步I/O">为什么要异步I/O</h3><ul>
+<li>用户体验</li>
+</ul>
+<p>假如一个资源来自于两个不同位置的数据的返回，第一个资源需要M毫秒的耗时，第二个资源需要N毫秒的耗时。如果采用同步的方式，代码大致如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//消费时间为M</span></span><br><span class="line">getData(<span class="string">'from_db'</span>);</span><br><span class="line"><span class="comment">//消费时间为N</span></span><br><span class="line">getData(<span class="string">'from_remote_api'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>如上如果采用同步方式，那么时间消耗为M+N。但是如果采用异步方式，第一个资源的获取并不会阻塞第二个资源。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//消费时间为M</span><br><span class="line">getData('from_db',function(<span class="literal">result</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">//消费时间为N</span><br><span class="line">getData('from_remote_api',function(<span class="literal">result</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果采用异步的方式则时间消耗为Max(M, N)。随着应用复杂性的增加，情景将会变为M+N+…和Max(M,N,…)</p>
+<ul>
+<li>资源分配：利用异步I/O，让单线程远离阻塞，更好利用CPU</li>
+</ul>
+<h3 id="Node的异步I/O">Node的异步I/O</h3><ul>
+<li>事件循环</li>
+<li>观察者</li>
+<li>执行回调</li>
+</ul>
+<p>Node异步I/O环节事件循环、观察者、执行回调。当进程启动时，Node便会创建一个类似于while(true)的循环、每执行一次循环体的过程称为Tick。<br>每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及其相关的回调函数。如果存在关联的回调函数，就执行它们。然后进入下个循环，如果不再有事件处理，就退出进程。在每个Tick的过程中，如何判断是否有事件需要处理呢？这里必须引入的概念是观察者。每个事件循环中有一个或者多个观察者，而判断是否有事件处理的过程就是向这些观察者询问是否有要处理的事件。</p>
+<h3 id="知名的基于事件驱动的实现">知名的基于事件驱动的实现</h3><ul>
+<li>Ruby的Event Machine</li>
+<li>Perl的AnyEvent</li>
+<li>Python的Twisted</li>
+<li>Node异步I/O</li>
+</ul>
+<p>前面介绍异步的实现原理的过程中，我们也勾勒出了事件驱动的本质，即通过主循环加事件触发的方式来运行程序。事实上，Node的异步I/O并非首创，但却是第一个成功地平台，在那之前，也有一些知名的基于事件驱动的实现，具体如下所示。这些库没有成功地原因是同步I/O库的存在。因为在这些成熟的语言平台上，异步不是主流，尽管有这些事件驱动的实现库，但开发者总会习惯性的采用同步I/O库，这导致预想的高性能直接落空。</p>
+<h2 id="异步编程">异步编程</h2><p>有异步I/O，必有异步编程</p>
+<h3 id="函数式编程">函数式编程</h3><p>JavaScript中，函数作为一等公民，使用非常自由</p>
+<ul>
+<li>直接调用</li>
+<li>赋值给其他变量</li>
+<li>作为参数</li>
+<li>作为返回值</li>
+</ul>
+<h3 id="回调">回调</h3><p>在代码中，异步编程的直接体现就是回调。异步编程依托于回调来实现，异步的方式读取文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//异步读取文件内容</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'file.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (err) &#123; </span><br><span class="line">		<span class="built_in">console</span>.error(err);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">		<span class="comment">//doSomething</span></span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end.'</span>);</span><br></pre></td></tr></table></figure>
+<p>fs.readFile 接收了三个参数, 第一个是文件名,第二个是编码方式,第三个是一个函数,我们称这个函数为回调函数。 异步式 I/O 请求发送给了操作系统,然后立即 返回并执行后面的语句,执行完以后进入事件循环监听事件。当 fs 接收到 I/O 请求完成的 事件时,事件循环会主动调用回调函数以完成后续工作。因此我们会先看到 end.,再看到 file.txt 文件的内容。 </p>
+<h3 id="异步编程的难点">异步编程的难点</h3><h4 id="异常处理">异常处理</h4><p>尝试对异步方法进行try/catch操作只能捕获当次事件循环内的异常，对callback执行时抛出的异常将无能为力，示例代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//异步方法</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">	process.nextTick(callback);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="keyword">async</span>(callback);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Node约定，将异常作为回调函数的第一个实参传回，</span></span><br><span class="line"><span class="comment">//如果为空值，则表明异步调用没有异常抛出</span></span><br><span class="line"><span class="keyword">async</span>(<span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Node约定，将异常作为回调函数的第一个实参传回，如果为空值，则表明异步调用没有异常抛出。我们自行编写的异步方法上，也需要遵循这样一些原则：</p>
+<ul>
+<li>必须执行调用者传入的回调函数；</li>
+<li>正确传递回异常供调用者判断。</li>
+</ul>
+<h4 id="函数嵌套过深">函数嵌套过深</h4><p>世界上本没有嵌套回调，写得人多了，也便有了}}}}}}}}}}。比如遍历目录，三层嵌套：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历目录</span></span><br><span class="line">fs.readdir(path.join(__dirname,<span class="string">'..'</span>),<span class="function"><span class="keyword">function</span><span class="params">(err,files)</span></span>&#123;</span><br><span class="line">	files.<span class="keyword">forEach</span>(<span class="function"><span class="keyword">function</span><span class="params">(filename,index)</span></span>&#123;</span><br><span class="line">		fs.readFile(filename,<span class="string">'utf8'</span>,<span class="function"><span class="keyword">function</span><span class="params">(err,file)</span></span>&#123;</span><br><span class="line">			<span class="comment">//TODO</span></span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="阻塞代码">阻塞代码</h4><p>竟然没有sleep()这样的线程沉睡功能，所以有多半开发者会写出下述这样的代码来实现sleep(1000)的效果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TODO</span></span><br><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">new</span> <span class="built_in">Date</span>() - start &lt; <span class="number">1000</span>)&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//需要阻塞的代码</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码会持续占用CPU进行判断，与真正的线程沉睡相去甚远，完全破坏了事件循环的调度。由于Node单线程的原因，CPU资源全都会用于为这段代码服务，导致其余任何请求都会得不到响应。Node单线程不能充分利用多核CPU，后面会介绍相关解决办法</p>
+<h3 id="异步编程解决方案">异步编程解决方案</h3><p>前面列举了因异步编程带来的一些问题，编程过程看起来似乎没有想象中美好，但是事实也没用那么糟糕。这里介绍一些典型的解决方案<br>后面两种方法复杂，需要长篇幅来介绍，这里只介绍一下前面的两种基础方法。</p>
+<h4 id="事件发布/订阅模式">事件发布/订阅模式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//订阅</span></span><br><span class="line">emitter.on(<span class="string">"event1"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">message</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(message);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//发布</span></span><br><span class="line">emitter.emit(<span class="string">"event1"</span>,<span class="string">"I am message!"</span>);</span><br></pre></td></tr></table></figure>
+<p>事件监听器模式是一种广泛用于异步编程的模式，是回调函数的事件化，又称发布/订阅模式。Node自身提供的events模块是发布/订阅模式的一个简单实现。</p>
+<h4 id="流程控制库">流程控制库</h4><ul>
+<li>async</li>
+<li>Step<br>第二可以通过流程控制库，来处理异步的各种协作模式。Async和Step都提供了异步的串行执行和异步的并行执行等方法，相关用法查阅官方文档即可。</li>
+</ul>
+<h2 id="内存控制">内存控制</h2><p>JavaScript与Java一样，由垃圾回收机制来自行自动内存管理。对于性能敏感的服务器端程序，内存管理的好坏、<br>垃圾回收状况是否优良，都会对服务构成影响。而在Node，这一切都与Node的JavaScript执行引擎V8息息相关。<br>V8的垃圾回收策略主要基于分代式垃圾回收机制。</p>
+<h3 id="V8的垃圾回收机制与内存控制">V8的垃圾回收机制与内存控制</h3><ul>
+<li>Node与V8:Node在JavaScript的执行上直接受益于V8，同时也受到V8的一些限制</li>
+<li>V8的内存限制：64位系统1.4GB，32位0.7GB</li>
+<li>V8的对象分配：通过堆分配，内存使用量process.memoryUsage()可查询</li>
+<li>V8的垃圾回收机制：<br>  （1）V8的内存分代：新生代（存活时间较短）和老生代（存活时间较长）<br>  （2）Scavenge算法（新生代）：采用复制的方式（空间换时间）<br>  （3）Mark-Sweep&amp;Mark-Compact（老生代）：标记清除，标记整理<br>  （4）Incremental Marking：增量标记</li>
+</ul>
+<p>Scavenge算法将堆内存分为两个空间，只有一个使用，称为From空间，另一个闲置，称为To空间。垃圾回收时，将From的存活对象复制到TO空间，非存活释放。然后两个空间对换，开始下一轮回收<br>标记清除：标记阶段遍历堆中所有对象，标记活得对象；接下来在清除阶段只清除没有被标记的对象<br>标记整理：标记清除的问题是清除后，内存不连续，会造成无法分配大对象。标记整理清除阶段将活着的对象往一端移动，移动完成后，直接清理掉边界外的内存。<br>增量标记：垃圾回收的3种基本算法都需要将应用逻辑暂停下来，这种暂停成为“全停顿”。V8先从标记阶段入手，将原本一口气停顿完成的动作改为增量标记，也就是拆分为许多小“步进”，每做完一步就让JS应用逻辑执行一小会儿。垃圾回收与应用逻辑交替执行，大大减少停顿时间</p>
+<h3 id="内存指标">内存指标</h3><ul>
+<li>查看进程占用：process.memoryUsage()</li>
+<li>查看系统的内存占用：os模块中的totalmem()和freemem()分别返回总内存和闲置内存</li>
+<li>堆外内存（不是通过V8分配：Buffer）：意味利用堆外内存可以突破内存的限制</li>
+</ul>
+<h3 id="内存泄露">内存泄露</h3><p>在垃圾回收机制下，通常的代码编写中，很少会出现内存泄露的情况，通常会造成内存泄露的原因有以下几个；<br>原因：缓存、队列消费不及时、作用域未释放<br>解决方案：将缓存转移到外部，减少常驻内存的对象的数量（Redis，Memcached）；监控队列的长度<br>内存泄露排查：node-heapdump（对V8堆内存抓取快照、分析）、node-memwatch（抓取快照、比较快照）</p>
+<h2 id="理解Buffer">理解Buffer</h2><h3 id="Buffer结构">Buffer结构</h3><p>在网络流和文件的操作中，需要处理大量二进制数据，JavaScript自有的字符串远远不能满足这些需求，于是Buffer对象应运而生。它将性能相关的部分用C++实现，将非性能相关的部分用JavaScript实现。内存应用时，由于Node的内存限制，若不需要进行字符串层面的操作，可以尝试使用Buffer来操作，这不会受到V8堆内存的限制，但依然会受到物理内存限制。</p>
+<ul>
+<li>模块结构：JavaScript与C++结合的模块</li>
+<li>Buffer对象：类似于数组，元素是16进制的两位数（0-255）</li>
+<li>Buffer的内存分配：在Node的C++层面申请；不是V8分配的，属于堆外内存</li>
+<li>在文件I/O和网络I/O中运用广泛，尤其在网络传输中，它的性能举足轻重</li>
+</ul>
+<h3 id="Buffer与字符串的相互转换">Buffer与字符串的相互转换</h3><ul>
+<li>目前支持的编码类型：ASCII、UTF-8、UTF-16LE/UCS-2、Base64、Binary、Hex</li>
+<li>字符串转Buffer：new Buffer(str, [encoding])</li>
+<li>Buffer转字符串：buf.toString([encoding],[start],[end])</li>
+<li>Buffer不支持的编码类型：通过Buffer.isEncoding(encoding)判断是否支持转换；中国常用的GBK、GB2312等都不支持；借助生态圈中的iconv和iconv-lite两个模块解决</li>
+</ul>
+<h3 id="网络编程">网络编程</h3><p>利用Node可以十分方便地搭建网络服务器，不需要专门的Web服务器作为容器，仅仅需要几行代码就可以构建服务器。Node提供了net、dgram、http、https这4个模块，分别用于处理TCP、UDP、HTTP、HTTPS，适用于服务端和客户端。</p>
+<h4 id="HTTP服务器&amp;&amp;TCP服务器">HTTP服务器&amp;&amp;TCP服务器</h4><ul>
+<li>HTTP服务器</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>&#125;);</span><br><span class="line">  res.end(<span class="string">'Hello World\n'</span>);</span><br><span class="line">&#125;).listen(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:1337/'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>TCP服务器</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var net = <span class="keyword">require</span>(<span class="string">'net'</span>);</span><br><span class="line">var server = net.createServer(function (<span class="keyword">socket</span>) &#123;</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">write</span>(<span class="string">'Echo server\r\n'</span>);</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">pipe</span>(<span class="keyword">socket</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.<span class="keyword">listen</span>(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="构建Web应用">构建Web应用</h2><p>构建Web应用过程中用到很多技术细节，如数据处理、路由、MVC、模板、RESTful等，详见以下脑图。实现这些细节就可以完成一个功能完备的Web开发框架。<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs2.png" alt=""></p>
+<h2 id="玩转进程">玩转进程</h2><h3 id="Node单线程">Node单线程</h3><p>好处：程序状态单一，没有多线程的锁、同步问题，操作系统调度较少的上下文切换，可以很好地提高CPU的使用率<br>问题：</p>
+<pre><code><span class="bullet">* </span>如何充分利用多核CPU服务器
+<span class="bullet">* </span>如何保证进程的健壮性和稳定性
+</code></pre><h3 id="多进程架构">多进程架构</h3><p>Node提供了child_process模块，并提供child_process.fork()实现进程的复制。<br>worker.js:http服务器，监听1000到2000之间的一个随机端口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http  = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;);</span><br><span class="line">	res.end(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;).listen(<span class="built_in">Math</span>.round((<span class="number">1</span>+<span class="built_in">Math</span>.random())*<span class="number">1000</span>),<span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
+<p>master.js：根据当前机器上的CPU地数量复制出对应Node进程数</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">fork</span> = <span class="keyword">require</span>(<span class="string">'child_process'</span>).<span class="keyword">fork</span>;</span><br><span class="line">var cpus = <span class="keyword">require</span>(<span class="string">'os'</span>).cpus();</span><br><span class="line"><span class="keyword">for</span>(var i = <span class="number">0</span>; i &lt; cpus.<span class="keyword">length</span>; i++)&#123;</span><br><span class="line">	<span class="keyword">fork</span>(<span class="string">'./worker.js'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理想状态下，每个进程各自利用一个CPU，以此实现多核CPU的利用。如下图：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs3.png" alt=""></p>
+<h3 id="Master-Worker模式（主从模式）">Master-Worker模式（主从模式）</h3><p><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs4.png" alt=""></p>
+<p>上图就是著名的Master-Worker模式，又称主从模式。图中的进程分为两种：主进程和工作进程。这是典型的分布式架构中用于并行处理业务的模式，具备较好地可伸缩性和稳定性。主进程不负责具体的业务处理，而是负责调度或管理工作进程，它是倾向于稳定的。fork进程是昂贵的，好在这里启动多个进程只是为了充分将CPU资源利用起来，而不是为了解决并发问题</p>
+<h3 id="集群稳定之路:自动重启">集群稳定之路:自动重启</h3><p><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs5.png" alt=""><br>我们创建了很多工作进程，但每个工作进程依然是在单线程上执行的，稳定性不能得到保障。我们在主进程上加入一些子进程管理的机制，当有子进程退出时重新启动一个工作进程来继续服务。</p>
+<ul>
+<li>工作进程得知要退出时(有未捕获的异常出现)，向主进程发送自杀信号</li>
+<li>然后停止接收新的连接，当所有连接断开后才退出</li>
+<li>主进程接收自杀信号后，立即创建新的工作进程服务</li>
+</ul>
+<p>至此我们完成了进程的平滑重启，一旦有异常出现，主进程会创建新的工作进程来为用户服务，旧的进程一旦处理完已有连接就自动断开。整个过程使得我们的应用的稳定性和健壮性大大提高。</p>
+<h3 id="负载均衡">负载均衡</h3><p>多进程架构将CPU资源都调用起来后，需要保证每个进程的工作量，既不能让一些进程忙不过来，也不能让一些进程闲着这种保证多个处理单元工作量公平的策略叫负载均衡。Node提供了叫Round-Robin策略，又叫轮叫调度。轮叫调度的工作方式是由主进程接受连接，将其依次分发给工作进程。<br>分发策略：在N个工作进程中，每次选择第i=(i+1) mod n个进程来发送连接</p>
+<ul>
+<li>在cluster模块中启用：</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启用Round-Robin</span></span><br><span class="line">cluster<span class="class">.schedulingPolicy</span> = cluster<span class="class">.SCHED_RR</span></span><br><span class="line"><span class="comment">//不启用Round-Robin</span></span><br><span class="line">cluster<span class="class">.schedulingPolicy</span> = cluster.SCHED_NONE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或在环境变量中设置NODE_CLUSTER_SCHED_POLICY的值：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=rr</span><br><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=none</span><br></pre></td></tr></table></figure>
+<h3 id="Cluster模块">Cluster模块</h3><p>cluster模块，用以解决多核CPU的利用率问题，是child_process和net模块的组合应用。作用：用于解决多核CPU的利用率问题，同时也提供较完善的API，用以处理进程的健壮性。</p>
+<p>cluster模块中，一个主进程只能管理一组工作进程。child_process可以更灵活控制工作进程，甚至控制多组工作进程尽管通过child_process模块可以大幅度提升Node的稳定性，但是一旦主进程出现问题，所有子进程将会失去管理。在Node的进程管理之外，还需要监听进程数量或监听日志的方式确保整个系统的稳定性，即使主进程出错退出，也能及时得到监控报警，使得开发者可以及时处理故障。</p>
+<h2 id="其他">其他</h2></script></p></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/" data-id="cio9padol000impc1bg379do5" class="article-share-link">分享到</a><div class="tags"><a href="/tags/读书笔记/">读书笔记</a></div><div class="post-nav"><a href="/2016/05/14/LeetCode-Number-of-1-Bits-和-Counting-Bits/" class="next">[LeetCode]Number of 1 Bits 和 Counting Bits</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
+var disqus_identifier = '2016/05/16/深入浅出Node-js读书笔记/';
+var disqus_title = '深入浅出Node.js读书笔记';
+var disqus_url = 'http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//noobsky.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://blog.noobsky.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shadowsocks/">Shadowsocks</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/AWS/" style="font-size: 15px;">AWS</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/代理/" style="font-size: 15px;">代理</a> <a href="/tags/Nodejs/" style="font-size: 15px;">Nodejs</a> <a href="/tags/node-http-proxy/" style="font-size: 15px;">node-http-proxy</a> <a href="/tags/读书笔记/" style="font-size: 15px;">读书笔记</a> <a href="/tags/谷歌学术/" style="font-size: 15px;">谷歌学术</a> <a href="/tags/Shadowsocks/" style="font-size: 15px;">Shadowsocks</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/静态代理/" style="font-size: 15px;">静态代理</a> <a href="/tags/动态代理/" style="font-size: 15px;">动态代理</a> <a href="/tags/注解/" style="font-size: 15px;">注解</a> <a href="/tags/反射/" style="font-size: 15px;">反射</a> <a href="/tags/面试/" style="font-size: 15px;">面试</a> <a href="/tags/Floyd判圈算法/" style="font-size: 15px;">Floyd判圈算法</a> <a href="/tags/DTW/" style="font-size: 15px;">DTW</a> <a href="/tags/语音识别/" style="font-size: 15px;">语音识别</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/16/深入浅出Node-js读书笔记/">深入浅出Node.js读书笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/14/LeetCode-Number-of-1-Bits-和-Counting-Bits/">[LeetCode]Number of 1 Bits 和 Counting Bits</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/LeetCode-Single-Number-I-II-III/">[LeetCode]Single Number I II III</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/LeetCode-Word-Pattern/">[LeetCode]Word Pattern</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/LeetCode-包含min函数的栈-Min-Stack/">[LeetCode]包含min函数的栈 Min Stack</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/12/LeetCode-字符串和数字转换相关的几道题Reverse-Integer、atoi和Valid-Number/">[LeetCode]字符串和数字转换相关的几道题Reverse Integer、atoi和Valid Number</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/HashSet源码分析/">HashSet源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/HashMap源码分析/">HashMap源码分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/Tricky知识点与任务列表/">Tricky知识点与任务列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/LeetCode对称树-Symmetric-Tree/">[LeetCode对称树]Symmetric Tree</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//noobsky.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a><ul></ul><a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a><ul></ul><a href="http://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">NoobSky.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

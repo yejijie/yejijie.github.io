@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-05-13T17:16:00.000Z</updated>
+  <updated>2016-05-16T07:39:41.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -15,11 +15,220 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[深入浅出Node.js读书笔记]]></title>
+    <link href="http://blog.noobsky.com/2016/05/16/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode-js%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/</id>
+    <published>2016-05-16T03:34:25.000Z</published>
+    <updated>2016-05-16T07:39:41.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
+<li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
+<li>2009.5，Ryan Dahl在GitHub上发布了最初的版本。</li>
+<li>2009.12和2010.4，两届JSConf大会都安排了Node的讲座。</li>
+<li>2010年年底，Node获得硅谷云计算服务商Joyent公司的资助，其创始人Ryan Dahl加入Joyent公司全职负责Node的发展。</li>
+<li>2011.7，Node在微软的支持下发布了其Windows版本。</li>
+<li>2011.11，Node超越Ruby on Rails，成为GitHub上关注度最高的项目（随后被Bootstrap项目超越，目前仍居第二）。</li>
+<li>2012.1，Ryan Dahl在对Node架构设计满意的情况下，将掌门人的身份转交给Isaac Z. Schlueter，自己转向一些研究项目。Isaac Z. Schlueter是Node的包管理器NPM的作者，之后Node的版本发布和bug修复等工作由他接手。</li>
+<li>2014.1.15 Node 掌门人更改为 TJ Fontaine, Isaac 成立公司 npm, Inc. 专注于 NPM 相关开发和维护.</li>
+<li>2014.3 Node.js 0.12(1.0-RC)发布, API锁定, 下一版本即为1.0</li>
+<li>2014.7.4 TJ Holowaychuk 离开Node世界， 转投Go怀抱</li>
+<li>2014.10 Node 项目被fork， node-forward创建社区，想用新的方式推动Node的发展</li>
+<li>2014.10.13 Node.js Advisory Board 以一种开发，自由的方式，推动 Node 项目发展</li>
+<li>随后Node的发布计划主要集中在性能提升上。</li>
+</ul>
+<h3 id="Node的命名与起源">Node的命名与起源</h3><h4 id="为什么是JavaScript">为什么是JavaScript</h4><ul>
+<li>高性能（Chrome浏览器JS的v8引擎性能在浏览器中第一）</li>
+<li>符合事件驱动（JavaScript在浏览器有广泛的事件驱动方面的应用）</li>
+<li>没有历史包袱（为其导入非阻塞的I/O库没有额外阻力）</li>
+</ul>
+<h4 id="为什么叫Node">为什么叫Node</h4><p>其目标是成为一个构建快速、可伸缩的网络应用平台。可以通过通信协议来组织许多Node，非常容易通过扩展来达成构建大型网络应用的目的。<br>每一个Node进程都构成这个网络应用的一个节点，这是它名字所含意义的真谛。</p>
+<h3 id="Node给JavaScript带来的意义">Node给JavaScript带来的意义</h3><ul>
+<li>Node结构与Chrome十分相似，基于事件驱动的异步结构</li>
+<li>Node中得JavaScript可以访问本地文件，搭建服务器，连接数据库，玩转多进程</li>
+<li>Node打破了过去JavaScript只能在浏览器中运行的局面，前后端统一</li>
+</ul>
+<h3 id="Node的特点">Node的特点</h3><ul>
+<li>异步I/O</li>
+<li>事件与回调函数</li>
+<li>单线程</li>
+<li>跨平台</li>
+</ul>
+<h3 id="Node的应用场景">Node的应用场景</h3><ul>
+<li>I/O密集型</li>
+<li>不是很擅长CPU密集型业务，但是可以合理调度</li>
+<li>分布式应用</li>
+</ul>
+<p>关于Node，探讨的较多的主要由I/O密集型和CPU密集型，Node面向网络且擅长并行I/O，总而言之，NodeJS适合运用在高并发、I/O密集、少量业务逻辑的场景。</p>
+<h3 id="Node的使用者">Node的使用者</h3><ul>
+<li>前后端编程语言环境统一：雅虎开放了Cocktail框架</li>
+<li>Node带来的高性能I/O用于实时应用：Voxer和腾讯</li>
+<li>并行I/O使得使用者可以更高效地利用分布式环境：阿里巴巴和eBay</li>
+<li>并行I/O，有效利用稳定接口提升Web渲染能力：雪球财经和LinkedIn</li>
+<li>云计算平台提供Node支持：微软、Joyent、阿里云…</li>
+<li>游戏开发领域：网易开源了pomelo实时框架</li>
+<li>工具类应用</li>
+</ul>
+<h2 id="模块机制">模块机制</h2><h3 id="Node的模块">Node的模块</h3><p>JavaScript先天就缺乏一项功能：模块，其他高级语言中Java、Python有import机制，Ruby有require，PHP有include和require……浏览器JavaScript通过<script>标签引入代码的方式显得杂乱无章，语言自身显得毫无组织和约束能力</p>
+<ul>
+<li>Node的模块分为两类：一类是Node提供的模块，称为核心（原生）模块；另一类是用户编写的模块，称为文件模块</li>
+<li>Node通过require引用模块</li>
+<li>对应引用的功能，通过exports对象来导出当前模块的方法或变量。模块中还存在一个module对象，exports实际上是module的属性。在Node中，一个文件就是一个模块，模块内的“全局变量”对外都不可见，只有挂载在exports上的属性才是公开的。exports 是指向的 module.exports 的引用</li>
+</ul>
+<h3 id="包与NPM">包与NPM</h3><ul>
+<li>包是在模块基础上更深一步的抽象,Node.js的包类似于 C/C++ 的函数库或者 Java/.Net 的类库。它将某个独立的功能封装起来,用于发布、更新、依赖管理和版本控制。</li>
+<li>严格符合CommonJS规范的包应该包含以下文件:<ul>
+<li>package.json:包描述文件</li>
+<li>bin：用于存放可执行二进制文件的目录</li>
+<li>lib：用于存放JavaScript代码的目录</li>
+<li>doc：用于存放文档的目录</li>
+<li>test：用于存放单元测试用例的代码 </li>
+</ul>
+</li>
+</ul>
+<h3 id="NPM：_Node包管理器（Node_Package_Manager）">NPM： Node包管理器（Node Package Manager）</h3><p>Node.js根据CommonJS规范实现了包机制,开发了npm来解决包的发布和获取需求。NPM常用功能：</p>
+<ul>
+<li>查看帮助：npm –h、npm help <command></li>
+<li>安装依赖包：npm install express –g(全局安装)、npm install <file>(本地安装)</li>
+<li>发布包</li>
+<li>分析包</li>
+</ul>
+<h2 id="异步I/O">异步I/O</h2><p>异步I/O就是I/O 操作不采用阻塞的策略。当线程遇到 I/O 操作时,不会以阻塞的方式等待 I/O 操作 的完成或数据的返回,而只是将 I/O<br>请求发送给操作系统,继续执行下一条语句。当操作系统完成 I/O 操作时,以事件的形式通知执行 I/O 操作的线程,线程会在特定时候处理这个事件。<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs1.png" alt=""></p>
+<p>为了处理异步 I/O,线程必须有事件循环,不断地检查有没有未处理的事件,依次予以处理。CPU与 I/O并行执行，计算设备与I/O设备互不干扰</p>
+<h3 id="为什么要异步I/O">为什么要异步I/O</h3><ul>
+<li>用户体验</li>
+</ul>
+<p>假如一个资源来自于两个不同位置的数据的返回，第一个资源需要M毫秒的耗时，第二个资源需要N毫秒的耗时。如果采用同步的方式，代码大致如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//消费时间为M</span></span><br><span class="line">getData(<span class="string">'from_db'</span>);</span><br><span class="line"><span class="comment">//消费时间为N</span></span><br><span class="line">getData(<span class="string">'from_remote_api'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>如上如果采用同步方式，那么时间消耗为M+N。但是如果采用异步方式，第一个资源的获取并不会阻塞第二个资源。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//消费时间为M</span><br><span class="line">getData('from_db',function(<span class="literal">result</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">//消费时间为N</span><br><span class="line">getData('from_remote_api',function(<span class="literal">result</span>)&#123;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果采用异步的方式则时间消耗为Max(M, N)。随着应用复杂性的增加，情景将会变为M+N+…和Max(M,N,…)</p>
+<ul>
+<li>资源分配：利用异步I/O，让单线程远离阻塞，更好利用CPU</li>
+</ul>
+<h3 id="Node的异步I/O">Node的异步I/O</h3><ul>
+<li>事件循环</li>
+<li>观察者</li>
+<li>执行回调</li>
+</ul>
+<p>Node异步I/O环节事件循环、观察者、执行回调。当进程启动时，Node便会创建一个类似于while(true)的循环、每执行一次循环体的过程称为Tick。<br>每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及其相关的回调函数。如果存在关联的回调函数，就执行它们。然后进入下个循环，如果不再有事件处理，就退出进程。在每个Tick的过程中，如何判断是否有事件需要处理呢？这里必须引入的概念是观察者。每个事件循环中有一个或者多个观察者，而判断是否有事件处理的过程就是向这些观察者询问是否有要处理的事件。</p>
+<h3 id="知名的基于事件驱动的实现">知名的基于事件驱动的实现</h3><ul>
+<li>Ruby的Event Machine</li>
+<li>Perl的AnyEvent</li>
+<li>Python的Twisted</li>
+<li>Node异步I/O</li>
+</ul>
+<p>前面介绍异步的实现原理的过程中，我们也勾勒出了事件驱动的本质，即通过主循环加事件触发的方式来运行程序。事实上，Node的异步I/O并非首创，但却是第一个成功地平台，在那之前，也有一些知名的基于事件驱动的实现，具体如下所示。这些库没有成功地原因是同步I/O库的存在。因为在这些成熟的语言平台上，异步不是主流，尽管有这些事件驱动的实现库，但开发者总会习惯性的采用同步I/O库，这导致预想的高性能直接落空。</p>
+<h2 id="异步编程">异步编程</h2><p>有异步I/O，必有异步编程</p>
+<h3 id="函数式编程">函数式编程</h3><p>JavaScript中，函数作为一等公民，使用非常自由</p>
+<ul>
+<li>直接调用</li>
+<li>赋值给其他变量</li>
+<li>作为参数</li>
+<li>作为返回值</li>
+</ul>
+<h3 id="回调">回调</h3><p>在代码中，异步编程的直接体现就是回调。异步编程依托于回调来实现，异步的方式读取文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//异步读取文件内容</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'file.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (err) &#123; </span><br><span class="line">		<span class="built_in">console</span>.error(err);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">		<span class="comment">//doSomething</span></span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end.'</span>);</span><br></pre></td></tr></table></figure>
+<p>fs.readFile 接收了三个参数, 第一个是文件名,第二个是编码方式,第三个是一个函数,我们称这个函数为回调函数。 异步式 I/O 请求发送给了操作系统,然后立即 返回并执行后面的语句,执行完以后进入事件循环监听事件。当 fs 接收到 I/O 请求完成的 事件时,事件循环会主动调用回调函数以完成后续工作。因此我们会先看到 end.,再看到 file.txt 文件的内容。 </p>
+<h3 id="异步编程的难点">异步编程的难点</h3><h4 id="异常处理">异常处理</h4><p>尝试对异步方法进行try/catch操作只能捕获当次事件循环内的异常，对callback执行时抛出的异常将无能为力，示例代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//异步方法</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">	process.nextTick(callback);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="keyword">async</span>(callback);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Node约定，将异常作为回调函数的第一个实参传回，</span></span><br><span class="line"><span class="comment">//如果为空值，则表明异步调用没有异常抛出</span></span><br><span class="line"><span class="keyword">async</span>(<span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Node约定，将异常作为回调函数的第一个实参传回，如果为空值，则表明异步调用没有异常抛出。我们自行编写的异步方法上，也需要遵循这样一些原则：</p>
+<ul>
+<li>必须执行调用者传入的回调函数；</li>
+<li>正确传递回异常供调用者判断。</li>
+</ul>
+<h4 id="函数嵌套过深">函数嵌套过深</h4><p>世界上本没有嵌套回调，写得人多了，也便有了}}}}}}}}}}。比如遍历目录，三层嵌套：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历目录</span></span><br><span class="line">fs.readdir(path.join(__dirname,<span class="string">'..'</span>),<span class="function"><span class="keyword">function</span><span class="params">(err,files)</span></span>&#123;</span><br><span class="line">	files.<span class="keyword">forEach</span>(<span class="function"><span class="keyword">function</span><span class="params">(filename,index)</span></span>&#123;</span><br><span class="line">		fs.readFile(filename,<span class="string">'utf8'</span>,<span class="function"><span class="keyword">function</span><span class="params">(err,file)</span></span>&#123;</span><br><span class="line">			<span class="comment">//TODO</span></span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="阻塞代码">阻塞代码</h4><p>竟然没有sleep()这样的线程沉睡功能，所以有多半开发者会写出下述这样的代码来实现sleep(1000)的效果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TODO</span></span><br><span class="line"><span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">new</span> <span class="built_in">Date</span>() - start &lt; <span class="number">1000</span>)&#123;</span><br><span class="line">	<span class="comment">//TODO</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//需要阻塞的代码</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码会持续占用CPU进行判断，与真正的线程沉睡相去甚远，完全破坏了事件循环的调度。由于Node单线程的原因，CPU资源全都会用于为这段代码服务，导致其余任何请求都会得不到响应。Node单线程不能充分利用多核CPU，后面会介绍相关解决办法</p>
+<h3 id="异步编程解决方案">异步编程解决方案</h3><p>前面列举了因异步编程带来的一些问题，编程过程看起来似乎没有想象中美好，但是事实也没用那么糟糕。这里介绍一些典型的解决方案<br>后面两种方法复杂，需要长篇幅来介绍，这里只介绍一下前面的两种基础方法。</p>
+<h4 id="事件发布/订阅模式">事件发布/订阅模式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//订阅</span></span><br><span class="line">emitter.on(<span class="string">"event1"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">message</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(message);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//发布</span></span><br><span class="line">emitter.emit(<span class="string">"event1"</span>,<span class="string">"I am message!"</span>);</span><br></pre></td></tr></table></figure>
+<p>事件监听器模式是一种广泛用于异步编程的模式，是回调函数的事件化，又称发布/订阅模式。Node自身提供的events模块是发布/订阅模式的一个简单实现。</p>
+<h4 id="流程控制库">流程控制库</h4><ul>
+<li>async</li>
+<li>Step<br>第二可以通过流程控制库，来处理异步的各种协作模式。Async和Step都提供了异步的串行执行和异步的并行执行等方法，相关用法查阅官方文档即可。</li>
+</ul>
+<h2 id="内存控制">内存控制</h2><p>JavaScript与Java一样，由垃圾回收机制来自行自动内存管理。对于性能敏感的服务器端程序，内存管理的好坏、<br>垃圾回收状况是否优良，都会对服务构成影响。而在Node，这一切都与Node的JavaScript执行引擎V8息息相关。<br>V8的垃圾回收策略主要基于分代式垃圾回收机制。</p>
+<h3 id="V8的垃圾回收机制与内存控制">V8的垃圾回收机制与内存控制</h3><ul>
+<li>Node与V8:Node在JavaScript的执行上直接受益于V8，同时也受到V8的一些限制</li>
+<li>V8的内存限制：64位系统1.4GB，32位0.7GB</li>
+<li>V8的对象分配：通过堆分配，内存使用量process.memoryUsage()可查询</li>
+<li>V8的垃圾回收机制：<br>  （1）V8的内存分代：新生代（存活时间较短）和老生代（存活时间较长）<br>  （2）Scavenge算法（新生代）：采用复制的方式（空间换时间）<br>  （3）Mark-Sweep&amp;Mark-Compact（老生代）：标记清除，标记整理<br>  （4）Incremental Marking：增量标记</li>
+</ul>
+<p>Scavenge算法将堆内存分为两个空间，只有一个使用，称为From空间，另一个闲置，称为To空间。垃圾回收时，将From的存活对象复制到TO空间，非存活释放。然后两个空间对换，开始下一轮回收<br>标记清除：标记阶段遍历堆中所有对象，标记活得对象；接下来在清除阶段只清除没有被标记的对象<br>标记整理：标记清除的问题是清除后，内存不连续，会造成无法分配大对象。标记整理清除阶段将活着的对象往一端移动，移动完成后，直接清理掉边界外的内存。<br>增量标记：垃圾回收的3种基本算法都需要将应用逻辑暂停下来，这种暂停成为“全停顿”。V8先从标记阶段入手，将原本一口气停顿完成的动作改为增量标记，也就是拆分为许多小“步进”，每做完一步就让JS应用逻辑执行一小会儿。垃圾回收与应用逻辑交替执行，大大减少停顿时间</p>
+<h3 id="内存指标">内存指标</h3><ul>
+<li>查看进程占用：process.memoryUsage()</li>
+<li>查看系统的内存占用：os模块中的totalmem()和freemem()分别返回总内存和闲置内存</li>
+<li>堆外内存（不是通过V8分配：Buffer）：意味利用堆外内存可以突破内存的限制</li>
+</ul>
+<h3 id="内存泄露">内存泄露</h3><p>在垃圾回收机制下，通常的代码编写中，很少会出现内存泄露的情况，通常会造成内存泄露的原因有以下几个；<br>原因：缓存、队列消费不及时、作用域未释放<br>解决方案：将缓存转移到外部，减少常驻内存的对象的数量（Redis，Memcached）；监控队列的长度<br>内存泄露排查：node-heapdump（对V8堆内存抓取快照、分析）、node-memwatch（抓取快照、比较快照）</p>
+<h2 id="理解Buffer">理解Buffer</h2><h3 id="Buffer结构">Buffer结构</h3><p>在网络流和文件的操作中，需要处理大量二进制数据，JavaScript自有的字符串远远不能满足这些需求，于是Buffer对象应运而生。它将性能相关的部分用C++实现，将非性能相关的部分用JavaScript实现。内存应用时，由于Node的内存限制，若不需要进行字符串层面的操作，可以尝试使用Buffer来操作，这不会受到V8堆内存的限制，但依然会受到物理内存限制。</p>
+<ul>
+<li>模块结构：JavaScript与C++结合的模块</li>
+<li>Buffer对象：类似于数组，元素是16进制的两位数（0-255）</li>
+<li>Buffer的内存分配：在Node的C++层面申请；不是V8分配的，属于堆外内存</li>
+<li>在文件I/O和网络I/O中运用广泛，尤其在网络传输中，它的性能举足轻重</li>
+</ul>
+<h3 id="Buffer与字符串的相互转换">Buffer与字符串的相互转换</h3><ul>
+<li>目前支持的编码类型：ASCII、UTF-8、UTF-16LE/UCS-2、Base64、Binary、Hex</li>
+<li>字符串转Buffer：new Buffer(str, [encoding])</li>
+<li>Buffer转字符串：buf.toString([encoding],[start],[end])</li>
+<li>Buffer不支持的编码类型：通过Buffer.isEncoding(encoding)判断是否支持转换；中国常用的GBK、GB2312等都不支持；借助生态圈中的iconv和iconv-lite两个模块解决</li>
+</ul>
+<h3 id="网络编程">网络编程</h3><p>利用Node可以十分方便地搭建网络服务器，不需要专门的Web服务器作为容器，仅仅需要几行代码就可以构建服务器。Node提供了net、dgram、http、https这4个模块，分别用于处理TCP、UDP、HTTP、HTTPS，适用于服务端和客户端。</p>
+<h4 id="HTTP服务器&amp;&amp;TCP服务器">HTTP服务器&amp;&amp;TCP服务器</h4><ul>
+<li>HTTP服务器</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>&#125;);</span><br><span class="line">  res.end(<span class="string">'Hello World\n'</span>);</span><br><span class="line">&#125;).listen(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:1337/'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>TCP服务器</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var net = <span class="keyword">require</span>(<span class="string">'net'</span>);</span><br><span class="line">var server = net.createServer(function (<span class="keyword">socket</span>) &#123;</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">write</span>(<span class="string">'Echo server\r\n'</span>);</span><br><span class="line">  <span class="keyword">socket</span>.<span class="keyword">pipe</span>(<span class="keyword">socket</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.<span class="keyword">listen</span>(<span class="number">1337</span>, <span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="构建Web应用">构建Web应用</h2><p>构建Web应用过程中用到很多技术细节，如数据处理、路由、MVC、模板、RESTful等，详见以下脑图。实现这些细节就可以完成一个功能完备的Web开发框架。<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs2.png" alt=""></p>
+<h2 id="玩转进程">玩转进程</h2><h3 id="Node单线程">Node单线程</h3><p>好处：程序状态单一，没有多线程的锁、同步问题，操作系统调度较少的上下文切换，可以很好地提高CPU的使用率<br>问题：</p>
+<pre><code><span class="bullet">* </span>如何充分利用多核CPU服务器
+<span class="bullet">* </span>如何保证进程的健壮性和稳定性
+</code></pre><h3 id="多进程架构">多进程架构</h3><p>Node提供了child_process模块，并提供child_process.fork()实现进程的复制。<br>worker.js:http服务器，监听1000到2000之间的一个随机端口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http  = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain'</span>&#125;);</span><br><span class="line">	res.end(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;).listen(<span class="built_in">Math</span>.round((<span class="number">1</span>+<span class="built_in">Math</span>.random())*<span class="number">1000</span>),<span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
+<p>master.js：根据当前机器上的CPU地数量复制出对应Node进程数</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">fork</span> = <span class="keyword">require</span>(<span class="string">'child_process'</span>).<span class="keyword">fork</span>;</span><br><span class="line">var cpus = <span class="keyword">require</span>(<span class="string">'os'</span>).cpus();</span><br><span class="line"><span class="keyword">for</span>(var i = <span class="number">0</span>; i &lt; cpus.<span class="keyword">length</span>; i++)&#123;</span><br><span class="line">	<span class="keyword">fork</span>(<span class="string">'./worker.js'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理想状态下，每个进程各自利用一个CPU，以此实现多核CPU的利用。如下图：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs3.png" alt=""></p>
+<h3 id="Master-Worker模式（主从模式）">Master-Worker模式（主从模式）</h3><p><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs4.png" alt=""></p>
+<p>上图就是著名的Master-Worker模式，又称主从模式。图中的进程分为两种：主进程和工作进程。这是典型的分布式架构中用于并行处理业务的模式，具备较好地可伸缩性和稳定性。主进程不负责具体的业务处理，而是负责调度或管理工作进程，它是倾向于稳定的。fork进程是昂贵的，好在这里启动多个进程只是为了充分将CPU资源利用起来，而不是为了解决并发问题</p>
+<h3 id="集群稳定之路:自动重启">集群稳定之路:自动重启</h3><p><img src="http://7xonwi.com1.z0.glb.clouddn.com/Nodejs5.png" alt=""><br>我们创建了很多工作进程，但每个工作进程依然是在单线程上执行的，稳定性不能得到保障。我们在主进程上加入一些子进程管理的机制，当有子进程退出时重新启动一个工作进程来继续服务。</p>
+<ul>
+<li>工作进程得知要退出时(有未捕获的异常出现)，向主进程发送自杀信号</li>
+<li>然后停止接收新的连接，当所有连接断开后才退出</li>
+<li>主进程接收自杀信号后，立即创建新的工作进程服务</li>
+</ul>
+<p>至此我们完成了进程的平滑重启，一旦有异常出现，主进程会创建新的工作进程来为用户服务，旧的进程一旦处理完已有连接就自动断开。整个过程使得我们的应用的稳定性和健壮性大大提高。</p>
+<h3 id="负载均衡">负载均衡</h3><p>多进程架构将CPU资源都调用起来后，需要保证每个进程的工作量，既不能让一些进程忙不过来，也不能让一些进程闲着这种保证多个处理单元工作量公平的策略叫负载均衡。Node提供了叫Round-Robin策略，又叫轮叫调度。轮叫调度的工作方式是由主进程接受连接，将其依次分发给工作进程。<br>分发策略：在N个工作进程中，每次选择第i=(i+1) mod n个进程来发送连接</p>
+<ul>
+<li>在cluster模块中启用：</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启用Round-Robin</span></span><br><span class="line">cluster<span class="class">.schedulingPolicy</span> = cluster<span class="class">.SCHED_RR</span></span><br><span class="line"><span class="comment">//不启用Round-Robin</span></span><br><span class="line">cluster<span class="class">.schedulingPolicy</span> = cluster.SCHED_NONE</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或在环境变量中设置NODE_CLUSTER_SCHED_POLICY的值：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=rr</span><br><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=none</span><br></pre></td></tr></table></figure>
+<h3 id="Cluster模块">Cluster模块</h3><p>cluster模块，用以解决多核CPU的利用率问题，是child_process和net模块的组合应用。作用：用于解决多核CPU的利用率问题，同时也提供较完善的API，用以处理进程的健壮性。</p>
+<p>cluster模块中，一个主进程只能管理一组工作进程。child_process可以更灵活控制工作进程，甚至控制多组工作进程尽管通过child_process模块可以大幅度提升Node的稳定性，但是一旦主进程出现问题，所有子进程将会失去管理。在Node的进程管理之外，还需要监听进程数量或监听日志的方式确保整个系统的稳定性，即使主进程出错退出，也能及时得到监控报警，使得开发者可以及时处理故障。</p>
+<h2 id="其他">其他</h2></script></p>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
+<li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
+<li>2009.5，Ryan D]]>
+    </summary>
+    
+      <category term="读书笔记" scheme="http://blog.noobsky.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="Nodejs" scheme="http://blog.noobsky.com/categories/Nodejs/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[[LeetCode]Number of 1 Bits 和 Counting Bits]]></title>
     <link href="http://blog.noobsky.com/2016/05/14/LeetCode-Number-of-1-Bits-%E5%92%8C-Counting-Bits/"/>
     <id>http://blog.noobsky.com/2016/05/14/LeetCode-Number-of-1-Bits-和-Counting-Bits/</id>
     <published>2016-05-13T17:06:33.000Z</published>
-    <updated>2016-05-13T17:16:00.000Z</updated>
+    <updated>2016-05-16T03:35:28.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Number_of_1_Bits">Number of 1 Bits</h2><h3 id="题目描述">题目描述</h3><p>Write a function that takes an unsigned integer and returns the number of ’1’ bits it has (also known as the Hamming weight).</p>
 <p>For example, the 32-bit integer ’11’ has binary representation 00000000000000000000000000001011, so the function should return 3.</p>
 <h4 id="代码一">代码一</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// you need to treat n as an unsigned value</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">// if((n &amp; 1)==1)&#123;</span></span><br><span class="line">        <span class="comment">//     count++;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">//更好的写法</span></span><br><span class="line">        count = count + (n &amp; <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//注意应该使用无符号右移，如果使用&gt;&gt;遇到负数时会发生死循环</span></span><br><span class="line">        n = n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -37,6 +246,12 @@
     <![CDATA[<h2 id="Number_of_1_Bits">Number of 1 Bits</h2><h3 id="题目描述">题目描述</h3><p>Write a function that takes an unsigned integer and returns the num]]>
     </summary>
     
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+    
   </entry>
   
   <entry>
@@ -44,7 +259,7 @@
     <link href="http://blog.noobsky.com/2016/05/13/LeetCode-Single-Number-I-II-III/"/>
     <id>http://blog.noobsky.com/2016/05/13/LeetCode-Single-Number-I-II-III/</id>
     <published>2016-05-13T02:30:10.000Z</published>
-    <updated>2016-05-13T06:48:21.000Z</updated>
+    <updated>2016-05-16T03:35:23.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Single_Number_I">Single Number I</h2><h3 id="题目描述">题目描述</h3><p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
 <p>Note:<br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
 <p>代码如下：</p>
@@ -63,6 +278,12 @@
     <![CDATA[<h2 id="Single_Number_I">Single Number I</h2><h3 id="题目描述">题目描述</h3><p>Given an array of integers, every element appears twice except for on]]>
     </summary>
     
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+    
   </entry>
   
   <entry>
@@ -70,7 +291,7 @@
     <link href="http://blog.noobsky.com/2016/05/13/LeetCode-Word-Pattern/"/>
     <id>http://blog.noobsky.com/2016/05/13/LeetCode-Word-Pattern/</id>
     <published>2016-05-12T16:25:27.000Z</published>
-    <updated>2016-05-12T16:28:58.000Z</updated>
+    <updated>2016-05-16T03:35:10.000Z</updated>
     <content type="html"><![CDATA[<h3 id="题目描述">题目描述</h3><p>Given a pattern and a string str, find if str follows the same pattern.</p>
 <p>Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in str.</p>
 <p>Examples:<br>pattern = “abba”, str = “dog cat cat dog” should return true.<br>pattern = “abba”, str = “dog cat cat fish” should return false.<br>pattern = “aaaa”, str = “dog cat cat dog” should return false.<br>pattern = “abba”, str = “dog dog dog dog” should return false.<br>Notes:<br>You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space.</p>
@@ -81,6 +302,12 @@
     <![CDATA[<h3 id="题目描述">题目描述</h3><p>Given a pattern and a string str, find if str follows the same pattern.</p>
 <p>Here follow means a full match, suc]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
     
   </entry>
   
@@ -633,94 +860,6 @@
     <summary type="html">
     
     </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Java注解]]></title>
-    <link href="http://blog.noobsky.com/2016/04/17/Java%E6%B3%A8%E8%A7%A3/"/>
-    <id>http://blog.noobsky.com/2016/04/17/Java注解/</id>
-    <published>2016-04-17T03:07:37.000Z</published>
-    <updated>2016-04-30T04:32:06.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="注解（Annotation）的工作方式">注解（Annotation）的工作方式</h3><p>Java5.0提供了一个正式的注解（Annotation）功能：允许开发者定义、使用自己的注解类型。此功能由一个定义注解类型的语法和一个描述注解声明的语法，读取注解的API，一个使用注解修饰的class文件和一个注解处理工具组成。</p>
-<p>注解并不直接影响程序代码的语义，但是它工作的方式被看作类似程序的工具或者类库，他会反过来对正在运行的程序语义有所影响。</p>
-<p>注解可以从源文件、class文件或者以在运行时反射的多种方式被读取。</p>
-<h3 id="Java内置注解">Java内置注解</h3><ul>
-<li>@Override注解</li>
-</ul>
-<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java.lang</span><br><span class="line">Annotation <span class="keyword">Type</span> <span class="keyword">Override</span></span><br><span class="line">@Target(value=<span class="function"><span class="keyword">METHOD</span>)</span><br><span class="line">@<span class="title">Retention</span><span class="params">(value=SOURCE)</span></span><br><span class="line"><span class="title">public</span> @<span class="title">interface</span> <span class="title">Override</span></span></span><br></pre></td></tr></table></figure>
-<p>表示一个方法声明将重写父类中声明的一个方法。如果方法使用此注解类型进行注解但没有重写父类中的方法，则编译器会生成一条错误信息。</p>
-<p>@Override注解表示子类要重写父类中对应的方法，它是一个Marker Annotation，用于标识Annotation，Annotation名称本身表示了要给工具程序的信息。<br>@Override注解非常常见，比如：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OverrideTest</span> &#123;</span><br><span class="line">    @<span class="function">Override</span><br><span class="line">    <span class="keyword">public</span> String <span class="title">toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"This is OverrideTest"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">        OverrideTest test = <span class="keyword">new</span> OverrideTest();</span><br><span class="line">        System.<span class="keyword">out</span>.println(test);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@Deprecated注解</li>
-</ul>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">java.lang</span><br><span class="line">Annotation <span class="keyword">Type</span> Deprecated</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Documented</span><br><span class="line">@Retention(<span class="keyword">value</span>=RUNTIME)</span><br><span class="line">@<span class="type">Target</span>(<span class="keyword">value</span>=&#123;CONSTRUCTOR,FIELD,LOCAL_VARIABLE,METHOD,PACKAGE,<span class="type">PARAMETER</span>,<span class="keyword">TYPE</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> @<span class="keyword">interface</span> Deprecated</span><br></pre></td></tr></table></figure>
-<p>用@Deprecated注解的程序元素，是不鼓励程序员使用的，通常是因为它存在危险或存在更好的选择。在使用deprecated的程序元素或在非deprecated代码中重写它，编译器会发出警告。</p>
-<p>@Deprecated注解表示某个方法已经不建议使用，即该方法是过时的。Deprecated也是个 Marker annotation。下面是使用@Deprecated注解的例子：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DeprecatedTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Deprecated</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"hello world!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">        DeprecatedTest test = <span class="keyword">new</span> DeprecatedTest();</span><br><span class="line">        test.hello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@SuppressWarnings注解</li>
-</ul>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java.lang</span><br><span class="line">Annotation <span class="keyword">Type</span> SuppressWarnings</span><br><span class="line">@<span class="type">Target</span>(<span class="keyword">value</span>=&#123;<span class="keyword">TYPE</span>,FIELD,METHOD,<span class="type">PARAMETER</span>,CONSTRUCTOR,LOCAL_VARIABLE&#125;)</span><br><span class="line">@Retention(<span class="keyword">value</span>=SOURCE)</span><br><span class="line"><span class="keyword">public</span> @<span class="keyword">interface</span> SuppressWarnings</span><br></pre></td></tr></table></figure>
-<p>表明应该在注解元素（以及包含在该注解元素中的所有程序元素）中取消显示指定的编译器警告。注意，在给定元素中取消显示的警告集是所有包含元素中取消显示的警告的超集。例如，如果注解一个类来取消显示某个警告，同时注解一个方法来取消显示另一个警告，那么将在此方法中同时取消显示这两个警告。<br>根据风格不同，程序员应该始终在最里层的嵌套元素上使用此注解，在那里使用才有效。如果要在特定的方法中取消显示某个警告，则应该注解该方法而不是注解它的类。</p>
-<p>@SuppressWarnings注解表示抑制警告。下面是一个使用@SuppressWarnings注解的例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.TreeMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">SuppressWarningsTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @SuppressWarnings(&#123;<span class="string">"unchecked"</span>, <span class="string">"deprecation"</span>&#125;)</span><br><span class="line">    public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">        <span class="built_in">Map</span> map = <span class="keyword">new</span> TreeMap();</span><br><span class="line">        map.put(<span class="string">"hello"</span>, <span class="keyword">new</span> <span class="built_in">Date</span>());</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        <span class="built_in">Date</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">        System.out.println(date.toLocaleString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>@SafeVarargs注解</li>
-</ul>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java<span class="class">.lang</span></span><br><span class="line">Annotation Type SafeVarargs</span><br><span class="line">@Documented</span><br><span class="line">@<span class="function"><span class="title">Retention</span><span class="params">(value=RUNTIME)</span></span></span><br><span class="line">@<span class="function"><span class="title">Target</span><span class="params">(value=&#123;CONSTRUCTOR,METHOD&#125;)</span></span></span><br><span class="line">public @interface SafeVarargs</span><br></pre></td></tr></table></figure>
-<p>@SafeVarargs是标记注解，只能用于参数长度可变的方法或构造函数，且方法必须声明为static或final，否则会出现编译错误。指示没有发生与可变长度参数相关的不安全动作。如果不安全代码与不能具体化的varargs类型相关，或者与参数化的数组实例相关，那么@SafeVarargs注解用于抑制“未检查不安全代码”警告(本质上，不能具体化的类是泛型类)。@SafeVarargs注解是由JDK 7新增的。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> SafeVarargsTest &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; a1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        a1.add(<span class="keyword">new</span> Integer(<span class="number">1</span>));</span><br><span class="line">        a1.add(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Float&gt; a2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        a2.add(<span class="keyword">new</span> Float(<span class="number">3.0</span>));</span><br><span class="line">        a2.add(<span class="keyword">new</span> Float(<span class="number">4.0</span>));</span><br><span class="line"></span><br><span class="line">        displayElements(a1, a2, <span class="number">12</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @SafeVarargs</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">displayElements</span><span class="params">(T... <span class="built_in">array</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (T element : <span class="built_in">array</span>) &#123;</span><br><span class="line">            System.out.println(element.getClass().getName() + <span class="string">":"</span> + element);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="自定义注解">自定义注解</h3><p>使用@interface自定义注解时，实际上自动继承了java.lang.annotation.Annotation接口，由编译程序自动完成其他细节。在定义注解时，不能继承其他的注解或接口。如果我们定义了一个接口,并且让该接口继承 自 Annotation,那么我们所定义的接口依然还是接口而不是注解;Annotation 本身 是接口而不是注解。可以与 Enum 类比。<br>自定义注解：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Created by Jaye on 16/4/17.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">public <span class="comment">@interface MyAnnotation &#123;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用自定义注解：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * <span class="type">Created</span> by <span class="type">Jaye</span> on <span class="number">16</span>/<span class="number">4</span>/<span class="number">17</span>.</span><br><span class="line"> */</span><br><span class="line">public class <span class="type">AnnotationUsage</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="type">MyAnnotation</span></span><br><span class="line">    public <span class="type">void</span> <span class="keyword">method</span>()&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"usage of annotation"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args)&#123;</span><br><span class="line">        <span class="type">AnnotationUsage</span> usage = new <span class="type">AnnotationUsage</span>();</span><br><span class="line">        usage.<span class="keyword">method</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>添加变量</li>
-</ul>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> @<span class="keyword">interface</span> <span class="title">MyAnnotation</span> &#123;</span><br><span class="line">    <span class="function">String <span class="title">value1</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用自定义注解：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class <span class="type">AnnotationUsage</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="type">MyAnnotation</span>(value1 = <span class="string">"jaye"</span>)</span><br><span class="line">    public <span class="type">void</span> <span class="keyword">method</span>()&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"usage of annotation"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args)&#123;</span><br><span class="line">        <span class="type">AnnotationUsage</span> usage = new <span class="type">AnnotationUsage</span>();</span><br><span class="line">        usage.<span class="keyword">method</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当注解中使用的属性名为value时，对其赋值时可以不指定属性的名称而直接写上属性值接口；除了value意外的变量名都需要使用name=value的方式赋值。</p>
-<ul>
-<li>使用默认值</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> @<span class="interface"><span class="keyword">interface</span> MyAnnotation </span>&#123;</span><br><span class="line">    <span class="built_in">String</span> value1() <span class="keyword">default</span> <span class="string">"hello"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组变量</li>
-</ul>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> @<span class="interface"><span class="keyword">interface</span> MyAnnotation </span>&#123;</span><br><span class="line">    <span class="built_in">String</span>[] value1() <span class="keyword">default</span> <span class="string">"hello"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class <span class="type">AnnotationUsage</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="type">MyAnnotation</span>(value1 = &#123;<span class="string">"jaye"</span>, <span class="string">"poop"</span>&#125;)</span><br><span class="line">    public <span class="type">void</span> <span class="keyword">method</span>()&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"usage of annotation"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args)&#123;</span><br><span class="line">        <span class="type">AnnotationUsage</span> usage = new <span class="type">AnnotationUsage</span>();</span><br><span class="line">        usage.<span class="keyword">method</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>多变量使用枚举</li>
-</ul>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public <span class="variable">@interface</span> <span class="constant">MyAnnotation</span> &#123;</span><br><span class="line">    <span class="constant">String</span>[] value1() default <span class="string">"hello"</span>;</span><br><span class="line">    <span class="constant">EnumTest</span> value2();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">EnumTest</span>&#123;</span></span><br><span class="line">    <span class="constant">Hello</span>, <span class="constant">World</span>, <span class="constant">Welcome</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class <span class="type">AnnotationUsage</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="type">MyAnnotation</span>(value1 = &#123;<span class="string">"jaye"</span>, <span class="string">"poop"</span>&#125;, value2 = <span class="type">EnumTest</span>.<span class="type">Hello</span>)</span><br><span class="line">    public <span class="type">void</span> <span class="keyword">method</span>()&#123;</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"usage of annotation"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args)&#123;</span><br><span class="line">        <span class="type">AnnotationUsage</span> usage = new <span class="type">AnnotationUsage</span>();</span><br><span class="line">        usage.<span class="keyword">method</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="设置注解的作用范围">设置注解的作用范围</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java<span class="class">.lang</span><span class="class">.annotation</span></span><br><span class="line">Annotation Type Retention</span><br><span class="line">@Documented</span><br><span class="line">@<span class="function"><span class="title">Retention</span><span class="params">(value=RUNTIME)</span></span></span><br><span class="line">@<span class="function"><span class="title">Target</span><span class="params">(value=ANNOTATION_TYPE)</span></span></span><br><span class="line">public @interface Retention</span><br></pre></td></tr></table></figure>
-<p>声明注解类型的注解需要保留多久。如果注解类型声明中没有Retention注解，则保留策略默认为RetentionPolicy.CLASS。只有元注释类型直接用于注释时，Target 元注释才有效。如果元注释类型用作另一种注释类型的成员，则无效。<br>注解保留策略。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">enum</span> <span class="title">RetentionPolicy</span></span></span><br><span class="line">extends <span class="constant">Enum</span>&lt;<span class="constant">RetentionPolicy</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>此枚举类型的常量描述保留注解的不同策略。它们与 Retention 元注释类型一起使用，以指定保留多长的注解。</p>
-<p><strong>CLASS:</strong> 编译器将注解类型记录在class文件中，但运行时VM不保留注解<br><strong>RUNTIME:</strong> 编译器把注解类型记录在class文件中，而且运行时VM将保留注解，因此可以利用反射机制读取。<br><strong>SOURCE:</strong> 编译器将丢弃注解</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"><span class="keyword">import</span> java.lang.annotation.Retention;</span></span><br><span class="line"><span class="preprocessor"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line">@Retention(RetentionPolicy.CLASS)</span><br><span class="line"><span class="keyword">public</span> @<span class="class"><span class="keyword">interface</span> <span class="title">MyAnnotation2</span> </span>&#123;</span><br><span class="line">    String hello() <span class="keyword">default</span> <span class="string">"hellojaye"</span>;</span><br><span class="line">    String world();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用反射读取RUNTIME保留策略的注解信息">使用反射读取RUNTIME保留策略的注解信息</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">java.lang.reflect</span><br><span class="line"><span class="keyword">Interface</span> AnnotatedElement</span><br><span class="line"></span><br><span class="line">All Known Implementing Classes:</span><br><span class="line">AccessibleObject, <span class="keyword">Class</span>, <span class="function"><span class="keyword">Constructor</span>, <span class="title">Field</span>, <span class="title">Method</span>, <span class="title">Package</span></span></span><br></pre></td></tr></table></figure>
-<p>表示目前正在此 VM 中运行的程序的一个已注解元素。该接口允许通过反射机制读取注解。由此接口中的方法返回的所有注解都是不可变并且可序列化的。调用者可以修改已赋值数组枚举成员的访问器返回的数组；这不会对其他调用者返回的数组产生任何影响。<br>如果此接口中的方法返回的注解（直接或间接地）包含一个已赋值的 Class 成员，该成员引用了一个在此 VM 中不可访问的类，则试图通过在返回的注解上调用相关的类返回的方法来读取该类，将导致一个 TypeNotPresentException。</p>
-<p>类似地，如果注释中的枚举常量不再以枚举类型存在，那么试图读取一个已赋值的枚举成员将导致一个 EnumConstantNotPresentException。</p>
-<p>最后，读取其定义已经引起不兼容性的成员将导致 AnnotationTypeMismatchException 或 IncompleteAnnotationException。<br>自定义注解：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"><span class="keyword">import</span> java.lang.annotation.Retention;</span></span><br><span class="line"><span class="preprocessor"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> @<span class="class"><span class="keyword">interface</span> <span class="title">MyAnnotation2</span> </span>&#123;</span><br><span class="line">    String hello() <span class="keyword">default</span> <span class="string">"hellojaye"</span>;</span><br><span class="line">    String world();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用自定义注解：<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">@MyAnnotation2</span>(hello = <span class="string">"beijing"</span>, world = <span class="string">"haidian"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> MyTest &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">@MyAnnotation2</span>(hello = <span class="string">"poop"</span>, world = <span class="string">"jaye"</span>)</span><br><span class="line">    <span class="keyword">@Deprecated</span></span><br><span class="line">    <span class="keyword">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> output()&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"output something"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>利用反射获取注解信息：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.<span class="type">Annotation</span>;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.<span class="type">Method</span>;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * <span class="type">Created</span> by <span class="type">Jaye</span> on <span class="number">16</span>/<span class="number">4</span>/<span class="number">17</span>.</span><br><span class="line"> */</span><br><span class="line">public class <span class="type">MyReflection</span> &#123;</span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) throws <span class="type">Exception</span>&#123;</span><br><span class="line">        <span class="type">MyTest</span> myTest = new <span class="type">MyTest</span>();</span><br><span class="line">        //获取<span class="type">MyTest2</span>的<span class="type">Class</span>实例</span><br><span class="line">        <span class="type">Class</span>&lt;<span class="type">MyTest</span>&gt; cls = <span class="type">MyTest</span>.class;</span><br><span class="line">        //获取待处理方法的<span class="type">Method</span>实例</span><br><span class="line">        <span class="type">Method</span> <span class="keyword">method</span> = cls.getMethod(<span class="string">"output"</span>, new <span class="type">Class</span>[]&#123;&#125;);</span><br><span class="line">        //判断该方法是否包含<span class="type">MyAnnotation2</span>注解</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">method</span>.isAnnotationPresent(<span class="type">MyAnnotation2</span>.class))&#123;</span><br><span class="line">            //执行方法</span><br><span class="line">            <span class="keyword">method</span>.invoke(myTest, new <span class="type">Object</span>[]&#123;&#125;);</span><br><span class="line">            //获取方法的<span class="type">MyAnnotation2</span>的注解实例</span><br><span class="line">            <span class="type">MyAnnotation2</span> myAnnotation2 = <span class="keyword">method</span>.getAnnotation(<span class="type">MyAnnotation2</span>.class);</span><br><span class="line">            <span class="type">String</span> hello = myAnnotation2.hello();</span><br><span class="line">            <span class="type">String</span> world = myAnnotation2.world();</span><br><span class="line"></span><br><span class="line">            <span class="type">System</span>.<span class="keyword">out</span>.println(hello + <span class="string">","</span> + world);</span><br><span class="line">            //获取方法上的所有注解</span><br><span class="line">            <span class="type">Annotation</span>[] annotations = <span class="keyword">method</span>.getAnnotations();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">Annotation</span> annotation : annotations)&#123;</span><br><span class="line">                <span class="type">System</span>.<span class="keyword">out</span>.println(annotation.annotationType().getName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>程序输出：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output something</span><br><span class="line">poop,jaye</span><br><span class="line">com<span class="class">.jaye</span><span class="class">.annotation</span><span class="class">.MyAnnotation2</span></span><br><span class="line">java<span class="class">.lang</span><span class="class">.Deprecated</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="限定注解的使用">限定注解的使用</h3><p>限定注解对象使用@Target<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ava<span class="class">.lang</span><span class="class">.annotation</span></span><br><span class="line">Annotation Type Target</span><br><span class="line"></span><br><span class="line">@Documented</span><br><span class="line">@<span class="function"><span class="title">Retention</span><span class="params">(value=RUNTIME)</span></span></span><br><span class="line">@<span class="function"><span class="title">Target</span><span class="params">(value=ANNOTATION_TYPE)</span></span></span><br><span class="line">public @interface Target</span><br></pre></td></tr></table></figure></p>
-<p>指示注解类型所适用的程序元素的种类。如果注解类型声明中不存在 Target 元注释，则声明的类型可以用在任一程序元素上。如果存在这样的元注解，则编译器强制实施指定的使用限制。 例如，此元注解指示该声明类型是其自身，即元注解类型。它只能用在注解类型声明上：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">enum</span> <span class="title">ElementType</span></span></span><br><span class="line">extends <span class="constant">Enum</span>&lt;<span class="constant">ElementType</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>程序元素类型。此枚举类型的常量提供了 Java 程序中声明的元素的简单分类。<br>这些常量与 Target 元注解类型一起使用，以指定在什么情况下使用注解类型是合法的。枚举常量如下：</p>
-<p><strong>ANNOTATION_TYPE:</strong> 注解类型声明<br><strong>CONSTRUCTOR:</strong> 构造方法声明<br><strong>FIELD:</strong> 字段声明（包括枚举常量）<br><strong>LOCAL_VARIABLE:</strong> 局部变量声明<br><strong>METHOD:</strong> 方法声明<br><strong>PACKAGE:</strong> 包声明<br><strong>PARAMETER:</strong> 参数声明<br><strong>TYPE:</strong> 类、接口（包括注释类型）或枚举声明</p>
-<p>例子如下：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Created by Jaye on 16/4/17.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line"><span class="comment">@Target(ElementType.METHOD)</span></span><br><span class="line">public <span class="comment">@interface MyTarget &#123;</span></span><br><span class="line">    String value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="在帮助文档中加入注解">在帮助文档中加入注解</h3><p>要想在制作JavaDoc文件的同时将注解信息加入到API文件中，可以使用java.lang.annotation.Documented。<br>在自定义注解中声明构建注解文档：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"><span class="keyword">import</span> java.lang.annotation.Documented;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/4/17.</span><br><span class="line"> */</span></span><br><span class="line">@Documented</span><br><span class="line"><span class="keyword">public</span> @<span class="class"><span class="keyword">interface</span> <span class="title">DocumentedAnnotation</span> </span>&#123;</span><br><span class="line">    String hello();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class <span class="type">DocumentedTest</span></span><br><span class="line">&#123;</span><br><span class="line">	@<span class="type">DocumentedAnnotation</span>(hello = <span class="string">"welcome"</span>)</span><br><span class="line">	public <span class="type">void</span> <span class="keyword">method</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"hello world"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="在注解中使用继承：">在注解中使用继承：</h3><p>默认情况下注解并不会被继承到子类中，可以在自定义注解时加上java.lang.annotation.Inherited注解声明使用继承。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java<span class="class">.lang</span><span class="class">.annotation</span></span><br><span class="line">Annotation Type Inherited</span><br><span class="line"></span><br><span class="line">@Documented</span><br><span class="line">@<span class="function"><span class="title">Retention</span><span class="params">(value=RUNTIME)</span></span></span><br><span class="line">@<span class="function"><span class="title">Target</span><span class="params">(value=ANNOTATION_TYPE)</span></span></span><br><span class="line">public @interface Inherited</span><br></pre></td></tr></table></figure></p>
-<p>表示注解类型被自动继承。如果在注解类型声明中存在 Inherited 元注释，并且用户在某一类声明中查询该注解类型，同时该类声明中没有此类型的注解，则将在该类的父类中自动查询该注解类型。此过程会重复进行，直到找到此类型的注解或到达了该类层次结构的顶层 (Object) 为止。如果没有父类具有该类型的注解，则查询将指示当前类没有这样的注解。<br>注意，如果使用注解类型注解类以外的任何事物，此元注解类型都是无效的。还要注意，此元注解仅促成从父类继承注解；对已实现接口的注解无效。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="注解（Annotation）的工作方式">注解（Annotation）的工作方式</h3><p>Java5.0提供了一个正式的注解（Annotation）功能：允许开发者定义、使用自己的注解类型。此功能由一个定义注解类型的语法和一个描述注解声明的语法，读取注解的A]]>
-    </summary>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="注解" scheme="http://blog.noobsky.com/tags/%E6%B3%A8%E8%A7%A3/"/>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/categories/Java/"/>
     
   </entry>
   
