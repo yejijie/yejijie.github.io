@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-05-16T07:56:52.000Z</updated>
+  <updated>2016-05-16T07:59:25.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.noobsky.com/2016/05/16/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode-js%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.noobsky.com/2016/05/16/深入浅出Node-js读书笔记/</id>
     <published>2016-05-16T03:34:25.000Z</published>
-    <updated>2016-05-16T07:56:52.000Z</updated>
+    <updated>2016-05-16T07:59:25.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
 <li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
 <li>2009.5，Ryan Dahl在GitHub上发布了最初的版本。</li>
@@ -67,7 +67,7 @@
 <li>游戏开发领域：网易开源了pomelo实时框架</li>
 <li>工具类应用</li>
 </ul>
-<h2 id="模块机制">模块机制</h2><h3 id="Node的模块">Node的模块</h3><p>JavaScript先天就缺乏一项功能：模块，其他高级语言中Java、Python有import机制，Ruby有require，PHP有include和require……浏览器JavaScript通过<script>标签引入代码的方式显得杂乱无章，语言自身显得毫无组织和约束能力</p>
+<h2 id="模块机制">模块机制</h2><h3 id="Node的模块">Node的模块</h3><p>JavaScript先天就缺乏一项功能：模块，其他高级语言中Java、Python有import机制，Ruby有require，PHP有include和require……浏览器JavaScript通过script标签引入代码的方式显得杂乱无章，语言自身显得毫无组织和约束能力</p>
 <ul>
 <li>Node的模块分为两类：一类是Node提供的模块，称为核心（原生）模块；另一类是用户编写的模块，称为文件模块</li>
 <li>Node通过require引用模块</li>
@@ -87,7 +87,7 @@
 <h3 id="NPM：_Node包管理器（Node_Package_Manager）">NPM： Node包管理器（Node Package Manager）</h3><p>Node.js根据CommonJS规范实现了包机制,开发了npm来解决包的发布和获取需求。NPM常用功能：</p>
 <ul>
 <li>查看帮助：npm –h、npm help <command></li>
-<li>安装依赖包：npm install express –g(全局安装)、npm install <file>(本地安装)</li>
+<li>安装依赖包：npm install express –g(全局安装)、npm install <file>(本地安装)</file></li>
 <li>发布包</li>
 <li>分析包</li>
 </ul>
@@ -210,7 +210,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=rr</span><br><span class="line"><span class="built_in">export</span> NODE_CLUSTER_SCHED_POLICY=none</span><br></pre></td></tr></table></figure>
 <h3 id="Cluster模块">Cluster模块</h3><p>cluster模块，用以解决多核CPU的利用率问题，是child_process和net模块的组合应用。作用：用于解决多核CPU的利用率问题，同时也提供较完善的API，用以处理进程的健壮性。</p>
 <p>cluster模块中，一个主进程只能管理一组工作进程。child_process可以更灵活控制工作进程，甚至控制多组工作进程尽管通过child_process模块可以大幅度提升Node的稳定性，但是一旦主进程出现问题，所有子进程将会失去管理。在Node的进程管理之外，还需要监听进程数量或监听日志的方式确保整个系统的稳定性，即使主进程出错退出，也能及时得到监控报警，使得开发者可以及时处理故障。</p>
-<h2 id="其他">其他</h2></script></p>]]></content>
+<h2 id="其他">其他</h2>]]></content>
     <summary type="html">
     <![CDATA[<h2 id="Node简介">Node简介</h2><h3 id="Node诞生历程">Node诞生历程</h3><ul>
 <li>2009.3，Ryan Dahl在其博客上宣布准备基于V8创建一个轻量级的Web服务器并提供一套库。</li>
