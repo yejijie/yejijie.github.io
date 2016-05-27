@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/05/27/LeetCode-Bulb-Swithcher/</loc>
+    <lastmod>2016-05-27T12:59:39.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/05/17/Java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2016-05-17T16:44:14.000Z</lastmod>
   </url>
