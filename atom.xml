@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-06-04T06:38:31.000Z</updated>
+  <updated>2016-06-04T08:43:54.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -13,6 +13,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[[LeetCode]Find Minimum in Rotated Sorted Array I II]]></title>
+    <link href="http://blog.noobsky.com/2016/06/04/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-I-II/"/>
+    <id>http://blog.noobsky.com/2016/06/04/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-I-II/</id>
+    <published>2016-06-04T07:07:07.000Z</published>
+    <updated>2016-06-04T08:43:54.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Find_Minimum_in_Rotated_Sorted_Array_I">Find Minimum in Rotated Sorted Array I</h2><h3 id="题目描述">题目描述</h3><p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
+<p>Find the minimum element.</p>
+<p>You may assume no duplicate exists in the array.</p>
+<h3 id="代码如下">代码如下</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//二分后肯定有一边是有序的</span></span><br><span class="line">    <span class="keyword">public</span> int findMin(int[] nums) &#123;</span><br><span class="line">        int <span class="keyword">left</span> = <span class="number">0</span>, <span class="keyword">right</span> = nums.length - <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">left</span> &lt; <span class="keyword">right</span>)&#123;</span><br><span class="line">            int mid = <span class="keyword">left</span> + (<span class="keyword">right</span> - <span class="keyword">left</span>)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] &gt; nums[<span class="keyword">right</span>])&#123;<span class="comment">//nums[left:mid]有序，搜索右边</span></span><br><span class="line">                <span class="keyword">left</span> = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; nums[<span class="keyword">right</span>])&#123;<span class="comment">//nums[mid:right]有序，搜索左边</span></span><br><span class="line">                <span class="keyword">right</span> = mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> nums[<span class="keyword">left</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Find_Minimum_in_Rotated_Sorted_Array_II">Find Minimum in Rotated Sorted Array II</h2><h3 id="题目描述-1">题目描述</h3><p>Follow up for “Find Minimum in Rotated Sorted Array”:<br>What if duplicates are allowed?</p>
+<p>Would this affect the run-time complexity? How and why?<br>Suppose a sorted array is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
+<p>Find the minimum element.</p>
+<p>The array may contain duplicates.</p>
+<h3 id="代码">代码</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//二分后肯定有一边是有序的</span></span><br><span class="line">    <span class="comment">//nums[mid] &gt; nums[right],nums[left:mid]有序，搜索右边</span></span><br><span class="line">    <span class="comment">//nums[mid] &lt; nums[right],nums[mid:right]有序，搜索左边</span></span><br><span class="line">    <span class="comment">//nums[mid] = nums[right],有重复元素，无法判断哪边有序比如3 1 2 3 3 3 3 和 3 3 3 3 1 2 3</span></span><br><span class="line">    <span class="comment">//但可以肯定排除nums[right],即使min = A[right],排除A[right]并没有使min丢失</span></span><br><span class="line">    <span class="keyword">public</span> int findMin(int[] nums) &#123;</span><br><span class="line">        </span><br><span class="line">        int <span class="keyword">left</span> = <span class="number">0</span>, <span class="keyword">right</span> = nums.length - <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">left</span> &lt; <span class="keyword">right</span>)&#123;</span><br><span class="line">            int mid = <span class="keyword">left</span>+(<span class="keyword">right</span> - <span class="keyword">left</span>)/<span class="number">2</span>;</span><br><span class="line">            <span class="comment">//nums[left:mid]有序，搜索右边</span></span><br><span class="line">            <span class="keyword">if</span>(nums[mid] &gt; nums[<span class="keyword">right</span>])&#123;</span><br><span class="line">                <span class="keyword">left</span> = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; nums[<span class="keyword">right</span>])&#123;<span class="comment">//nums[mid:right]有序，搜索左边</span></span><br><span class="line">                <span class="keyword">right</span> = mid;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">//有重复元素，无法判断哪边有序比如3 1 2 3 3 3 3 和 3 3 3 3 1 2 3</span></span><br><span class="line">                <span class="keyword">right</span>--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> nums[<span class="keyword">left</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Find_Minimum_in_Rotated_Sorted_Array_I">Find Minimum in Rotated Sorted Array I</h2><h3 id="题目描述">题目描述</h3><p>Suppose a sorted array ]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[[LeetCode]Populating Next Right Pointers in Each Node I II]]></title>
@@ -764,19 +788,6 @@
       <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]字符串和数字转换相关的几道题Reverse Integer、atoi和Valid Number]]></title>
-    <link href="http://blog.noobsky.com/2016/05/12/LeetCode-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E5%AD%97%E8%BD%AC%E6%8D%A2%E7%9B%B8%E5%85%B3%E7%9A%84%E5%87%A0%E9%81%93%E9%A2%98Reverse-Integer%E3%80%81atoi%E5%92%8CValid-Number/"/>
-    <id>http://blog.noobsky.com/2016/05/12/LeetCode-字符串和数字转换相关的几道题Reverse-Integer、atoi和Valid-Number/</id>
-    <published>2016-05-12T02:29:36.000Z</published>
-    <updated>2016-05-12T02:29:36.000Z</updated>
-    <content type="html"></content>
-    <summary type="html">
-    
-    </summary>
     
   </entry>
   

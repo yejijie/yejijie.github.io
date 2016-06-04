@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/04/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-I-II/</loc>
+    <lastmod>2016-06-04T08:43:54.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/04/LeetCode-Populating-Next-Right-Pointers-in-Each-Node/</loc>
     <lastmod>2016-06-04T06:38:31.000Z</lastmod>
   </url>
