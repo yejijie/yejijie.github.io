@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-06-04T08:43:54.000Z</updated>
+  <updated>2016-06-04T08:49:45.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.noobsky.com/2016/06/04/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-I-II/"/>
     <id>http://blog.noobsky.com/2016/06/04/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-I-II/</id>
     <published>2016-06-04T07:07:07.000Z</published>
-    <updated>2016-06-04T08:43:54.000Z</updated>
+    <updated>2016-06-04T08:49:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Find_Minimum_in_Rotated_Sorted_Array_I">Find Minimum in Rotated Sorted Array I</h2><h3 id="题目描述">题目描述</h3><p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.</p>
 <p>(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).</p>
 <p>Find the minimum element.</p>
