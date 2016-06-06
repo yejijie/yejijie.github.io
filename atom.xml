@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-06-05T09:47:32.000Z</updated>
+  <updated>2016-06-06T01:23:39.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -13,6 +13,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[[LeetCode]Binary Tree Right Side View]]></title>
+    <link href="http://blog.noobsky.com/2016/06/06/LeetCode-Binary-Tree-Right-Side-View/"/>
+    <id>http://blog.noobsky.com/2016/06/06/LeetCode-Binary-Tree-Right-Side-View/</id>
+    <published>2016-06-06T01:21:29.000Z</published>
+    <updated>2016-06-06T01:23:39.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.</p>
+<p>For example:<br>Given the following binary tree,</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="number">1</span>            &lt;-<span class="comment">--</span></span><br><span class="line"> /   \</span><br><span class="line"><span class="number">2</span>     <span class="number">3</span>         &lt;-<span class="comment">--</span></span><br><span class="line"> \     \</span><br><span class="line">  <span class="number">5</span>     <span class="number">4</span>       &lt;-<span class="comment">--</span></span><br></pre></td></tr></table></figure>
+<p>You should return [1, 3, 4].</p>
+<h2 id="代码">代码</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * public class TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode left;</span><br><span class="line"> *     TreeNode right;</span><br><span class="line"> *     TreeNode(int x) &#123; val = x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> class Solution &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">List</span>&lt;<span class="built_in">Integer</span>&gt; rightSideView(TreeNode root) &#123;</span><br><span class="line">        <span class="built_in">List</span>&lt;<span class="built_in">Integer</span>&gt; res = <span class="literal">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        rightView(root, res, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//一层就取一个，而且是最右边</span></span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> rightView(TreeNode root, <span class="built_in">List</span>&lt;<span class="built_in">Integer</span>&gt; res, int currHeight)&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="built_in">null</span>) <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//tricky，因为一层就取一个（最右边的），当res.size()==currHeight时，说明该元素就是该层最右边的元素</span></span><br><span class="line">        <span class="keyword">if</span>(res<span class="built_in">.</span>size() == currHeight) res<span class="built_in">.</span>add(root<span class="built_in">.</span>val);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//右边优先</span></span><br><span class="line">        rightView(root<span class="built_in">.</span>right, res, currHeight+<span class="number">1</span>);</span><br><span class="line">        rightView(root<span class="built_in">.</span>left, res, currHeight+<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see]]>
+    </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[[LeetCode]Spiral Matrix I,II]]></title>
@@ -787,37 +811,6 @@
       <category term="读书笔记" scheme="http://blog.noobsky.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
       <category term="Nodejs" scheme="http://blog.noobsky.com/categories/Nodejs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]Number of 1 Bits 和 Counting Bits]]></title>
-    <link href="http://blog.noobsky.com/2016/05/14/LeetCode-Number-of-1-Bits-%E5%92%8C-Counting-Bits/"/>
-    <id>http://blog.noobsky.com/2016/05/14/LeetCode-Number-of-1-Bits-和-Counting-Bits/</id>
-    <published>2016-05-13T17:06:33.000Z</published>
-    <updated>2016-05-16T03:35:28.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Number_of_1_Bits">Number of 1 Bits</h2><h3 id="题目描述">题目描述</h3><p>Write a function that takes an unsigned integer and returns the number of ’1’ bits it has (also known as the Hamming weight).</p>
-<p>For example, the 32-bit integer ’11’ has binary representation 00000000000000000000000000001011, so the function should return 3.</p>
-<h4 id="代码一">代码一</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// you need to treat n as an unsigned value</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">// if((n &amp; 1)==1)&#123;</span></span><br><span class="line">        <span class="comment">//     count++;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">//更好的写法</span></span><br><span class="line">        count = count + (n &amp; <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//注意应该使用无符号右移，如果使用&gt;&gt;遇到负数时会发生死循环</span></span><br><span class="line">        n = n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="代码二">代码二</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">       <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">while</span>(n != <span class="number">0</span>)&#123;</span><br><span class="line">           count++;</span><br><span class="line">           <span class="comment">//将n最右边为1的比特位置为0</span></span><br><span class="line">           n = n &amp; (n-<span class="number">1</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> count;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="代码三">代码三</h4><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接调用Integer的方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">return</span> Integer.<span class="title">bitCount</span><span class="params">(n)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Counting_Bits">Counting Bits</h2><h3 id="题目描述-1">题目描述</h3><p>Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1’s in their binary representation and return them as an array.</p>
-<p>Example:<br>For num = 5 you should return [0,1,1,2,1,2].</p>
-<p>Follow up:</p>
-<p>It is very easy to come up with a solution with run time O(n*sizeof(integer)). But can you do it in linear time O(n) /possibly in a single pass?<br>Space complexity should be O(n).<br>Can you do it like a boss? Do it without using any builtin function like __builtin_popcount in c++ or in any other language.<br>Hint:</p>
-<p>You should make use of what you have produced already.<br>Divide the numbers in ranges like [2-3], [4-7], [8-15] and so on. And try to generate new range from previous.<br>Or does the odd/even status of the number help you in calculating the number of 1s?</p>
-<h4 id="代码一-1">代码一</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bits[i] = bits[i/2] + i%2;</span></span><br><span class="line"><span class="comment">//i/2相当于将i(i&gt;=0)右移一位，对于奇数(最右边的比特位为1,&amp;1一定为1)来说,少了一个为1的比特位，需要加1（i%2或者i&amp;1），</span></span><br><span class="line"><span class="comment">//对于偶数来说(最右边的比特位为0，&amp;1一定为0)来说，为1的比特位不变</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num) &#123;</span><br><span class="line">    <span class="keyword">int</span>[] bits = <span class="keyword">new</span> <span class="keyword">int</span>[num+<span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) bits[i] = bits[i &gt;&gt; <span class="number">1</span>] + (i &amp; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> bits;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="代码二-1">代码二</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bits[i] = bits[i &amp; (i-1)] + 1;</span></span><br><span class="line"><span class="comment">//i &amp; (i-1)的结果就是讲i最右边为1的比特位置为0，使i的比特位减少1，加上1即可</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] countBits(<span class="keyword">int</span> num)&#123;</span><br><span class="line">    <span class="keyword">int</span>[] bits = <span class="keyword">new</span> <span class="keyword">int</span>[num+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i++) bits[i] = bits[i &amp; (i-<span class="number">1</span>)] + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> bits;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Number_of_1_Bits">Number of 1 Bits</h2><h3 id="题目描述">题目描述</h3><p>Write a function that takes an unsigned integer and returns the num]]>
-    </summary>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
     
   </entry>
   

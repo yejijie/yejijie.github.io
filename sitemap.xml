@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/06/LeetCode-Binary-Tree-Right-Side-View/</loc>
+    <lastmod>2016-06-06T01:23:39.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/05/LeetCode-Spiral-Matrix-I-II/</loc>
     <lastmod>2016-06-05T09:47:32.000Z</lastmod>
   </url>
