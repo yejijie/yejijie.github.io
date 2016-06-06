@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/06/LeetCode-Search-a-2D-Matrix-I-II/</loc>
+    <lastmod>2016-06-06T14:37:02.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/06/LeetCode-Sort-Colors/</loc>
+    <lastmod>2016-06-06T14:28:08.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/06/LeetCode-Ugly-Number-I-II/</loc>
-    <lastmod>2016-06-06T07:27:51.000Z</lastmod>
+    <lastmod>2016-06-06T11:43:06.000Z</lastmod>
   </url>
   
   <url>
