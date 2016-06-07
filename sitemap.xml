@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/07/LeetCode-Increasing-Triplet-Subsequence/</loc>
+    <lastmod>2016-06-07T10:46:34.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/07/LeetCode-Longest-Increasing-Subsequence/</loc>
     <lastmod>2016-06-07T07:20:05.000Z</lastmod>
   </url>
