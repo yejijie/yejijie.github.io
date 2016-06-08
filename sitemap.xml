@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/08/LeetCode-Kth-Largest-Element-in-an-Array/</loc>
+    <lastmod>2016-06-08T14:31:11.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/07/LeetCode-Increasing-Triplet-Subsequence/</loc>
-    <lastmod>2016-06-07T10:46:34.000Z</lastmod>
+    <lastmod>2016-06-08T06:33:53.000Z</lastmod>
   </url>
   
   <url>
