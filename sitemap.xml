@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Peeking-Iterator/</loc>
+    <lastmod>2016-06-10T01:07:31.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/08/LeetCode-Kth-Largest-Element-in-an-Array/</loc>
     <lastmod>2016-06-09T16:49:20.000Z</lastmod>
   </url>
