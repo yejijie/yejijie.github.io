@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Find-Peak-Element/</loc>
+    <lastmod>2016-06-10T04:13:45.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Set-Matrix-Zeroes/</loc>
+    <lastmod>2016-06-10T02:44:09.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Peeking-Iterator/</loc>
     <lastmod>2016-06-10T01:07:31.000Z</lastmod>
   </url>
