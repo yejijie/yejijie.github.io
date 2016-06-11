@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Search-in-Rotated-Sorted-Array-I-II/</loc>
+    <lastmod>2016-06-11T01:29:13.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Perfect-Squares/</loc>
-    <lastmod>2016-06-10T12:03:35.000Z</lastmod>
+    <lastmod>2016-06-11T01:01:01.000Z</lastmod>
   </url>
   
   <url>
