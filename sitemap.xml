@@ -2,8 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/12/LeetCode-Patching-Array/</loc>
+    <lastmod>2016-06-12T03:53:40.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/12/LeetCode-Insertion-Sort-List/</loc>
+    <lastmod>2016-06-12T02:34:10.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/12/LeetCode-Partition-List/</loc>
+    <lastmod>2016-06-12T01:13:34.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/11/LeetCode-Triangle/</loc>
+    <lastmod>2016-06-11T15:57:40.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/11/LeetCode-Bitwise-AND-of-Numbers-Range/</loc>
+    <lastmod>2016-06-11T15:05:15.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/11/LeetCode-Subsets-I-II/</loc>
-    <lastmod>2016-06-11T07:13:34.000Z</lastmod>
+    <lastmod>2016-06-11T07:25:33.000Z</lastmod>
   </url>
   
   <url>
