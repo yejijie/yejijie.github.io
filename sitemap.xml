@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/13/LeetCode-3Sum-And-3Sum-Closest/</loc>
+    <lastmod>2016-06-13T07:10:48.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/12/LeetCode-Search-for-a-Range/</loc>
-    <lastmod>2016-06-12T13:34:46.000Z</lastmod>
+    <lastmod>2016-06-12T13:49:51.000Z</lastmod>
   </url>
   
   <url>
