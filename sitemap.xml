@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/13/LeetCode-Construct-Binary-Tree-from-Preorder-Postorder-and-Inorder-Traversal/</loc>
+    <lastmod>2016-06-13T16:10:44.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/13/LeetCode-Lowest-Common-Ancestor-of-a-Binary-Search-Tree-or-Search-Tree/</loc>
-    <lastmod>2016-06-13T12:04:40.000Z</lastmod>
+    <lastmod>2016-06-13T12:16:39.000Z</lastmod>
   </url>
   
   <url>
