@@ -2,6 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Remove-Duplicates-from-Sorted-List-I-II/</loc>
+    <lastmod>2016-06-14T15:18:30.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Palindrome-Partitioning-I-II/</loc>
+    <lastmod>2016-06-14T11:33:50.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Pow-x-n/</loc>
+    <lastmod>2016-06-14T06:46:00.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Group-Anagrams/</loc>
+    <lastmod>2016-06-14T04:51:37.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Number-of-Islands-I-II/</loc>
+    <lastmod>2016-06-14T03:19:25.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Jump-Game-I-II/</loc>
     <lastmod>2016-06-14T02:30:17.000Z</lastmod>
   </url>
