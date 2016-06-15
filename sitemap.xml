@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Majority-Element-I-II/</loc>
+    <lastmod>2016-06-15T11:21:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Gas-Station/</loc>
+    <lastmod>2016-06-15T05:06:43.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/14/LeetCode-Remove-Duplicates-from-Sorted-List-I-II/</loc>
     <lastmod>2016-06-14T15:18:30.000Z</lastmod>
   </url>
