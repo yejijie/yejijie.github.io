@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Repeated-DNA-Sequences/</loc>
+    <lastmod>2016-06-15T15:45:17.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Minimum-Size-Subarray-Sum/</loc>
+    <lastmod>2016-06-15T12:33:53.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Majority-Element-I-II/</loc>
-    <lastmod>2016-06-15T11:21:42.000Z</lastmod>
+    <lastmod>2016-06-15T11:52:42.000Z</lastmod>
   </url>
   
   <url>
