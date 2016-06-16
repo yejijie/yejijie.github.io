@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/16/LeetCode-Count-Complete-Tree-Nodes/</loc>
+    <lastmod>2016-06-16T06:10:13.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/16/LeetCode-Word-Break/</loc>
+    <lastmod>2016-06-16T02:06:39.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/15/LeetCode-Repeated-DNA-Sequences/</loc>
     <lastmod>2016-06-15T15:45:17.000Z</lastmod>
   </url>
