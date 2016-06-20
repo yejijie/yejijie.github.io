@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/20/LeetCode-Largest-Number/</loc>
+    <lastmod>2016-06-20T06:45:58.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/19/LeetCode-Contains-Duplicate-I-II-III/</loc>
-    <lastmod>2016-06-20T02:02:03.000Z</lastmod>
+    <lastmod>2016-06-20T02:42:45.000Z</lastmod>
   </url>
   
   <url>
