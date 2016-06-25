@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/25/LeetCode-Sliding-Window-Maximum/</loc>
+    <lastmod>2016-06-25T16:33:04.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/25/LeetCode-One-Edit-Distance-And-Edit-Distance/</loc>
     <lastmod>2016-06-25T12:03:23.000Z</lastmod>
   </url>
