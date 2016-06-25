@@ -2,8 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/06/25/LeetCode-One-Edit-Distance-And-Edit-Distance/</loc>
+    <lastmod>2016-06-25T12:03:23.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/25/LeetCode-Distinct-Subsequences/</loc>
+    <lastmod>2016-06-25T03:25:52.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/25/LeetCode-Trapping-Rain-Water/</loc>
+    <lastmod>2016-06-25T01:39:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/21/LeetCode-Find-the-Duplicate-Number/</loc>
+    <lastmod>2016-06-21T10:02:00.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/21/LeetCode-Binary-Tree-Preorder-Inorder-Postorder-Traversal/</loc>
+    <lastmod>2016-06-21T06:21:41.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/21/LeetCode-Fraction-to-Recurring-Decimal/</loc>
+    <lastmod>2016-06-21T06:12:50.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/06/21/LeetCode-Flatten-Binary-Tree-to-Linked-List/</loc>
-    <lastmod>2016-06-21T05:23:16.000Z</lastmod>
+    <lastmod>2016-06-21T05:24:04.000Z</lastmod>
   </url>
   
   <url>
