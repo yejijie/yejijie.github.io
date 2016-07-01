@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/01/LeetCode-Merge-Intervals-and-Insert-Interval/</loc>
+    <lastmod>2016-07-01T07:38:44.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/01/LeetCode-Burst-Balloons/</loc>
-    <lastmod>2016-07-01T03:26:47.000Z</lastmod>
+    <lastmod>2016-07-01T04:23:00.000Z</lastmod>
   </url>
   
   <url>
