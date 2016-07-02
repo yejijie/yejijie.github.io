@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/02/LeetCode-Binary-Tree-Maximum-Path-Sum/</loc>
+    <lastmod>2016-07-02T09:47:03.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/02/LeetCode-First-Missing-Positive/</loc>
+    <lastmod>2016-07-02T09:45:39.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/02/LeetCode-Remove-Duplicate-Letters/</loc>
+    <lastmod>2016-07-02T03:53:49.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/01/LeetCode-Copy-List-with-Random-Pointer/</loc>
+    <lastmod>2016-07-01T14:21:05.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/01/LeetCode-Merge-Intervals-and-Insert-Interval/</loc>
     <lastmod>2016-07-01T07:38:44.000Z</lastmod>
   </url>
