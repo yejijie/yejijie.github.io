@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/02/LeetCode-Merge-k-Sorted-Lists/</loc>
+    <lastmod>2016-07-02T13:43:39.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/02/LeetCode-Binary-Tree-Maximum-Path-Sum/</loc>
-    <lastmod>2016-07-02T09:47:03.000Z</lastmod>
+    <lastmod>2016-07-02T09:51:06.000Z</lastmod>
   </url>
   
   <url>
