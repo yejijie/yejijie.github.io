@@ -69,18 +69,12 @@
   </entry>
   
   <entry>
-    <title></title>
+    <title><![CDATA[[LeetCode]Interleaving String]]></title>
     <link href="http://blog.noobsky.com/2016/07/03/LeetCode-Interleaving-String/"/>
     <id>http://blog.noobsky.com/2016/07/03/LeetCode-Interleaving-String/</id>
-    <published>2016-07-03T01:57:35.000Z</published>
-    <updated>2016-07-03T01:57:35.000Z</updated>
-    <content type="html"><![CDATA[<p>title: ‘[LeetCode]Interleaving String’<br>date: 2016-07-03 09:54:30<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<li>Leetcode</li>
-</ul>
-<h2 id="题目描述">题目描述</h2><p>Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.</p>
+    <published>2016-07-03T01:54:30.000Z</published>
+    <updated>2016-07-04T08:58:25.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.</p>
 <p>For example,<br>Given:<br>s1 = “aabcc”,<br>s2 = “dbbca”,</p>
 <p>When s3 = “aadbbcbcac”, return true.<br>When s3 = “aadbbbaccc”, return false.</p>
 <h2 id="代码">代码</h2><p>dp[i][j]表示s1[0…i-1]和s2[0…j-1]能表示s3[0…i+j-1]，即s1的前i个字符和s2的前j个字符能按规则表示s3的前i+j个字符。则：</p>
@@ -91,28 +85,25 @@
 <p>i=0,j=0:dp[i][j] = true，表示s1、s2、s3都未空字符串<br>i=0 dp[i][j] = dp[i][j-1] &amp;&amp; s2[j-1] == s3[i+j-1]<br>j=0 dp[i][j] = dp[i-1][j] &amp;&amp; s1[i-1] == s3[i+j-1]</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> boolean <span class="title">isInterleave</span><span class="params">(String s1, String s2, String s3)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(s1.length() + s2.length() != s3.length()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        boolean[][] dp = <span class="keyword">new</span> boolean[s1.length() + <span class="number">1</span>][s2.length() + <span class="number">1</span>];</span><br><span class="line">        <span class="comment">//注意循环条件可以等于</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= s1.length(); i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= s2.length(); j++)&#123;</span><br><span class="line">                <span class="comment">//都为空字符串</span></span><br><span class="line">                <span class="keyword">if</span>(i == <span class="number">0</span> &amp;&amp; j == <span class="number">0</span>) &#123;</span><br><span class="line">                    dp[i][j] = <span class="literal">true</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="comment">//s1为空字符串</span></span><br><span class="line">                    dp[i][j] = dp[i][j-<span class="number">1</span>] &amp;&amp; s2.charAt(j-<span class="number">1</span>) == s3.charAt(i+j-<span class="number">1</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="comment">//s2为空字符</span></span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j] &amp;&amp; s1.charAt(i-<span class="number">1</span>) == s3.charAt(i+j-<span class="number">1</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="comment">//有两种情况s3[i+j-1]取自s1[i-1]或者取自s2[j-1]</span></span><br><span class="line">                    dp[i][j] = (dp[i][j-<span class="number">1</span>] &amp;&amp; s2.charAt(j-<span class="number">1</span>) == s3.charAt(i+j-<span class="number">1</span>)) || (dp[i-<span class="number">1</span>][j] &amp;&amp; s1.charAt(i-<span class="number">1</span>) == s3.charAt(i+j-<span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[s1.length()][s2.length()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     <summary type="html">
-    <![CDATA[<p>title: ‘[LeetCode]Interleaving String’<br>date: 2016-07-03 09:54:30<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<li>Leetco]]>
+    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.</p>
+<p>For example,<br>Given:<br>s1 ]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
     
   </entry>
   
   <entry>
-    <title></title>
+    <title><![CDATA[[LeetCode]Merge k Sorted Lists]]></title>
     <link href="http://blog.noobsky.com/2016/07/02/LeetCode-Merge-k-Sorted-Lists/"/>
     <id>http://blog.noobsky.com/2016/07/02/LeetCode-Merge-k-Sorted-Lists/</id>
-    <published>2016-07-02T13:44:57.000Z</published>
-    <updated>2016-07-02T13:44:57.000Z</updated>
-    <content type="html"><![CDATA[<p>title: ‘[LeetCode]Merge k Sorted Lists’<br>date: 2016-07-02 21:40:00<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<li>Leetcode</li>
-</ul>
-<h2 id="题目描述">题目描述</h2><p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+    <published>2016-07-02T13:40:00.000Z</published>
+    <updated>2016-07-04T08:58:04.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
 <h2 id="代码">代码</h2><ul>
 <li>利用优先级队列</li>
 </ul>
@@ -125,28 +116,24 @@
 <p>时间复杂度为O(nlgk)</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>title: ‘[LeetCode]Merge k Sorted Lists’<br>date: 2016-07-02 21:40:00<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<li>Leetc]]>
+    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the no]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
     
   </entry>
   
   <entry>
-    <title></title>
+    <title><![CDATA[[LeetCode]Binary Tree Maximum Path Sum]]></title>
     <link href="http://blog.noobsky.com/2016/07/02/LeetCode-Binary-Tree-Maximum-Path-Sum/"/>
     <id>http://blog.noobsky.com/2016/07/02/LeetCode-Binary-Tree-Maximum-Path-Sum/</id>
-    <published>2016-07-02T09:51:06.000Z</published>
-    <updated>2016-07-02T09:51:06.000Z</updated>
-    <content type="html"><![CDATA[<p>title: ‘[LeetCode]Binary Tree Maximum Path Sum’<br>date: 2016-07-02 17:45:09<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<li>Leetcode</li>
-</ul>
-<h2 id="题目描述">题目描述</h2><p>Given a binary tree, find the maximum path sum.</p>
+    <published>2016-07-02T09:45:09.000Z</published>
+    <updated>2016-07-04T08:57:55.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a binary tree, find the maximum path sum.</p>
 <p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path does not need to go through the root.</p>
 <p>For example:<br>Given the below binary tree,</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span></span><br><span class="line"> / \</span><br><span class="line"><span class="number">2</span>   <span class="number">3</span></span><br></pre></td></tr></table></figure>
@@ -155,12 +142,15 @@
 <h2 id="参考文献">参考文献</h2><p><a href="http://www.geeksforgeeks.org/find-maximum-path-sum-in-a-binary-tree/" target="_blank" rel="external">Maximum Path Sum in a Binary Tree</a><br><a href="http://blog.csdn.net/fightforyourdream/article/details/16894069" target="_blank" rel="external"> Binary Tree Maximum Path Sum 二叉树最大路径和 @LeetCode</a><br><a href="https://leetcode.com/discuss/14190/accepted-short-solution-in-java" target="_blank" rel="external">Accepted short solution in Java</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>title: ‘[LeetCode]Binary Tree Maximum Path Sum’<br>date: 2016-07-02 17:45:09<br>tags:</p>
-<ul>
-<li>Java</li>
-<li>算法<br>categories:</li>
-<]]>
+    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a binary tree, find the maximum path sum.</p>
+<p>For this problem, a path is defined as any sequence of node]]>
     </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
     
   </entry>
   
