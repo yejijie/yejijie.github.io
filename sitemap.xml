@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/05/LeetCode-Valid-Perfect-Square/</loc>
+    <lastmod>2016-07-05T14:08:35.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/05/LeetCode-Different-Ways-to-Add-Parentheses/</loc>
     <lastmod>2016-07-05T12:28:43.000Z</lastmod>
   </url>
