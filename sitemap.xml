@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/06/LeetCode-Course-Schedule/</loc>
+    <lastmod>2016-07-06T11:49:45.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Remove-Duplicates-from-Sorted-Array-I-II/</loc>
+    <lastmod>2016-07-06T08:31:14.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/06/LeetCode-Binary-Tree-Zigzag-Level-Level-Order-Traversal-I-II/</loc>
     <lastmod>2016-07-06T07:49:36.000Z</lastmod>
   </url>
@@ -419,11 +429,6 @@
   <url>
     <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Perfect-Squares/</loc>
     <lastmod>2016-06-11T01:01:01.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.noobsky.com/2016/06/10/LeetCode-Remove-Duplicates-from-Sorted-Array-I-II/</loc>
-    <lastmod>2016-06-10T10:48:13.000Z</lastmod>
   </url>
   
   <url>
