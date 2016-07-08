@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/08/LeetCode-Basic-Calculator-I-II/</loc>
+    <lastmod>2016-07-08T14:45:39.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/08/LeetCode-Reconstruct-ltinerary/</loc>
+    <lastmod>2016-07-08T02:34:36.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/07/LeetCode-Evaluate-Reverse-Polish-Notation/</loc>
+    <lastmod>2016-07-07T14:54:04.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/07/LeetCode-Clone-Graph/</loc>
     <lastmod>2016-07-07T13:17:38.000Z</lastmod>
   </url>
