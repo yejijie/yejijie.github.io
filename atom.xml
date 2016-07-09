@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-07-09T12:29:11.000Z</updated>
+  <updated>2016-07-09T15:09:17.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -15,11 +15,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[[LeetCode]Multiply Strings]]></title>
+    <link href="http://blog.noobsky.com/2016/07/09/LeetCode-Multiply-Strings/"/>
+    <id>http://blog.noobsky.com/2016/07/09/LeetCode-Multiply-Strings/</id>
+    <published>2016-07-09T14:44:07.000Z</published>
+    <updated>2016-07-09T15:09:17.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given two numbers represented as strings, return multiplication of the numbers as a string.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The numbers can be arbitrarily large and are non-negative.</li>
+<li>Converting the input string to integer is NOT allowed.</li>
+<li>You should NOT use internal library such as BigInteger.</li>
+</ul>
+<h2 id="代码">代码</h2><p>规律是： <code>num1[i] * num2[j]</code> will be placed at indices <code>[i + j</code>, <code>i + j + 1]</code> ，如下图：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/multiply.jpg" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//num1[i]*num2[j]的乘积位于结果中的下标[i+j, i+j+1]</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">multiply</span><span class="params">(String num1, String num2)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> m = num1.length(), n = num2.length();</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[m + n];</span><br><span class="line">        <span class="comment">//数的低位位于字符串的后面，</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = n - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)&#123;</span><br><span class="line">                <span class="keyword">int</span> mul = (num1.charAt(i) - <span class="string">'0'</span>) * (num2.charAt(j) - <span class="string">'0'</span>);</span><br><span class="line">                <span class="comment">//记得加上res[i+j+1]</span></span><br><span class="line">                <span class="keyword">int</span> sum = mul + res[i+j+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">                res[i+j+<span class="number">1</span>] = sum % <span class="number">10</span>;</span><br><span class="line">                <span class="comment">//不要漏了res[i+j]本身的部分</span></span><br><span class="line">                <span class="comment">//因为有多个i和j的组合num1[i]和num2[j]乘积会有一部分位于res[i+j]</span></span><br><span class="line">                res[i+j] = res[i+j] + sum / <span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="comment">// int i = 0;</span></span><br><span class="line">        <span class="comment">// for(i = 0; i &lt; m+n; i++)&#123;</span></span><br><span class="line">        <span class="comment">//     if(res[i] != 0) break;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">// for(int j = i; j &lt; m+n; j++)&#123;</span></span><br><span class="line">        <span class="comment">//     sb.append(res[j]);</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// return sb.length() == 0 ? "0" : sb.toString();</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> digit : res)&#123;</span><br><span class="line">            <span class="comment">//sb.length() != 0 || digit != 0</span></span><br><span class="line">            <span class="keyword">if</span>(!(sb.length() == <span class="number">0</span> &amp;&amp; digit == <span class="number">0</span>)) sb.append(digit);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.length() == <span class="number">0</span> ? <span class="string">"0"</span> : sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given two numbers represented as strings, return multiplication of the numbers as a string.</p>
+<p><strong>Note:</]]>
+    </summary>
+    
+      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
+    
+      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[[LeetCode]Basic Calculator I II III]]></title>
     <link href="http://blog.noobsky.com/2016/07/08/LeetCode-Basic-Calculator-I-II/"/>
     <id>http://blog.noobsky.com/2016/07/08/LeetCode-Basic-Calculator-I-II/</id>
     <published>2016-07-08T13:49:45.000Z</published>
-    <updated>2016-07-09T12:29:11.000Z</updated>
+    <updated>2016-07-09T12:31:57.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Basic_Calculator_I">Basic Calculator I</h2><h3 id="题目描述">题目描述</h3><p>Implement a basic calculator to evaluate a simple expression string.</p>
 <p>The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .</p>
 <p>You may assume that the given expression is always valid.</p>
@@ -42,7 +71,7 @@
 <h3 id="代码-2">代码</h3><ul>
 <li>解法一</li>
 </ul>
-<p>先将中缀表达式转化为后缀表达式（逆波兰式），然后进行计算。但其实我们可以在中缀转后缀的过程中同时表达式的值。见下面的解法二。</p>
+<p>先将中缀表达式转化为后缀表达式（逆波兰式），然后进行计算。可以参见<a href="http://www.cnblogs.com/yinger/archive/2011/07/01/2095500.html" target="_blank" rel="external">表达式求值</a>。但其实我们可以在中缀转后缀的过程中同时表达式的值。见下面的解法二。</p>
 <ul>
 <li>解法二</li>
 </ul>
@@ -651,29 +680,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="Valid_Sudoku">Valid Sudoku</h2><h3 id="题目描述">题目描述</h3><p>Determine if a Sudoku is valid, according to: <a href="http://sudoku.com.au]]>
-    </summary>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]Sum of Two Integers]]></title>
-    <link href="http://blog.noobsky.com/2016/07/05/LeetCode-Sum-of-Two-Integers/"/>
-    <id>http://blog.noobsky.com/2016/07/05/LeetCode-Sum-of-Two-Integers/</id>
-    <published>2016-07-05T01:03:21.000Z</published>
-    <updated>2016-07-05T01:04:55.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.</p>
-<p>Example:<br>Given a = 1 and b = 2, return 3.</p>
-<h2 id="代码">代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    <span class="comment">//举个例子：5+17 = 22 </span></span><br><span class="line">    <span class="comment">//0+0 = 0 ,1+1 = 0, 1+0 = 1, 0+1 = 1跟异或相同</span></span><br><span class="line">    <span class="comment">//先不考虑进位：5 + 17 = 101 + 10001 = 10100 = 20</span></span><br><span class="line">    <span class="comment">//再加上进位1+1才有进位1+1 = 10 = (1&amp;1) &lt;&lt; 1</span></span><br><span class="line">    <span class="comment">//在比如11+11的进位：11 + 11 = 110 = (11&amp;11) &lt;&lt; 1</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// if(b == 0) &#123;</span></span><br><span class="line">        <span class="comment">//     return a;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">// int sum, carry;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// sum = a ^ b;</span></span><br><span class="line">        <span class="comment">// carry = (a &amp; b) &lt;&lt; 1;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// return getSum(sum, carry);</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//等价于</span></span><br><span class="line">        <span class="keyword">return</span> b == <span class="number">0</span> ? a : getSum(a ^ b, (a &amp; b) &lt;&lt; <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//迭代的形式</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSum1</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum, carry;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            sum = a ^ b;</span><br><span class="line">            carry = (a &amp; b) &lt;&lt; <span class="number">1</span>;</span><br><span class="line">            a = sum;</span><br><span class="line">            b = carry;</span><br><span class="line">        &#125;<span class="keyword">while</span>(b != <span class="number">0</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.</p>
-<p>Example:<br]]>
     </summary>
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>

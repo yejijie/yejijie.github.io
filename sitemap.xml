@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/09/LeetCode-Multiply-Strings/</loc>
+    <lastmod>2016-07-09T15:09:17.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/08/LeetCode-Basic-Calculator-I-II/</loc>
-    <lastmod>2016-07-09T12:29:11.000Z</lastmod>
+    <lastmod>2016-07-09T12:31:57.000Z</lastmod>
   </url>
   
   <url>
