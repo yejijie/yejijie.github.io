@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/11/LeetCode-Water-and-Jug-Problem/</loc>
+    <lastmod>2016-07-11T05:36:57.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/10/LeetCode-Simplify-Path/</loc>
+    <lastmod>2016-07-10T15:45:12.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/10/LeetCode-Design-Twitter/</loc>
     <lastmod>2016-07-10T11:24:19.000Z</lastmod>
   </url>
