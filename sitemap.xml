@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/11/LeetCode-Add-and-Search-Word-Data-structure-design/</loc>
+    <lastmod>2016-07-11T06:20:13.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/11/LeetCode-Water-and-Jug-Problem/</loc>
     <lastmod>2016-07-11T05:36:57.000Z</lastmod>
   </url>
