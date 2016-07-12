@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/12/LeetCode-N-Queens-I-II/</loc>
+    <lastmod>2016-07-12T03:36:28.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/11/LeetCode-Surrounded-Regions/</loc>
     <lastmod>2016-07-11T15:24:09.000Z</lastmod>
   </url>
