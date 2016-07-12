@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/07/12/LeetCode-Longest-Increasing-Path-in-a-Matrix/</loc>
+    <lastmod>2016-07-12T08:26:23.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/12/LeetCode-Remove-Invalid-Parentheses/</loc>
+    <lastmod>2016-07-12T07:52:54.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/07/12/LeetCode-Longest-Consecutive-Sequence/</loc>
+    <lastmod>2016-07-12T07:51:43.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/07/12/LeetCode-N-Queens-I-II/</loc>
     <lastmod>2016-07-12T03:36:28.000Z</lastmod>
   </url>
