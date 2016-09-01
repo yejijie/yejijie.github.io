@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="奔跑吧菜鸟"><title>Redis实战之Redis命令 | NoobSky</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Redis实战之Redis命令</h1><a id="logo" href="/.">NoobSky</a><p class="description">Talk is cheap. Show me the code. - http://noobsky.com</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/guestbook/"><i class="fa fa-comments"> 留言</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Redis实战之Redis命令</h1><div class="post-meta">Aug 29, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2016/08/29/Redis实战之Redis命令/" href="/2016/08/29/Redis实战之Redis命令/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h2 id="字符串">字符串</h2><p>Redis中，字符串可以存储以下3种类型的值</p>
+<ul>
+<li>字节串(byte string)</li>
+<li>整数</li>
+<li>浮点数</li>
+</ul>
+<p>用户可以通过给定一个任意的数值，对存储着整数或者浮点数的字符串执行自增或者自减的操作，Redis还能将整数转换成浮点数。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">INCR</td>
+<td style="text-align:left">INCR key-name————将键存储的值加上1</td>
+</tr>
+<tr>
+<td style="text-align:left">DECR</td>
+<td style="text-align:left">DECR key-name————将键存储的值减去1</td>
+</tr>
+<tr>
+<td style="text-align:left">INCRBY</td>
+<td style="text-align:left">INCRBY key-name amount————将键存储的值加上整数amount</td>
+</tr>
+<tr>
+<td style="text-align:left">DECRBY</td>
+<td style="text-align:left">DECRBY key-name amount————将键存储的值减去整数amount</td>
+</tr>
+<tr>
+<td style="text-align:left">INCRBYFLOAT</td>
+<td style="text-align:left">INCRBYFLOAT key-name amount————将键存储的值加上浮点数amount，这个命令在Redis 2.6或以上的版本可用</td>
+</tr>
+</tbody>
+</table>
+<p>如果Redis字符串中的值可用被解释为十进制整数或者浮点数，那么Redis能发现这一点，并允许用户对这个字符串执行各种INCR<em>和DECR</em>操作。若用户对不存在的键或者空串的键执行自增或者自减操作，那么Redis在执行操作时会将这个键的值当作是0来处理。如果尝试对无法被解释为整数或者浮点数的字符串键执行自增或者自减操作，Redis会返回一个错误。示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">import</span> redis</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn = redis.Redis()</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.get(<span class="string">'key'</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.incr(<span class="string">'key'</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.incr(<span class="string">'key'</span>, <span class="number">15</span>)</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.decr(<span class="string">'key'</span>, <span class="number">5</span>)</span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.get(<span class="string">'key'</span>)</span><br><span class="line"><span class="string">'11'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.set(<span class="string">'key'</span>, <span class="string">'13'</span>)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.incr(<span class="string">'key'</span>)</span><br><span class="line"><span class="number">14</span></span><br></pre></td></tr></table></figure>
+<p>处理字符串子串和二进制位的命令：<br>| 命令 | 用例和描述     |<br>| :————- | :————- |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |<br>| Item One       | Item Two       |</p>
+<p>使用示例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.append(<span class="string">'new-string-key'</span>, <span class="string">'hello '</span>)</span><br><span class="line"><span class="number">6L</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.append(<span class="string">'new-string-key'</span>, <span class="string">'world!'</span>)</span><br><span class="line"><span class="number">12L</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.substr(<span class="string">'new-string-key'</span>, <span class="number">3</span>, <span class="number">7</span>)</span><br><span class="line"><span class="string">'lo wo'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.setrange(<span class="string">'new-string-key'</span>, <span class="number">0</span>, <span class="string">'H'</span>)</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.setrange(<span class="string">'new-string-key'</span>, <span class="number">6</span>, <span class="string">'W'</span>)</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.get(<span class="string">'new-string-key'</span>)</span><br><span class="line"><span class="string">'Hello World!'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.setrange(<span class="string">'new-string-key'</span>, <span class="number">11</span>, <span class="string">', how are you?'</span>)</span><br><span class="line"><span class="number">25</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.get(<span class="string">'new-string-key'</span>)</span><br><span class="line"><span class="string">'Hello World, how are you?'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.setbit(<span class="string">'anothor-key'</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.setbit(<span class="string">'anothor-key'</span>, <span class="number">7</span>, <span class="number">1</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.get(<span class="string">'anothor-key'</span>)</span><br><span class="line"><span class="string">'!'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="列表">列表</h2><p>列表常用命令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">RPUSH</td>
+<td style="text-align:left">RPUSH key-name value [value …]————将一个或多个值推入列表的右端</td>
+</tr>
+<tr>
+<td style="text-align:left">LPUSH</td>
+<td style="text-align:left">LPUSH key-name value [value …]————将一个或多个值推入列表的左端</td>
+</tr>
+<tr>
+<td style="text-align:left">RPOP</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">LPOP</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">LINDEX</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">LRANGE</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">LTRIM</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.rpush(<span class="string">'list-key'</span>, <span class="string">'last'</span>)</span><br><span class="line"><span class="number">1</span>L</span><br><span class="line">&gt;&gt;&gt; conn.lpush(<span class="string">'list-key'</span>, <span class="string">'first'</span>)</span><br><span class="line"><span class="number">2</span>L</span><br><span class="line">&gt;&gt;&gt; conn.rpush(<span class="string">'list-key'</span>, <span class="string">'new last'</span>)</span><br><span class="line"><span class="number">3</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="keyword">lrange</span>(<span class="string">'list-key'</span>, <span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line">[<span class="string">'first'</span>, <span class="string">'last'</span>, <span class="string">'new last'</span>]</span><br><span class="line">&gt;&gt;&gt; conn.lpop(<span class="string">'list-key'</span>)</span><br><span class="line"><span class="string">'first'</span></span><br><span class="line">&gt;&gt;&gt; conn.lpop(<span class="string">'list-key'</span>)</span><br><span class="line"><span class="string">'last'</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="keyword">lrange</span>(<span class="string">'list-key'</span>, <span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line">[<span class="string">'new last'</span>]</span><br><span class="line">&gt;&gt;&gt; conn.rpush(<span class="string">'list-key'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)</span><br><span class="line"><span class="number">4</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="keyword">lrange</span>(<span class="string">'list-key'</span>, <span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line">[<span class="string">'new last'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br><span class="line">&gt;&gt;&gt; conn.ltrim(<span class="string">'list-key'</span>, <span class="number">2</span>, -<span class="number">1</span>)</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; conn.<span class="keyword">lrange</span>(<span class="string">'list-key'</span>, <span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line">[<span class="string">'b'</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>阻塞式的列表弹出命令以及在列表之间移动元素的命令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">BLPOP</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">BRPOP</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">RPOPLPUSH</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">BRPOPLPUSH</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.rpush(<span class="string">'list'</span>, <span class="string">'item1'</span>)</span><br><span class="line"><span class="number">1L</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.rpush(<span class="string">'list'</span>, <span class="string">'item2'</span>)</span><br><span class="line"><span class="number">2L</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.rpush(<span class="string">'list2'</span>, <span class="string">'item3'</span>)</span><br><span class="line"><span class="number">1L</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.brpoplpush(<span class="string">'list2'</span>, <span class="string">'list'</span>, <span class="number">1</span>)</span><br><span class="line"><span class="string">'item3'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.brpoplpush(<span class="string">'list2'</span>, <span class="string">'list'</span>, <span class="number">1</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.lrange(<span class="string">'list'</span>, <span class="number">0</span>, -<span class="number">1</span>)</span><br><span class="line">[<span class="string">'item3'</span>, <span class="string">'item1'</span>, <span class="string">'item2'</span>]</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.brpoplpush(<span class="string">'list'</span>, <span class="string">'list2'</span>, <span class="number">1</span>)</span><br><span class="line"><span class="string">'item2'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.blpop([<span class="string">'list'</span>, <span class="string">'list2'</span>], <span class="number">1</span>)</span><br><span class="line">(<span class="string">'list'</span>, <span class="string">'item3'</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.blpop([<span class="string">'list'</span>, <span class="string">'list2'</span>], <span class="number">1</span>)</span><br><span class="line">(<span class="string">'list'</span>, <span class="string">'item1'</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.blpop([<span class="string">'list'</span>, <span class="string">'list2'</span>], <span class="number">1</span>)</span><br><span class="line">(<span class="string">'list2'</span>, <span class="string">'item2'</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>conn.blpop([<span class="string">'list'</span>, <span class="string">'list2'</span>], <span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="集合">集合</h2><p>常用集合命令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">Item One</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sadd</span><span class="params">(<span class="string">'set-key'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>)</span></span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">srem</span><span class="params">(<span class="string">'set-key'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>)</span></span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">srem</span><span class="params">(<span class="string">'set-key'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>)</span></span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">scard</span><span class="params">(<span class="string">'set-key'</span>)</span></span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">smembers</span><span class="params">(<span class="string">'set-key'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">([<span class="string">'a'</span>, <span class="string">'b'</span>])</span></span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">smove</span><span class="params">(<span class="string">'set-key'</span>, <span class="string">'set-key2'</span>, <span class="string">'a'</span>)</span></span></span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">smove</span><span class="params">(<span class="string">'set-key'</span>, <span class="string">'set-key2'</span>, <span class="string">'c'</span>)</span></span></span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">smembers</span><span class="params">(<span class="string">'set-key2'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">([<span class="string">'a'</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<p>用于组合和处理多个集合的Redis命令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+<tr>
+<td style="text-align:left">SDIFF</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sadd</span><span class="params">(<span class="string">'skey1'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>)</span></span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sadd</span><span class="params">(<span class="string">'skey2'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>)</span></span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sdiff</span><span class="params">(<span class="string">'skey1'</span>, <span class="string">'skey2'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">([<span class="string">'a'</span>, <span class="string">'b'</span>])</span></span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sinter</span><span class="params">(<span class="string">'skey1'</span>, <span class="string">'skey2'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">([<span class="string">'c'</span>, <span class="string">'d'</span>])</span></span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sunion</span><span class="params">(<span class="string">'skey1'</span>, <span class="string">'skey2'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">([<span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'b'</span>, <span class="string">'e'</span>, <span class="string">'d'</span>, <span class="string">'f'</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="散列">散列</h2><p>添加和删除键值对的散列操作：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">HMGET</td>
+<td style="text-align:left">HMGET key-name key [key …]————从散列里面获取一个或多个键的值</td>
+</tr>
+<tr>
+<td style="text-align:left">HMSET</td>
+<td style="text-align:left">HMSET key-name key value [key value …]————为散列里面的一个或多个键设置值</td>
+</tr>
+<tr>
+<td style="text-align:left">HDEL</td>
+<td style="text-align:left">HMGET key-name key [key …]————删除散列里面一或多个键值对，返回成功找到并删除的数量</td>
+</tr>
+<tr>
+<td style="text-align:left">HLEN</td>
+<td style="text-align:left">HMGET key-name————返回散列包含的键值对数量</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hmset</span><span class="params">(<span class="string">'hash-key'</span>, &#123;<span class="string">'k1'</span>:<span class="string">'v1'</span>, <span class="string">'k2'</span>:<span class="string">'v2'</span>, <span class="string">'k3'</span>:<span class="string">'v3'</span>&#125;)</span></span></span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hmget</span><span class="params">(<span class="string">'hash-key'</span>, [<span class="string">'k2'</span>, <span class="string">'k3'</span>])</span></span></span><br><span class="line">[<span class="string">'v2'</span>, <span class="string">'v3'</span>]</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hlen</span><span class="params">(<span class="string">'hash-key'</span>)</span></span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hdel</span><span class="params">(<span class="string">'hash-key'</span>, <span class="string">'k1'</span>, <span class="string">'k3'</span>)</span></span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>以下表中列出了散列的其他几个批量操作命令，以及一些和字符串操作类似的散列命令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">HEXISTS</td>
+<td style="text-align:left">HEXISTS key-name key————检查给定键是否存在于散列中</td>
+</tr>
+<tr>
+<td style="text-align:left">HKEYS</td>
+<td style="text-align:left">HKEYS key-name————获取散列包含的所有键</td>
+</tr>
+<tr>
+<td style="text-align:left">HVALS</td>
+<td style="text-align:left">HVALS key-name————获取散列包含的所有值</td>
+</tr>
+<tr>
+<td style="text-align:left">HGETALL</td>
+<td style="text-align:left">HGETALL key-name————获取散列包含的所有键值对</td>
+</tr>
+<tr>
+<td style="text-align:left">HINCRBY</td>
+<td style="text-align:left">HINCRBY key-name key increment————将键key存储的值加上整数increment</td>
+</tr>
+<tr>
+<td style="text-align:left">HINCREBYFLOAT</td>
+<td style="text-align:left">HINCREBYFLOAT key-name key increment————将键key存储的值加上浮点数increment</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hmset</span><span class="params">(<span class="string">'hash-key2'</span>, &#123;<span class="string">'short'</span>:<span class="string">'hello'</span>, <span class="string">'long'</span>:<span class="number">1000</span>*<span class="string">'1'</span>&#125;)</span></span></span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hkeys</span><span class="params">(<span class="string">'hash-key2'</span>)</span></span></span><br><span class="line">[<span class="string">'short'</span>, <span class="string">'long'</span>]</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hexists</span><span class="params">(<span class="string">'hash-key2'</span>, <span class="string">'num'</span>)</span></span></span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hincrby</span><span class="params">(<span class="string">'hash-key2'</span>, <span class="string">'num'</span>)</span></span></span><br><span class="line"><span class="number">1</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">hexists</span><span class="params">(<span class="string">'hash-key2'</span>, <span class="string">'num'</span>)</span></span></span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<h2 id="有序集合">有序集合</h2><p>常用的有序集合命令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+<tr>
+<td style="text-align:left">ZADD</td>
+<td style="text-align:left">ZADD key-name score member [score member …]————将带有给定分值的成员添加到有序集合里面</td>
+</tr>
+</tbody>
+</table>
+<p>使用示例：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zadd</span><span class="params">(<span class="string">'zset-key'</span>, <span class="string">'a'</span>, <span class="number">3</span>, <span class="string">'b'</span>, <span class="number">2</span>, <span class="string">'c'</span>, <span class="number">1</span>)</span></span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zcard</span><span class="params">(<span class="string">'zset-key'</span>)</span></span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zincrby</span><span class="params">(<span class="string">'zset-key'</span>, <span class="string">'c'</span>, <span class="number">3</span>)</span></span></span><br><span class="line"><span class="number">4.0</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zscore</span><span class="params">(<span class="string">'zset-key'</span>, <span class="string">'b'</span>)</span></span></span><br><span class="line"><span class="number">2.0</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrank</span><span class="params">(<span class="string">'zset-key'</span>, <span class="string">'c'</span>)</span></span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zcount</span><span class="params">(<span class="string">'zset-key'</span>, <span class="number">0</span>, <span class="number">3</span>)</span></span></span><br><span class="line"><span class="number">2</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrem</span><span class="params">(<span class="string">'zset-key'</span>, <span class="string">'b'</span>)</span></span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrange</span><span class="params">(<span class="string">'zset-key'</span>, <span class="number">0</span>, -<span class="number">1</span>, withscores=True)</span></span></span><br><span class="line">[(<span class="string">'a'</span>, <span class="number">3.0</span>), (<span class="string">'c'</span>, <span class="number">4.0</span>)]</span><br></pre></td></tr></table></figure></p>
+<p>其他非常有用的有序集合命令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">用例和描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ZREVRANK</td>
+<td style="text-align:left">Item Two</td>
+</tr>
+</tbody>
+</table>
+<p>ZINTERSTORE和ZUNIONSTORE的用法：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zadd</span><span class="params">(<span class="string">'zset-1'</span>, <span class="string">'a'</span>, <span class="number">1</span>, <span class="string">'b'</span>, <span class="number">2</span>, <span class="string">'c'</span>, <span class="number">3</span>)</span></span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zadd</span><span class="params">(<span class="string">'zset-2'</span>, <span class="string">'b'</span>, <span class="number">4</span>, <span class="string">'c'</span>, <span class="number">1</span>, <span class="string">'d'</span>, <span class="number">0</span>)</span></span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zinterstore</span><span class="params">(<span class="string">'zset-i'</span>, [<span class="string">'zset-1'</span>, <span class="string">'zset-2'</span>])</span></span></span><br><span class="line"><span class="number">2</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrange</span><span class="params">(<span class="string">'zset-i'</span>, <span class="number">0</span>, -<span class="number">1</span>, withscores=True)</span></span></span><br><span class="line">[(<span class="string">'c'</span>, <span class="number">4.0</span>), (<span class="string">'b'</span>, <span class="number">6.0</span>)]</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zunionstore</span><span class="params">(<span class="string">'zset-u'</span>, [<span class="string">'zset-1'</span>, <span class="string">'zset-2'</span>], aggregate=<span class="string">'min'</span>)</span></span></span><br><span class="line"><span class="number">4</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrange</span><span class="params">(<span class="string">'zset-u'</span>, <span class="number">0</span>, -<span class="number">1</span>, withscores=True)</span></span></span><br><span class="line">[(<span class="string">'d'</span>, <span class="number">0.0</span>), (<span class="string">'a'</span>, <span class="number">1.0</span>), (<span class="string">'c'</span>, <span class="number">1.0</span>), (<span class="string">'b'</span>, <span class="number">2.0</span>)]</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">sadd</span><span class="params">(<span class="string">'set-1'</span>, <span class="string">'a'</span>, <span class="string">'d'</span>)</span></span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zunionstore</span><span class="params">(<span class="string">'zset-u2'</span>, [<span class="string">'zset-1'</span>, <span class="string">'zset-2'</span>, <span class="string">'set-1'</span>])</span></span></span><br><span class="line"><span class="number">4</span>L</span><br><span class="line">&gt;&gt;&gt; conn.<span class="function"><span class="title">zrange</span><span class="params">(<span class="string">'zset-u2'</span>, <span class="number">0</span>, -<span class="number">1</span>, withscores=True)</span></span></span><br><span class="line">[(<span class="string">'d'</span>, <span class="number">1.0</span>), (<span class="string">'a'</span>, <span class="number">2.0</span>), (<span class="string">'c'</span>, <span class="number">4.0</span>), (<span class="string">'b'</span>, <span class="number">6.0</span>)]</span><br></pre></td></tr></table></figure></p>
+<h2 id="发布与订阅">发布与订阅</h2><h2 id="其他命令">其他命令</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/08/29/Redis实战之Redis命令/" data-id="cisjz4qix001qi4c1j7zxtgb9" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Redis/">Redis</a></div><div class="post-nav"><a href="/2016/08/29/Redis实战之数据安全与性能保障/" class="pre">Redis实战之数据安全与性能保障</a><a href="/2016/08/29/Redis实战之使用Redis构建Web应用/" class="next">Redis实战之使用Redis构建Web应用</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
+var disqus_identifier = '2016/08/29/Redis实战之Redis命令/';
+var disqus_title = 'Redis实战之Redis命令';
+var disqus_url = 'http://blog.noobsky.com/2016/08/29/Redis实战之Redis命令/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//noobsky.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://blog.noobsky.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nodejs/">Nodejs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shadowsocks/">Shadowsocks</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Tree/" style="font-size: 15px;">Tree</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/代理/" style="font-size: 15px;">代理</a> <a href="/tags/Nodejs/" style="font-size: 15px;">Nodejs</a> <a href="/tags/node-http-proxy/" style="font-size: 15px;">node-http-proxy</a> <a href="/tags/读书笔记/" style="font-size: 15px;">读书笔记</a> <a href="/tags/谷歌学术/" style="font-size: 15px;">谷歌学术</a> <a href="/tags/Shadowsocks/" style="font-size: 15px;">Shadowsocks</a> <a href="/tags/AWS/" style="font-size: 15px;">AWS</a> <a href="/tags/线程安全/" style="font-size: 15px;">线程安全</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Bit-Manipulation/" style="font-size: 15px;">Bit Manipulation</a> <a href="/tags/Brainteaser/" style="font-size: 15px;">Brainteaser</a> <a href="/tags/Array/" style="font-size: 15px;">Array</a> <a href="/tags/Two-Pointers/" style="font-size: 15px;">Two Pointers</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/DFS/" style="font-size: 15px;">DFS</a> <a href="/tags/BFS/" style="font-size: 15px;">BFS</a> <a href="/tags/Hash-Table/" style="font-size: 15px;">Hash Table</a> <a href="/tags/Sort/" style="font-size: 15px;">Sort</a> <a href="/tags/Binary-Search/" style="font-size: 15px;">Binary Search</a> <a href="/tags/Dynamic-Programming/" style="font-size: 15px;">Dynamic Programming</a> <a href="/tags/Math/" style="font-size: 15px;">Math</a> <a href="/tags/静态代理/" style="font-size: 15px;">静态代理</a> <a href="/tags/动态代理/" style="font-size: 15px;">动态代理</a> <a href="/tags/注解/" style="font-size: 15px;">注解</a> <a href="/tags/反射/" style="font-size: 15px;">反射</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/面试/" style="font-size: 15px;">面试</a> <a href="/tags/Floyd判圈算法/" style="font-size: 15px;">Floyd判圈算法</a> <a href="/tags/DTW/" style="font-size: 15px;">DTW</a> <a href="/tags/语音识别/" style="font-size: 15px;">语音识别</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/LeetCode-Find-the-Difference/">[LeetCode]Find the Difference</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/31/Redis实战之扩展Redis/">Redis实战之扩展Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/31/Redis实战之降低内存占用/">Redis实战之降低内存占用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/29/Redis实战之数据安全与性能保障/">Redis实战之数据安全与性能保障</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/29/Redis实战之Redis命令/">Redis实战之Redis命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/29/Redis实战之使用Redis构建Web应用/">Redis实战之使用Redis构建Web应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/28/Redis实战/">Redis实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/24/MyISAM和InnoDB的区别/">MyISAM和InnoDB的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/JVM和Tomcat类加载机制/">JVM和Tomcat类加载机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/垃圾回收器和内存分配/">垃圾回收器和内存分配</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//noobsky.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://coolshell.cn/" title="酷壳" target="_blank">酷壳</a><ul></ul><a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a><ul></ul><a href="http://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">NoobSky.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
