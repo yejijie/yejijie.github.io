@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-09-25T17:57:17.000Z</updated>
+  <updated>2016-09-28T01:57:11.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -13,6 +13,19 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[面试算法之动态规划问题集锦]]></title>
+    <link href="http://blog.noobsky.com/2016/09/28/%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/"/>
+    <id>http://blog.noobsky.com/2016/09/28/面试算法之动态规划问题集锦/</id>
+    <published>2016-09-28T01:57:10.000Z</published>
+    <updated>2016-09-28T01:57:11.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[排序算法]]></title>
@@ -734,30 +747,6 @@
     </summary>
     
       <category term="Binary Search" scheme="http://blog.noobsky.com/tags/Binary-Search/"/>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]First Unique Character in a String]]></title>
-    <link href="http://blog.noobsky.com/2016/09/01/LeetCode-First-Unique-Character-in-a-String/"/>
-    <id>http://blog.noobsky.com/2016/09/01/LeetCode-First-Unique-Character-in-a-String/</id>
-    <published>2016-09-01T07:52:11.000Z</published>
-    <updated>2016-09-01T07:56:49.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1.</p>
-<p><strong>Examples:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"leetcode"</span></span><br><span class="line"><span class="keyword">return</span> <span class="number">0.</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">"loveleetcode"</span>,</span><br><span class="line"><span class="keyword">return</span> <span class="number">2.</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Note:</strong> You may assume the string contain only lowercase letters.</p>
-<h2 id="解题思路和代码">解题思路和代码</h2><p>首先遍历一遍字符串，用hash统计每个字符出现的次数即可，然后第二遍遍历找出第一个只出现一次的字符。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstUniqChar</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//假设只有ASCII字符，否则可以用HashMap</span></span><br><span class="line">        <span class="keyword">int</span>[] freq = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> ch : s.toCharArray())&#123;</span><br><span class="line">            freq[ch]++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(freq[s.charAt(i)] == <span class="number">1</span>) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1]]>
-    </summary>
     
       <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
     
