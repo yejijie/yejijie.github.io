@@ -15,7 +15,7 @@
 <h2 id="软引用">软引用</h2><p>Java中的软引用使用java.lang.ref.SoftReference类来表示。一个持有软引用的对象，不会被JVM很快回收，JVM会根据当前堆的使用情况来判断何时回收。当堆的使用率临近阈值时，才会去回收软引用的对象。只要有足够的内存，软引用可能在内存中存活相当长的一段时间。因此，软引用可以用来实现缓存机制。</p>
 <h2 id="弱引用">弱引用</h2><p>弱引用是一种比软引用较弱的引用类型。在系统GC时，只要发现弱引用，不管堆空间是否充足，都会将对象进行回收。不过，由于垃圾回收器是一个优先级很低的线程，因此不一定会很快发现那些只具有弱引用的对象。</p>
 <h2 id="虚引用">虚引用</h2><p>虚引用是所有引用类型中最弱的一个。一个持有虚引用的对象，和没有引用几乎是一样的，随时都可能被垃圾回收器回收。虚引用主要用来跟踪对象被垃圾回收器回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列 （ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。</p>
-<h2 id="WeakHashMap及其实现">WeakHashMap及其实现</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/08/18/Java引用类型/" data-id="citm9rvch00nh6sc1kb8ibkfi" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a href="/2016/08/20/垃圾回收器和内存分配/" class="pre">垃圾回收器和内存分配</a><a href="/2016/08/18/深入理解ThreadLocal/" class="next">深入理解ThreadLocal</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
+<h2 id="WeakHashMap及其实现">WeakHashMap及其实现</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/08/18/Java引用类型/" data-id="citm9uy1100nhe2c1h9l55wg1" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a href="/2016/08/20/垃圾回收器和内存分配/" class="pre">垃圾回收器和内存分配</a><a href="/2016/08/18/深入理解ThreadLocal/" class="next">深入理解ThreadLocal</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
 var disqus_identifier = '2016/08/18/Java引用类型/';
 var disqus_title = 'Java引用类型';
 var disqus_url = 'http://blog.noobsky.com/2016/08/18/Java引用类型/';
