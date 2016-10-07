@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Talk is cheap. Show me the code. - http://noobsky.com]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.noobsky.com/"/>
-  <updated>2016-10-02T16:12:02.000Z</updated>
+  <updated>2016-10-07T07:51:41.000Z</updated>
   <id>http://blog.noobsky.com/</id>
   
   <author>
@@ -13,6 +13,401 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[HTTP]]></title>
+    <link href="http://blog.noobsky.com/2016/10/07/HTTP/"/>
+    <id>http://blog.noobsky.com/2016/10/07/HTTP/</id>
+    <published>2016-10-07T02:30:19.000Z</published>
+    <updated>2016-10-07T07:51:41.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="网络基础TCP/IP">网络基础TCP/IP</h2><h3 id="TCP/IP的分层管理">TCP/IP的分层管理</h3><p>TCP/IP协议族重要的一点就是分层。分为以下四层：应用层、传输层、网络层、数据链路层。</p>
+<p><strong>应用层</strong><br>应用层决定了向用户提供应用服务时通信的活动</p>
+<p>应用服务包括FTP、DNS、HTTP等</p>
+<p><strong>传输层</strong></p>
+<p>传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。<br>传输层协议包括TCP（传输控制协议）和UDP（用户数据报协议）</p>
+<p><strong>网络层</strong><br>网络层用来处理在网络上流动的数据包。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径到达对方计算机，并把数据包传送给对方。</p>
+<p>网络层所起的作用就是在众多的选项内选择一条传输路线。</p>
+<p><strong>链路层</strong><br>用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC（Network Interface Card，网络适配器，即网卡），及光纤等物理可见部分（还包括连接器等一切传输媒介）。硬件上的范畴均在链路层的作用范围之内。</p>
+<h3 id="TCP/IP通信传输流">TCP/IP通信传输流</h3><p>利用TCP/IP协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。</p>
+<p>以HTTP举例来说：<br>首先作为发送端的客户端在应用层（HTTP协议）发送一个想看某个Web页面的HTTP请求。</p>
+<p>接着为了传输方便，在传输层（TCP协议）把从应用层收到的数据（HTTP请求报文）进行分割，并在各个报文上打上标记序号即端口号后转发给网络层。</p>
+<p>在网络层(IP协议)，增加作为通信目的地的MAC地址后转发给链路层。</p>
+<p>接收端的服务器在链路层接收到数据，按序往上层发送，一直到应用层。当传输到应用层，才能算真正接收到由客服端发送过来的HTTP请求。发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，没经过一层时会把对应的首部消去。这种把数据信息包装起来的做法称为封装。</p>
+<h3 id="与HTTP关系密切的协议：IP、TCP和DNS">与HTTP关系密切的协议：IP、TCP和DNS</h3><h4 id="负责传输的IP协议">负责传输的IP协议</h4><p>IP协议位于网络层。作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要条件是IP地址和MAC地址。</p>
+<p>IP地址指明了节点被分配到的地址，MAC地址是指网卡所属的固定地址。IP地址可以和MAC地址进行配对。IP地址可变，但MAC地址一般不变。</p>
+<p><strong>利用ARP协议获取MAC地址进行通信</strong></p>
+<p>IP间的通信依赖MAC地址。网络上，通信双方在同一局域网内的情况很少，通常经过多台计算机和网络设备中转才能连接对方。而在中转时，利用MAC地址搜索下一个中转目标。利用ARP协议（地址解析协议）可以根据通信方的IP地址获取对应的MAC地址。</p>
+<h4 id="确保可靠性的TCP协议">确保可靠性的TCP协议</h4><p>TCP位于传输层，提供可靠的字节流服务。<br>字节流服务是指，为了方便传输，将大块数据分割成以报文段为单位的数据包进行管理。而可靠的传输服务是指，能够把数据准确可靠地传给对方。</p>
+<p><strong>确保数据能到达目标</strong></p>
+<p>为了准确无误地将数据送达目标，TCP协议采用了三次握手策略。发送端首先发送一个带有SYN标志的数据包给对方。接收端收到后，回传一个带有SYN/ACK标志的数据包以示传达确认信息。最后，发送端再回传一个带ACK标志的数据包，代表握手结束。</p>
+<h3 id="负责域名解析的DNS服务">负责域名解析的DNS服务</h3><p>DNS服务位于应用层，提供域名到IP地址之间的解析服务。</p>
+<h2 id="简单的HTTP协议">简单的HTTP协议</h2><h3 id="HTTP协议用于客户端和服务端之间的通信">HTTP协议用于客户端和服务端之间的通信</h3><p>请求访问的文本或图像等资源的一端称为客户端，而提供资源响应的一端称为服务器端。</p>
+<h3 id="通过请求和响应交换达成通信">通过请求和响应交换达成通信</h3><h3 id="HTTP是不保存状态的协议">HTTP是不保存状态的协议</h3><p>HTTP是无状态协议，也就说HTTP协议对于发送过的请求或响应都不做持久化处理。</p>
+<p>HTTP为了实现保存状态的功能引入了Cookie技术。</p>
+<h3 id="请求URI定位资源">请求URI定位资源</h3><h3 id="告知服务器意图的HTTP方法">告知服务器意图的HTTP方法</h3><ul>
+<li><p>GET：获取资源</p>
+</li>
+<li><p>POST：传输实体主体</p>
+</li>
+<li><p>PUT：传输文件</p>
+</li>
+<li><p>HEAD：获取报文首部</p>
+</li>
+<li><p>DELETE：删除文件</p>
+</li>
+<li><p>OPTIONS：询问支持的方法</p>
+</li>
+<li><p>TRACE：追踪路径</p>
+</li>
+<li><p>CONNECT：要求用隧道协议连接代理</p>
+</li>
+</ul>
+<h3 id="持久连接节省通信量">持久连接节省通信量</h3><p><strong>持久连接</strong></p>
+<p>持久连接（HTTP Persistent Connections也称为HTTP keep-alive或者HTTP connection reuse）的方法。持久连接的特点是只要任意一端没有明确提出断开连接，则保持TCP连接状态。</p>
+<p>持久连接的好处在于减少了TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。</p>
+<p><strong>管线化</strong><br>持久连接使得多数请求以管线化（pipelining）方式发送成为可能。以前发送请求后需等待并收到响应，才能发送下一个请求。管线化技术出现后，不用等待响应亦可直接发送下一个请求。</p>
+<p>这样就能够做到同时并行发送多个请求，而不需要一个接一个地等待响应。</p>
+<h3 id="使用Cookie的状态管理">使用Cookie的状态管理</h3><p>Cookie技术通过在请求和响应报文中写入Cookie信息来控制客户端的状态。</p>
+<p>Cookie会根据从服务器端发送的响应报文内的一个叫做Set-Cookie的首部字段信息，通知客户端保存Cookie。当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入Cookie值后发送出去。</p>
+<p>服务器端发现客户端发送过来的Cookie后，会去检查究竟是从哪一个客户端发来的连接请求，然后对比服务器上的记录，最后得到之前的状态信息。</p>
+<h2 id="HTTP报文">HTTP报文</h2><h3 id="请求报文">请求报文</h3><p>一个HTTP请求报文由请求行（request line）、请求头部（header）、空行和请求数据4个部分组成。报文的一般格式如下：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;request-line&gt;</span><br><span class="line"></span><br><span class="line">&lt;headers&gt;</span><br><span class="line"></span><br><span class="line">&lt;blank line&gt;</span><br><span class="line"></span><br><span class="line"><span class="annotation">[&lt;request-body&gt;]</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>请求行</li>
+</ul>
+<p>请求行由请求方法、URL字段和HTTP协议版本3个字段组成，由空格分隔。例如：GET /index.html HTTP/1.1。<br>HTTP协议的请求方法有GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT。</p>
+<ul>
+<li><p>请求头部<br>请求头部由关键字/值对组成，每行一对，关键字和值用英文冒号“:”分隔。请求头部通知服务器有关于客户端请求的信息，典型的请求头有：<br>User-Agent: 产生请求的浏览器类型<br>Accept: 客户端可识别的内容类型列表。<br>Host: 请求主机名，允许多个域名同处于一个IP地址，即虚拟主机。</p>
+</li>
+<li><p>空行<br>最后一个请求头之后是一个空行，发送回车符和换行符，通知服务器以下不再有请求头。</p>
+</li>
+<li><p>请求数据</p>
+</li>
+</ul>
+<p>请求数据不在GET方法中使用，而是在POST方法中使用。POST方法适用于需要客户填写表单的场合。与请求数据相关的最常使用的请求头是Content-Type和Content-Length。</p>
+<h3 id="响应报文">响应报文</h3><p>HTTP响应也由三个部分组成，分别是：状态行、消息报头、空行和响应正文。格式如下：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;status-line&gt;</span><br><span class="line"></span><br><span class="line">&lt;headers&gt;</span><br><span class="line"></span><br><span class="line">&lt;blank line&gt;</span><br><span class="line"></span><br><span class="line"><span class="annotation">[&lt;response-body&gt;]</span></span><br></pre></td></tr></table></figure></p>
+<p>在响应中唯一真正的区别在于第一行中用状态信息代替了请求信息。状态行（status line）通过提供一个状态码来说明所请求的资源情况。</p>
+<p>状态行格式如下：</p>
+<p>HTTP-Version Status-Code Reason-Phrase CRLF</p>
+<p>其中，HTTP-Version表示服务器HTTP协议的版本；Status-Code表示服务器发回的响应状态代码；Reason-Phrase表示状态代码的文本描述。状态代码由三位数字组成，第一个数字定义了响应的类别，且有五种可能取值。</p>
+<p>1xx：指示信息–表示请求已接收，继续处理。<br>2xx：成功–表示请求已被成功接收、理解、接受。<br>3xx：重定向–要完成请求必须进行更进一步的操作。<br>4xx：客户端错误–请求有语法错误或请求无法实现。<br>5xx：服务器端错误–服务器未能实现合法的请求。</p>
+<p>常见状态代码、状态描述的说明如下。</p>
+<ul>
+<li>200 OK：客户端请求成功。</li>
+<li>400 Bad Request：客户端请求有语法错误，不能被服务器所理解。</li>
+<li>401 Unauthorized：请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用。</li>
+<li>403 Forbidden：服务器收到请求，但是拒绝提供服务。</li>
+<li>404 Not Found：请求资源不存在，举个例子：输入了错误的URL。</li>
+<li>500 Internal Server Error：服务器发生不可预期的错误。</li>
+<li>503 Server Unavailable：服务器当前不能处理客户端的请求，一段时间后可能恢复正常</li>
+</ul>
+<h2 id="编码提升传输速率">编码提升传输速率</h2><h3 id="压缩传输的内容编码">压缩传输的内容编码</h3><h3 id="分割发送的分块传输编码">分割发送的分块传输编码</h3><h2 id="HTTP状态码">HTTP状态码</h2><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">类别</th>
+<th style="text-align:left">原因短语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1XX</td>
+<td style="text-align:left">Informational（信息性状态码）</td>
+<td style="text-align:left">接收的请求正在处理</td>
+</tr>
+<tr>
+<td style="text-align:left">2XX</td>
+<td style="text-align:left">Success （成功状态码）</td>
+<td style="text-align:left">请求正常处理完毕</td>
+</tr>
+<tr>
+<td style="text-align:left">3XX</td>
+<td style="text-align:left">Redirection（重定向状态码）</td>
+<td style="text-align:left">需要进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td style="text-align:left">4XX</td>
+<td style="text-align:left">Client Error（客户端错误状态码）</td>
+<td style="text-align:left">服务器无法处理请求</td>
+</tr>
+<tr>
+<td style="text-align:left">5XX</td>
+<td style="text-align:left">Server Error（服务器错误状态码）</td>
+<td style="text-align:left">服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<h2 id="确保Web安全的HTTPS">确保Web安全的HTTPS</h2><h3 id="HTTP的缺点">HTTP的缺点</h3><ul>
+<li>通信使用明文（不加密），内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ul>
+<h3 id="HTTP+加密+认证+完整性保护=HTTPS">HTTP+加密+认证+完整性保护=HTTPS</h3><h4 id="HTTP加上加密处理和认证以及完整性保护后即是HTTPS">HTTP加上加密处理和认证以及完整性保护后即是HTTPS</h4><h4 id="HTTPS是身披SSL外壳的HTTP">HTTPS是身披SSL外壳的HTTP</h4><p>HTTPS并非是应用层的一种新协议。只是HTTP通信接口部分用SSL和TLS协议代替而已。</p>
+<p>通常HTTP直接和TCP通信。当使用SSL时，则演变成先和SSL通信，再由SSL和TCP通信。</p>
+<h4 id="相互交换密钥的公开密钥加密技术">相互交换密钥的公开密钥加密技术</h4><ul>
+<li>共享密钥加密（对称加密）的困境<br>加密和解密同用一个密钥的方式称为共享密钥加密（Common key crypto system），也叫对称密钥加密。</li>
+</ul>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？因为只要拿到密钥任何人都能破解密码。</p>
+<ul>
+<li>使用两把密钥的公开密钥加密（非对称加密）</li>
+</ul>
+<p>公开密钥加密方式可以很好地解决共享密钥加密的困难。<br>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥，另一把叫做公开密钥。私钥需要自行进行保护！公钥可以随便分享。</p>
+<p>同时，生成的这个“私钥-公钥”对还有个强大的功能就是，使用私钥加密的信息，只能由该私钥对应的公钥才能解密，使用公钥加密的信息，只能由该公钥对应的私钥才能解密！</p>
+<ul>
+<li>HTTPS采用混合加密机制</li>
+</ul>
+<p>HTTPS采用共享密钥（对称）加密和公开密钥加密（非对称）两者并用的混合加密机制。若密钥能够实现安全交换，那么有可能会考虑仅使用公开密钥加密来通信。但是公开密钥加密与共享密钥加密相比，其处理速度要慢。</p>
+<p>所以应充分利用两者各自的优势，将多种方法组合起来用于通信。在交换密钥环节使用公开密钥加密方式，之后的建立的通信交换报文阶段则使用共享密钥加密方式。</p>
+<h4 id="证明公开密钥正确性的证书">证明公开密钥正确性的证书</h4><p>公开密钥加密方式存在的问题是无法证明公开密钥本身就是货真价实的公开密钥。公开密钥传输途中，可能被攻击者替换掉。</p>
+<p>为了解决上述问题，可以使用由数字证书认证机构（CA，Certificate Authority）和其相关机关颁发的公开密钥证书。</p>
+<p>首先,服务器的 运营人员向数字证书认证机构提出公开密钥的申请。数字证书认证机构 在判明提出申请者的身份之后,会对已申请的公开密钥做数字签名,然 后分配这个已签名的公开密钥,并将该公开密钥放入公钥证书后绑定在一起。</p>
+<p>服务器会将这份由数字证书认证机构颁发的公钥证书发送给客户 端,以进行公开密钥加密方式通信。公钥证书也可叫做数字证书或直接 称为证书。</p>
+<p>接到证书的客户端可使用数字证书认证机构的公开密钥,对那张证 书上的数字签名进行验证,一旦验证通过,客户端便可明确两件事: 一,认证服务器的公开密钥的是真实有效的数字证书认证机构。二,服务器的公开密钥是值得信赖的。</p>
+<p>此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式 时,如何安全转交是一件很困难的事,因此,多数浏览器开发商发布版 本时,会事先在内部植入常用认证机关的公开密钥。</p>
+<p><img src="http://7xonwi.com1.z0.glb.clouddn.com/https.png" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="网络基础TCP/IP">网络基础TCP/IP</h2><h3 id="TCP/IP的分层管理">TCP/IP的分层管理</h3><p>TCP/IP协议族重要的一点就是分层。分为以下四层：应用层、传输层、网络层、数据链路层。</p>
+<p><strong>应用层</]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java 8 新特性]]></title>
+    <link href="http://blog.noobsky.com/2016/10/06/Java-8-%E6%96%B0%E7%89%B9%E6%80%A7/"/>
+    <id>http://blog.noobsky.com/2016/10/06/Java-8-新特性/</id>
+    <published>2016-10-06T09:33:30.000Z</published>
+    <updated>2016-10-06T14:38:40.000Z</updated>
+    <content type="html"><![CDATA[<p>Java 8是Java 5（2004年发行）以来最具革命性的版本。Java 8为Java语言、编译器、类库、开发工具与JVM带来了大量新特性。本文会一一简要介绍。</p>
+<h2 id="Java语言新特性">Java语言新特性</h2><h3 id="Lambda表达式和Functional接口">Lambda表达式和Functional接口</h3><p>Lambda表达式可以理解为简洁地传递匿名函数的一种方式（将函数作为一个方法的参数）。它没有名称，但它可以有参数列表、函数主体、返回类型，可能还有一个可以抛出的异常列表。写过函数式编程语言的程序员对这个概念一定并不陌生。</p>
+<p>Java中Lambda表达式由逗号分隔的参数列表、-&gt;符号和函数体三部分组成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).forEach( e -&gt; System.out.println(e) );</span><br></pre></td></tr></table></figure>
+<p>请注意参数e的类型是由编译器推测出来的。同时，你也可以通过把参数类型与参数包括在括号中的形式直接给出参数的类型：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).forEach( ( String e ) -&gt; System.out.println( e ) );</span><br></pre></td></tr></table></figure></p>
+<p>在某些情况下lambda的函数体会更加复杂，这时可以把函数体放到在一对花括号中，就像在Java中定义普通函数一样。例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).forEach( e -&gt; &#123;</span><br><span class="line">    System.out.print(e);</span><br><span class="line">    System.out.print(<span class="string">","</span>);</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></p>
+<p>Lambda可以引用类的成员变量与局部变量（如果这些变量不是final的话，它们会被隐含的转为final，这样效率更高）。例如，下面两个代码片段是等价的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String separator = <span class="string">","</span>;</span><br><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).forEach(</span><br><span class="line">    ( String e ) -&gt; System.out.print( e + separator ) );</span><br></pre></td></tr></table></figure></p>
+<p>和<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> String separator = <span class="string">","</span>;</span><br><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).forEach(</span><br><span class="line">    ( String e ) -&gt; System.out.print( e + separator ) );</span><br></pre></td></tr></table></figure></p>
+<p>Lambda可能会返回一个值。返回值的类型也是由编译器推测出来的。如果lambda的函数体只有一行的话，那么没有必要显式使用return语句。下面两个代码片段是等价的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).sort( ( e1, e2 ) -&gt; e1.compareTo( e2 ) );</span><br></pre></td></tr></table></figure></p>
+<p>和<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Arrays.asList( <span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span> ).sort( ( e1, e2 ) -&gt; &#123;</span><br><span class="line">    <span class="keyword">int</span> result = e1.compareTo( e2 );</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></p>
+<p>如果表达式没有参数，你扔可以提供一对空的小括号，如同不含参数的方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++)&#125; doWork();</span><br></pre></td></tr></table></figure></p>
+<p>语言设计者投入了大量精力来思考如何使现有的函数友好地支持lambda。最终采取的方法是：增加函数式接口的概念。对于只包含一个抽象方法的接口(除了隐含的Object对象的公共方法)，可以通过lambda表达式来创建该接口的对象。这种接口被称为函数式接口。像这样的接口，可以被隐式转换为lambda表达式。java.lang.Runnable与java.util.concurrent.Callable是函数式接口最典型的两个例子。在实际使用过程中，函数式接口是容易出错的：如有某个人在接口定义中增加了另一个方法，这时，这个接口就不再是函数式的了，并且编译过程也会失败。为了克服函数式接口的这种脆弱性并且能够明确声明接口作为函数式接口的意图，Java 8增加了一种特殊的注解@FunctionalInterface（Java 8中所有类库的已有接口都添加了@FunctionalInterface注解）。让我们看一下这种函数式接口的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Functional</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>需要记住的一件事是：默认方法与静态方法并不影响函数式接口的契约，可以任意使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FunctionalDefaultMethods</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">defaultMethod</span><span class="params">()</span> </span>&#123;            </span><br><span class="line">    &#125;        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口的默认方法与静态方法">接口的默认方法与静态方法</h3><p>如果某个接口比如Collection添加了新方法，例如forEach，那么每个实现了Collection接口的自定义类就必须都实现该方法。这在Java中是完全无法接受的。</p>
+<p>Java设计者们通过允许接口包含带有具体实现的方法（称为默认方法）来解决这个问题，比如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">default</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> <span class="string">"Jaye"</span>;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>默认方法终结了以前一种经典模式，即提供一个接口，以及一个实现接口的大多数或全部方法的抽象类，例如Collection/AbstractCollection，现在直接在接口中实现即可。</p>
+<p>如果一个接口中定义了一个默认方法，而另外一个父类或者接口中又定义了一个同名的方法，选择方法的规则如下：</p>
+<ol>
+<li>选择父类中的方法。如果一个父类提供了具体的实现方法，那么接口中具有相同名称和参数的默认方法会被忽略。</li>
+<li>接口冲突。如果一个父接口提供了一个默认方法，而另一个接口也提供了一个具有相同名称和参数类型的方法（不管该方法是否是默认方法），那么你必须通过覆盖该方法来解决冲突。</li>
+</ol>
+<p>某个类继承了某个父类并实现了某个接口，父类和接口有一个同名的方法，此时，只有父类中的方法会起作用，这是“类优先”规则。</p>
+<p>Java 8带来的另一个有趣的特性是接口可以声明（并且可以提供实现）静态方法。例如：</p>
+<h3 id="方法引用">方法引用</h3><p>如果想传递给其他代码的操作已经有实现的方法，可以使用方法引用。</p>
+<p>如果你希望不区分大小写地对字符串进行排序，那么可以传入方法引用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, String::compareToIgnoreCase)</span><br></pre></td></tr></table></figure></p>
+<p>::操作符将方法名和对象或类的名字分隔开来。以下是三种主要的使用情况：</p>
+<ul>
+<li>对象::实例方法</li>
+<li>类::静态方法</li>
+<li>类::实例方法</li>
+</ul>
+<p>方法引用等同于提供方法参数的lambda表达式。<br>System.out::println等同于System.out.println(x)。相似的，Math::pow等同于(x, y) -&gt; Math.pow(x, y)。</p>
+<p>在Arrays.sort(strings, String::compareToIgnoreCase)中第一个参数会成为执行方法的对象。例如：String::compareToIgnoreCase等同于(x, y) -&gt; x.compareToIgnoreCase(y)</p>
+<p>还可以捕获方法中的this参数。例如this::equals就等同于x -&gt; this.equals(x)。也可以使用super对象。super::实例方法会使用this作为执行方法的对象，并调用父类中指定方法。</p>
+<h3 id="重复注解">重复注解</h3><h3 id="更好的类型推测机制">更好的类型推测机制</h3><h3 id="扩展注解的支持">扩展注解的支持</h3><h2 id="Java编译器的新特性">Java编译器的新特性</h2><h3 id="参数名字">参数名字</h3><p>在Java 8中把这个获取参数名字的功能添加到语言层面（通过反射API与Parameter.getName()方法）与字节码文件（通过新版的javac的–parameters选项）中。</p>
+<h2 id="Java类库的新特性">Java类库的新特性</h2><h3 id="Optional">Optional</h3><h3 id="Stream">Stream</h3><h3 id="Date/Time_API">Date/Time API</h3><h3 id="JavaScript引擎Nashorn">JavaScript引擎Nashorn</h3><h3 id="Base64">Base64</h3><h3 id="并行数组">并行数组</h3><h3 id="并发">并发</h3><h2 id="新的Java工具">新的Java工具</h2><p>Java 8带来了一些新的命令行工具。</p>
+<h3 id="Nashorn引擎：jjs">Nashorn引擎：jjs</h3><h3 id="类依赖分析器jdeps">类依赖分析器jdeps</h3><h2 id="JVM的新特性">JVM的新特性</h2><p>PermGen空间被移除了，取而代之的是Metaspace（JEP 122）。JVM选项-XX:PermSize与-XX:MaxPermSize分别被-XX:MetaSpaceSize与-XX:MaxMetaspaceSize所代替。</p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://colobu.com/2014/10/28/secrets-of-java-8-functional-interface/" target="_blank" rel="external">Java 8函数式接口functional interface的秘密</a><br><a href="http://www.importnew.com/11908.html" target="_blank" rel="external">Java 8新特性终极指南</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Java 8是Java 5（2004年发行）以来最具革命性的版本。Java 8为Java语言、编译器、类库、开发工具与JVM带来了大量新特性。本文会一一简要介绍。</p>
+<h2 id="Java语言新特性">Java语言新特性</h2><h3 id="Lambda表达式和]]>
+    </summary>
+    
+      <category term="Java8" scheme="http://blog.noobsky.com/categories/Java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java 8 CompletableFuture: 组合式异步编程]]></title>
+    <link href="http://blog.noobsky.com/2016/10/06/Java-8-CompletableFuture-%E7%BB%84%E5%90%88%E5%BC%8F%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/"/>
+    <id>http://blog.noobsky.com/2016/10/06/Java-8-CompletableFuture-组合式异步编程/</id>
+    <published>2016-10-06T08:52:54.000Z</published>
+    <updated>2016-10-06T09:16:19.000Z</updated>
+    <content type="html"><![CDATA[<p>Future是Java 5添加的类，用来描述一个异步计算的结果。你可以使用isDone方法检查计算是否完成，或者使用get阻塞住调用线程，直到计算完成返回结果，你也可以使用cancel方法停止任务的执行。</p>
+<p>虽然Future以及相关使用方法提供了异步执行任务的能力，但是对于结果的获取却是很不方便，只能通过阻塞或者轮询的方式得到任务的结果。阻塞的方式显然和我们的异步编程的初衷相违背，轮询的方式又会耗费无畏的CPU资源，而且也不能及时得到计算结果。为什么不能使用观察者设计模式当计算结果完成及时通知监听者呢？</p>
+<p>Nodejs采用回调的方式实现异步编程。Netty扩展了Java的Future接口提供了addListener等多个扩展方法。</p>
+<p>Java 8中，新增加了一个包含50个方法左右的类：CompletableFuture，提供了非常强大的Future的扩展功能，可以帮助我们简化异步编程的复杂性，提供了函数式编程的能力，可以通过回调的方式处理计算结果，并且提供了转换和组合CompletableFuture的方法。</p>
+<p><a href="http://colobu.com/2016/02/29/Java-CompletableFuture/" target="_blank" rel="external"></a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Future是Java 5添加的类，用来描述一个异步计算的结果。你可以使用isDone方法检查计算是否完成，或者使用get阻塞住调用线程，直到计算完成返回结果，你也可以使用cancel方法停止任务的执行。</p>
+<p>虽然Future以及相关使用方法提供了异步执行任务的能]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[写给大忙人看的Java SE 8之杂项改进]]></title>
+    <link href="http://blog.noobsky.com/2016/10/05/%E5%86%99%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E7%9C%8B%E7%9A%84Java-SE-8%E4%B9%8B%E6%9D%82%E9%A1%B9%E6%94%B9%E8%BF%9B/"/>
+    <id>http://blog.noobsky.com/2016/10/05/写给大忙人看的Java-SE-8之杂项改进/</id>
+    <published>2016-10-05T13:48:48.000Z</published>
+    <updated>2016-10-06T02:03:14.000Z</updated>
+    <content type="html"><![CDATA[<p>要点包括：</p>
+<ul>
+<li>用分隔符连接字符串的至简方法</li>
+<li>Integer类现在支持无符号数学运算</li>
+<li>Math类现在有了检测整数是否溢出的方法</li>
+<li>使用Math.floorMod(x, n)代替x % n来处理x可能是负数的情况</li>
+<li>Collocation(removeIf)和List(replaceAll, sort)中提供了很多新的方法</li>
+<li>Files.lines可以延迟读取一个包含文件行的流</li>
+<li>Files.list可以延迟列举目录下的项目，而且Files.walk可以递归遍历它们</li>
+<li>对Base64提供了官方支持</li>
+<li>Objects类中提供了对null参数的检查</li>
+</ul>
+<h2 id="字符串">字符串</h2><p>将多个字符串通过分隔符组合起来<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String joined = String.join(<span class="string">"/"</span>, <span class="string">"usr"</span>, <span class="string">"local"</span>, <span class="string">"bin"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="数字类">数字类</h2><p>7种数字类型的包装类提供了一个BYTES字段，以byte为单位来表示该类型的长度</p>
+<p>8种原始类型包装类提供了静态的hashCode方法</p>
+<p>Short、Integer、Long、Float和Double提供了sum、max和min，用来在流操作中作为聚合函数使用<br>Boolean包含了静态方法logicalAnd、logicalOr、logicalXor</p>
+<p>Integer类实现了支持无符号数学运算。<br>。。。</p>
+<h2 id="新的数学函数">新的数学函数</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<p>要点包括：</p>
+<ul>
+<li>用分隔符连接字符串的至简方法</li>
+<li>Integer类现在支持无符号数学运算</li>
+<li>Math类现在有了检测整数是否溢出的方法</li>
+<li>使用Math.floorMod(x, n)代替x % n来处理x可能是]]>
+    </summary>
+    
+      <category term="Java8" scheme="http://blog.noobsky.com/categories/Java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[写给大忙人看的Java SE 8之并发增强]]></title>
+    <link href="http://blog.noobsky.com/2016/10/05/%E5%86%99%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E7%9C%8B%E7%9A%84Java-SE-8%E4%B9%8B%E5%B9%B6%E5%8F%91%E5%A2%9E%E5%BC%BA/"/>
+    <id>http://blog.noobsky.com/2016/10/05/写给大忙人看的Java-SE-8之并发增强/</id>
+    <published>2016-10-05T13:03:08.000Z</published>
+    <updated>2016-10-05T13:48:43.000Z</updated>
+    <content type="html"><![CDATA[<p>要点包括：</p>
+<ul>
+<li>使用updateAndGet/accumulateAndGet方法可以更容易地更新原子变量</li>
+<li>在激烈得竞争环境下，LongAccumulator/DoubleAccumulator比AtomicLong/AtomicDouble效率更高</li>
+<li>使用compute和merge方法可以更容易地更新ConcurrentHashMap中的元素项</li>
+<li>ConcurrentHashMap提供了对键、值、键值对及元素项的各类操作，例如search、reduce和forEach</li>
+<li>集合视图允许你将ConcurrentHashMap作为一个Set来使用</li>
+<li>Arrays类提供了排序、填充及前缀操作的并行方法</li>
+<li>完善的Future类允许你创建异步的操作</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>要点包括：</p>
+<ul>
+<li>使用updateAndGet/accumulateAndGet方法可以更容易地更新原子变量</li>
+<li>在激烈得竞争环境下，LongAccumulator/DoubleAccumulator比AtomicLong/AtomicDo]]>
+    </summary>
+    
+      <category term="Java8" scheme="http://blog.noobsky.com/categories/Java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[写给大忙人看的Java SE 8之新的日期和时间API]]></title>
+    <link href="http://blog.noobsky.com/2016/10/05/%E5%86%99%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E7%9C%8B%E7%9A%84Java-SE-8%E4%B9%8B%E6%96%B0%E7%9A%84%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4API/"/>
+    <id>http://blog.noobsky.com/2016/10/05/写给大忙人看的Java-SE-8之新的日期和时间API/</id>
+    <published>2016-10-05T12:31:58.000Z</published>
+    <updated>2016-10-05T12:50:52.000Z</updated>
+    <content type="html"><![CDATA[<p>要点包括：</p>
+<ul>
+<li>所有java.time对象都是不可变的</li>
+<li>一个瞬间(Instant)是时间线上的一个点(与Date类似)</li>
+<li>在Java时间中，每天都是86400秒（即没有闰秒）</li>
+<li>持续时间(Duration)是两个瞬间之间的时间</li>
+<li>LocalDateTime没有时区信息</li>
+<li>TemporalAdjuster的方法可以处理常用的日历计算，例如找到某个月的第一个星期二</li>
+<li>ZonedDateTime是指时区中的某一个时间点(类似于Gregorian Calendar)</li>
+<li>当处理带时区的时间时，请使用时段(Period)，而非Duration，以便将夏令时的变化考虑在内</li>
+<li>使用DateTimeFormatter来格式化和解析日期和时间</li>
+</ul>
+<h2 id="时间线">时间线</h2><h2 id="本地日期">本地日期</h2><h2 id="日期校正器">日期校正器</h2><h2 id="本地时间">本地时间</h2><h2 id="带时区的时间">带时区的时间</h2><h2 id="格式化和解析">格式化和解析</h2><h2 id="与遗留代码互操作">与遗留代码互操作</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<p>要点包括：</p>
+<ul>
+<li>所有java.time对象都是不可变的</li>
+<li>一个瞬间(Instant)是时间线上的一个点(与Date类似)</li>
+<li>在Java时间中，每天都是86400秒（即没有闰秒）</li>
+<li>持续时间(Duratio]]>
+    </summary>
+    
+      <category term="Java8" scheme="http://blog.noobsky.com/categories/Java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[写给大忙人看的Java SE 8 之lambda表达式]]></title>
+    <link href="http://blog.noobsky.com/2016/10/05/%E5%86%99%E7%BB%99%E5%A4%A7%E5%BF%99%E4%BA%BA%E7%9C%8B%E7%9A%84Java-SE-8-%E4%B9%8Blambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://blog.noobsky.com/2016/10/05/写给大忙人看的Java-SE-8-之lambda表达式/</id>
+    <published>2016-10-05T04:11:48.000Z</published>
+    <updated>2016-10-05T08:45:51.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="lambda表达式的语法">lambda表达式的语法</h2><p>检查某个字符串的长度是否小于另一个字符串长度：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(String first, String second)</span><br><span class="line">  -&gt; Integer.compare(first.length(), second.length())</span><br></pre></td></tr></table></figure></p>
+<p>Java中lambda表达式的格式：参数、箭头 -&gt;，以及一个表达式。如果负责计算的代码无法用一个表达式表示，那么可以用编写方法的方式来编写：即用{}包裹代码并明确使用return语句，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(String first, String second) -&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(first.length() &lt; second.length()) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(first.length() &gt; second.length()) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果表达式没有参数，你扔可以提供一对空的小括号，如同不含参数的方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -&gt; &#123;<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++)&#125; doWork();</span><br></pre></td></tr></table></figure></p>
+<p>如果lambda表达式的参数类型可以被推导，那么就可以省略它们的类型，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;String&gt; comp</span><br><span class="line">  = (first, second)</span><br><span class="line">    -&gt; Integer.compare(first.length(), second.length());</span><br></pre></td></tr></table></figure></p>
+<p>这里编译器会推导出first和second必须是字符串，因为lambda表达式被赋值给了一个字符串比较器</p>
+<p>如果某个方法只含有一个参数，并且该参数的类型可以被推导出来，你甚至可以省略小括号：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EventHandler&lt;ActionEvent&gt; listener = event -&gt;</span><br><span class="line">  System.out.println(<span class="string">"Thanks for clicking"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>可以像对待方法参数一样向lambda表达式的参数添加注解或者final修饰符，如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">final</span> String name) -&gt; ...</span><br><span class="line">(<span class="annotation">@NonNull</span> String name) -&gt; ...</span><br></pre></td></tr></table></figure></p>
+<p>不需要为一个lambda表达式执行返回类型，它总是会从上下文中被推导出来，表达式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(String first, String second) -&gt; Integer.compare(first.length(), second.length())</span><br></pre></td></tr></table></figure></p>
+<p>可以被使用在期望结果类型为int 的上下文中。</p>
+<p>在lambda表达式中，只在某些分支中返回值（其他分支没有返回值）是不合法的。例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">int</span> x) -&gt; &#123;<span class="keyword">if</span>(x &gt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>是不合法的。</p>
+<h2 id="函数式接口">函数式接口</h2><p>java中有许多已有的接口都需要封装代码块，例如Runnable或者Comparator。lambda表达式与这些接口是向后兼容的。</p>
+<p>对于只包含一个抽象方法的接口，可以通过lambda表达式来创建该接口的对象。这种接口被称为函数式接口。</p>
+<p>函数式接口转换,lambda表达式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(words,</span><br><span class="line">  (first,second) -&gt; Integer.compare(first.length(), second.length()));</span><br></pre></td></tr></table></figure></p>
+<p>Arrays.sort方法会接收一个实现了Comparator<string>接口的类的实例。调用该对象的compare方法会执行lambda表达式中的代码。这些对象和类的管理完全依赖于如何实现，因此比传统的内部类效率更高。</string></p>
+<p>事实上，函数式接口的转换是你在Java中使用lambda表达式能做的唯一一件事。</p>
+<p>当一个lambda表达式被转换成一个函数式接口的实例时，请注意处理检查期异常。如果lambda表达式中可能会抛出一个检查期异常，那么该异常需要在目标接口的抽象方法中进行声明。</p>
+<h2 id="方法引用">方法引用</h2><p>如果想传递给其他代码的操作已经有实现的方法，可以使用方法引用。</p>
+<p>如果你希望不区分大小写地对字符串进行排序，那么可以传入方法引用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(strings, String::compareToIgnoreCase)</span><br></pre></td></tr></table></figure></p>
+<p>::操作符将方法名和对象或类的名字分隔开来。以下是三种主要的使用情况：</p>
+<ul>
+<li>对象::实例方法</li>
+<li>类::静态方法</li>
+<li>类::实例方法</li>
+</ul>
+<p>方法引用等同于提供方法参数的lambda表达式。<br>System.out::println等同于System.out.println(x)。相似的，Math::pow等同于(x, y) -&gt; Math.pow(x, y)。</p>
+<p>在Arrays.sort(strings, String::compareToIgnoreCase)中第一个参数会成为执行方法的对象。例如：String::compareToIgnoreCase等同于(x, y) -&gt; x.compareToIgnoreCase(y)</p>
+<p>还可以捕获方法中的this参数。例如this::equals就等同于x -&gt; this.equals(x)。也可以使用super对象。super::实例方法会使用this作为执行方法的对象，并调用父类中指定方法。</p>
+<h2 id="构造器引用">构造器引用</h2><p>构造器引用类似方法引用，不同的是在构造器引用中方法名是new。如Button::new表示Button类的构造器引用。</p>
+<p>可以使用数组类型来编写构造器引用。如int[]::new是一个含有一个参数的构造器引用，这个参数就是数组的长度。它等同于lambda表达式x -&gt; new int[x]。</p>
+<h2 id="变量作用域">变量作用域</h2><p>lambda表达式的闭合方法或类中访问其他的变量，例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String text, <span class="keyword">int</span> count)</span></span>&#123;</span><br><span class="line">  Runnable r = () -&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++ ) &#123;</span><br><span class="line">      System.out.println(text);</span><br><span class="line">      Thread.yield();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">new</span> Thread(r).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>假设有以下调用：<br>repeatMessage(“Hello”, 1000);//在另一个线程中打印Hello一千次</p>
+<p>注意看lambda表达式中的变量count和text，它们并没有在lambda表达式中被定义，而是方法repeatMessage的参数变量。lambda表达式可能会在repeatMessage返回之后才运行，此时参数变量已经消失了。</p>
+<p>lambda表达式包含三个部分：</p>
+<ul>
+<li>一段代码</li>
+<li>参数</li>
+<li>自由变量的值，这里的“自由”指的是那些不是参数并且没有在代码中定义的变量。</li>
+</ul>
+<p>上面的text和count就是lambda表达式的自由变量。数据结构表示lambda表达式必须存储这两个变量的值。其实含有自由变量的代码块被称之为”闭包”。</p>
+<p>Java的lambda表达式中，被引用的变量的值不可以被更改。例如，下面表达式不合法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeatMessage</span><span class="params">(String text, <span class="keyword">int</span> count)</span></span>&#123;</span><br><span class="line">  Runnable r = () -&gt;&#123;</span><br><span class="line">    <span class="keyword">while</span>(count &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      count--;</span><br><span class="line">      System.out.println(text);</span><br><span class="line">      Thread.yield();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">new</span> Thread(r).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>做出这个约束的原因是更改lambda表达式中的变量不是线程安全的。</p>
+<h2 id="默认方法">默认方法</h2><p>Java8允许接口包含带有具体实现的方法(称为默认方法)。</p>
+<p>如果一个接口中定义了一个默认方法，而另外一个父类或者接口中又定义了一个同名的方法，选择方法的规则如下：</p>
+<ol>
+<li>选择父类中的方法。如果一个父类提供了具体的实现方法，那么接口中具有相同名称和参数的默认方法会被忽略。</li>
+<li>接口冲突。如果一个父接口提供了一个默认方法，而另一个接口也提供了一个具有相同名称和参数类型的方法（不管该方法是否是默认方法），那么你必须通过覆盖该方法来解决冲突。</li>
+</ol>
+<p>某个类继承了某个父类并实现了某个接口，父类和接口有一个同名的方法，此时，只有父类中的方法会起作用，这是“类优先”规则。</p>
+<h2 id="接口中的静态方法">接口中的静态方法</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="lambda表达式的语法">lambda表达式的语法</h2><p>检查某个字符串的长度是否小于另一个字符串长度：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span]]>
+    </summary>
+    
+      <category term="lambda" scheme="http://blog.noobsky.com/tags/lambda/"/>
+    
+      <category term="Java8" scheme="http://blog.noobsky.com/categories/Java8/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Redis设计与实现之数据库]]></title>
@@ -848,364 +1243,6 @@
       <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[实战Java虚拟机之性能监控工具]]></title>
-    <link href="http://blog.noobsky.com/2016/09/16/%E5%AE%9E%E6%88%98Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B9%8B%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7/"/>
-    <id>http://blog.noobsky.com/2016/09/16/实战Java虚拟机之性能监控工具/</id>
-    <published>2016-09-16T02:31:15.000Z</published>
-    <updated>2016-09-16T04:42:40.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Linux下的性能监控工具">Linux下的性能监控工具</h2><h3 id="显示系统整体资源使用情况–top命令">显示系统整体资源使用情况–top命令</h3><p>top命令的常用用法如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">top</span><br><span class="line"> Display dynamic real-time information about running processes.</span><br><span class="line"></span><br><span class="line"> - <span class="operator"><span class="keyword">Start</span> top, all options <span class="keyword">are</span> available <span class="keyword">in</span> the <span class="keyword">interface</span>:</span><br><span class="line">   top</span><br><span class="line"></span><br><span class="line"> - <span class="keyword">Start</span> top sorting processes <span class="keyword">by</span> internal <span class="keyword">memory</span> <span class="keyword">size</span> (<span class="keyword">default</span> <span class="keyword">order</span> - process <span class="keyword">ID</span>):</span><br><span class="line">   top -o mem</span><br><span class="line"></span><br><span class="line"> - <span class="keyword">Start</span> top sorting processes <span class="keyword">first</span> <span class="keyword">by</span> CPU, <span class="keyword">then</span> <span class="keyword">by</span> running <span class="keyword">time</span>:</span><br><span class="line">   top -o cpu -O <span class="keyword">time</span></span><br><span class="line"></span><br><span class="line"> - <span class="keyword">Start</span> top displaying <span class="keyword">only</span> processes owned <span class="keyword">by</span> given <span class="keyword">user</span>:</span><br><span class="line">   top -<span class="keyword">user</span> user_name</span><br><span class="line"></span><br><span class="line"> - <span class="keyword">Get</span> <span class="keyword">help</span> about interactive commands:</span><br><span class="line">   ?</span></span><br></pre></td></tr></table></figure></p>
-<p>Mac输出如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Processes: 301 total, 2 running, 10 stuck, 289 sleeping, 1502 threads                             11:09:10</span><br><span class="line"><span class="operator"><span class="keyword">Load</span> <span class="keyword">Avg</span>: <span class="number">1.32</span>, <span class="number">1.64</span>, <span class="number">1.54</span>  CPU <span class="keyword">usage</span>: <span class="number">6.52</span>% <span class="keyword">user</span>, <span class="number">6.28</span>% <span class="keyword">sys</span>, <span class="number">87.19</span>% idle</span><br><span class="line">SharedLibs: <span class="number">138</span><span class="keyword">M</span> resident, <span class="number">23</span><span class="keyword">M</span> <span class="keyword">data</span>, <span class="number">16</span><span class="keyword">M</span> linkedit.</span><br><span class="line">MemRegions: <span class="number">42415</span> total, <span class="number">4174</span><span class="keyword">M</span> resident, <span class="number">160</span><span class="keyword">M</span> <span class="keyword">private</span>, <span class="number">830</span><span class="keyword">M</span> <span class="keyword">shared</span>.</span><br><span class="line">PhysMem: <span class="number">7623</span><span class="keyword">M</span> used (<span class="number">1379</span><span class="keyword">M</span> wired), <span class="number">567</span><span class="keyword">M</span> <span class="keyword">unused</span>.</span><br><span class="line">VM: <span class="number">830</span><span class="keyword">G</span> vsize, <span class="number">465</span><span class="keyword">M</span> framework vsize, <span class="number">0</span>(<span class="number">0</span>) swapins, <span class="number">0</span>(<span class="number">0</span>) swapouts.</span><br><span class="line">Networks: packets: <span class="number">95637</span>/<span class="number">48</span><span class="keyword">M</span> <span class="keyword">in</span>, <span class="number">29925</span>/<span class="number">4994</span><span class="keyword">K</span> <span class="keyword">out</span>. Disks: <span class="number">79110</span>/<span class="number">4258</span><span class="keyword">M</span> <span class="keyword">read</span>, <span class="number">25479</span>/<span class="number">598</span><span class="keyword">M</span> written.</span><br><span class="line"></span><br><span class="line">PID   COMMAND      %CPU <span class="keyword">TIME</span>     #TH   #WQ  #PORT MEM    PURG   CMPR PGRP PPID STATE    BOOSTS</span><br><span class="line"><span class="number">1853</span>  mdworker     <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.92</span> <span class="number">5</span>     <span class="number">3</span>    <span class="number">60</span>-   <span class="number">7816</span><span class="keyword">K</span>- <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1853</span> <span class="number">1</span>    sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1852</span>  mdworker     <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.67</span> <span class="number">5</span>     <span class="number">3</span>    <span class="number">50</span>-   <span class="number">6224</span><span class="keyword">K</span>- <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1852</span> <span class="number">1</span>    sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1851</span>  top          <span class="number">2.9</span>  <span class="number">00</span>:<span class="number">00.93</span> <span class="number">1</span>/<span class="number">1</span>   <span class="number">0</span>    <span class="number">23</span>    <span class="number">2320</span><span class="keyword">K</span>  <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1851</span> <span class="number">693</span>  running  *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1829</span>  Atom Helper  <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">03.52</span> <span class="number">5</span>     <span class="number">0</span>    <span class="number">53</span>    <span class="number">28</span><span class="keyword">M</span>    <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1645</span> <span class="number">1649</span> sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1649</span>  Atom Helper  <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">08.96</span> <span class="number">19</span>    <span class="number">0</span>    <span class="number">129</span>   <span class="number">176</span><span class="keyword">M</span>   <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1645</span> <span class="number">1645</span> sleeping *<span class="number">0</span>[<span class="number">7</span>]</span><br><span class="line"><span class="number">1648</span>  crashpad_han <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.01</span> <span class="number">4</span>     <span class="number">0</span>    <span class="number">28</span>    <span class="number">848</span><span class="keyword">K</span>   <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1647</span> <span class="number">1</span>    sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1646</span>  Atom Helper  <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.48</span> <span class="number">5</span>     <span class="number">0</span>    <span class="number">86</span>    <span class="number">13</span><span class="keyword">M</span>    <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1645</span> <span class="number">1645</span> sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1645</span>  Atom         <span class="number">0.1</span>  <span class="number">00</span>:<span class="number">02.94</span> <span class="number">33</span>    <span class="number">2</span>    <span class="number">347</span>   <span class="number">56</span><span class="keyword">M</span>+   <span class="number">12</span><span class="keyword">K</span>    <span class="number">0</span>B   <span class="number">1645</span> <span class="number">1</span>    sleeping *<span class="number">0</span>[<span class="number">31</span>]</span><br><span class="line"><span class="number">1360</span>  Google Chrom <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">07.10</span> <span class="number">18</span>    <span class="number">0</span>    <span class="number">133</span>   <span class="number">189</span><span class="keyword">M</span>   <span class="number">24</span><span class="keyword">K</span>    <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">2</span>]</span><br><span class="line"><span class="number">1350</span>  Google Chrom <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.33</span> <span class="number">6</span>     <span class="number">0</span>    <span class="number">69</span>    <span class="number">15</span><span class="keyword">M</span>    <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">1</span>]</span><br><span class="line"><span class="number">1346</span>  ShadowsocksX <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.45</span> <span class="number">6</span>     <span class="number">2</span>    <span class="number">150</span>   <span class="number">8536</span><span class="keyword">K</span>  <span class="number">4096</span>B  <span class="number">0</span>B   <span class="number">1346</span> <span class="number">1</span>    sleeping *<span class="number">0</span>[<span class="number">108</span>]</span><br><span class="line"><span class="number">1321</span>  com.apple.hi <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.01</span> <span class="number">2</span>     <span class="number">0</span>    <span class="number">34</span>    <span class="number">948</span><span class="keyword">K</span>   <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1321</span> <span class="number">1</span>    sleeping  <span class="number">0</span>[<span class="number">3</span>]</span><br><span class="line"><span class="number">1319</span>  Google Chrom <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">04.21</span> <span class="number">14</span>    <span class="number">0</span>    <span class="number">118</span>   <span class="number">98</span><span class="keyword">M</span>+   <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">2</span>]</span><br><span class="line"><span class="number">1318</span>  systemstatsd <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">00.06</span> <span class="number">2</span>     <span class="number">1</span>    <span class="number">21</span>    <span class="number">1108</span><span class="keyword">K</span>  <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">1318</span> <span class="number">1</span>    sleeping  <span class="number">0</span>[<span class="number">4</span>]</span><br><span class="line"><span class="number">1317</span>  Google Chrom <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">03.80</span> <span class="number">11</span>    <span class="number">0</span>    <span class="number">112</span>   <span class="number">75</span><span class="keyword">M</span>+   <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">2</span>]</span><br><span class="line"><span class="number">1316</span>  Google Chrom <span class="number">0.0</span>  <span class="number">00</span>:<span class="number">03.90</span> <span class="number">13</span>    <span class="number">0</span>    <span class="number">116</span>   <span class="number">100</span><span class="keyword">M</span>+  <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">2</span>]</span><br><span class="line"><span class="number">1315</span>  Google Chrom <span class="number">0.4</span>  <span class="number">00</span>:<span class="number">11.81</span> <span class="number">14</span>    <span class="number">0</span>    <span class="number">117</span>   <span class="number">147</span><span class="keyword">M</span>+  <span class="number">0</span>B     <span class="number">0</span>B   <span class="number">268</span>  <span class="number">268</span>  sleeping *<span class="number">0</span>[<span class="number">2</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>linux输出如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">top - <span class="number">23</span>:<span class="number">11</span>:<span class="number">30</span> up <span class="number">47</span> min,  <span class="number">2</span> users,  load average: <span class="number">0.04</span>, <span class="number">0.44</span>, <span class="number">0.32</span></span><br><span class="line">Tasks:  <span class="number">68</span> total,   <span class="number">2</span> running,  <span class="number">66</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%Cpu(s):  <span class="number">0.0</span> us,  <span class="number">0.0</span> sy,  <span class="number">0.0</span> ni,<span class="number">100.0</span> id,  <span class="number">0.0</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">KiB Mem :   <span class="number">500840</span> total,   <span class="number">222072</span> <span class="built_in">free</span>,    <span class="number">51972</span> used,   <span class="number">226796</span> buff/cache</span><br><span class="line">KiB Swap:        <span class="number">0</span> total,        <span class="number">0</span> <span class="built_in">free</span>,        <span class="number">0</span> used.   <span class="number">424868</span> avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</span><br><span class="line">    <span class="number">1</span> root      <span class="number">20</span>   <span class="number">0</span>   <span class="number">41224</span>   <span class="number">3748</span>   <span class="number">2400</span> S  <span class="number">0.0</span>  <span class="number">0.7</span>   <span class="number">0</span>:<span class="number">02.48</span> systemd</span><br><span class="line">    <span class="number">2</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kthreadd</span><br><span class="line">    <span class="number">3</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> ksoftirqd/<span class="number">0</span></span><br><span class="line">    <span class="number">5</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kworker/<span class="number">0</span>:<span class="number">0</span>H</span><br><span class="line">    <span class="number">7</span> root      rt   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> migration/<span class="number">0</span></span><br><span class="line">    <span class="number">8</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> rcu_bh</span><br><span class="line">    <span class="number">9</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> rcuob/<span class="number">0</span></span><br><span class="line">   <span class="number">10</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.48</span> rcu_sched</span><br><span class="line">   <span class="number">11</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> R  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.53</span> rcuos/<span class="number">0</span></span><br><span class="line">   <span class="number">12</span> root      rt   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.02</span> watchdog/<span class="number">0</span></span><br><span class="line">   <span class="number">13</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> khelper</span><br><span class="line">   <span class="number">14</span> root      <span class="number">20</span>   <span class="number">0</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kdevtmpfs</span><br><span class="line">   <span class="number">15</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> netns</span><br><span class="line">   <span class="number">16</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> perf</span><br><span class="line">   <span class="number">17</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> writeback</span><br><span class="line">   <span class="number">18</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kintegrityd</span><br><span class="line">   <span class="number">19</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> bioset</span><br><span class="line">   <span class="number">20</span> root       <span class="number">0</span> -<span class="number">20</span>       <span class="number">0</span>      <span class="number">0</span>      <span class="number">0</span> S  <span class="number">0.0</span>  <span class="number">0.0</span>   <span class="number">0</span>:<span class="number">00.00</span> kblockd</span><br></pre></td></tr></table></figure></p>
-<p>linux中top命令的输出可以分为两个部分：前半部分是系统统计信息，后半部分是进程信息。</p>
-<h3 id="监控内存和CPU–vmstat命令">监控内存和CPU–vmstat命令</h3><p>vmstat也是一款功能比较齐全的性能监测工具。它可以统计CPU、内存使用情况、swap使用情况等信息。还可以指定采样周期和采样次数。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@centos ~]<span class="preprocessor"># vmstat <span class="number">1</span> <span class="number">3</span></span></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   <span class="built_in">free</span>   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> <span class="number">2</span>  <span class="number">0</span>      <span class="number">0</span> <span class="number">222352</span>  <span class="number">16104</span> <span class="number">210788</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">72</span>    <span class="number">69</span>   <span class="number">93</span>  <span class="number">281</span>  <span class="number">3</span>  <span class="number">1</span> <span class="number">96</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>  <span class="number">0</span>      <span class="number">0</span> <span class="number">222336</span>  <span class="number">16104</span> <span class="number">210788</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">0</span>   <span class="number">40</span>   <span class="number">71</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"> <span class="number">0</span>  <span class="number">0</span>      <span class="number">0</span> <span class="number">222336</span>  <span class="number">16104</span> <span class="number">210788</span>    <span class="number">0</span>    <span class="number">0</span>     <span class="number">0</span>     <span class="number">0</span>   <span class="number">33</span>   <span class="number">64</span>  <span class="number">0</span>  <span class="number">0</span> <span class="number">100</span>  <span class="number">0</span>  <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="监控IO使用–iostat命令">监控IO使用–iostat命令</h3><p>iostat可以提供详尽的I/O信息，它的基本使用如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<h3 id="多功能诊断器–pidstat工具">多功能诊断器–pidstat工具</h3><p>pidstat是一个功能强大的性能监测工具，它也是Sysstat组件之一。</p>
-<p>如果是Debian / Ubuntu系统，可以使用以下命令安装：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="keyword">get</span> install sysstat</span><br></pre></td></tr></table></figure></p>
-<p>如果是CentOS / Fedora / RHEL系统，可以使用以下命令安装：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> sysstat</span><br></pre></td></tr></table></figure></p>
-<p>pidstat强大之处在于，它不仅可以监视进程的性能情况，也可以监视线程的性能情况。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Linux下的性能监控工具">Linux下的性能监控工具</h2><h3 id="显示系统整体资源使用情况–top命令">显示系统整体资源使用情况–top命令</h3><p>top命令的常用用法如下：<br><figure class="highlight sql]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[MySQL高可用]]></title>
-    <link href="http://blog.noobsky.com/2016/09/12/MySQL%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
-    <id>http://blog.noobsky.com/2016/09/12/MySQL高可用/</id>
-    <published>2016-09-12T01:48:40.000Z</published>
-    <updated>2016-09-21T02:32:24.000Z</updated>
-    <content type="html"><![CDATA[<p>lvs+keepalived+MySQL</p>
-<p>DRBD + Heartbeat + MySQL</p>
-<p>MHA</p>
-<p>MMM</p>
-<p>NDB</p>
-<p>proxy</p>
-<p>zookeeper</p>
-<p>mysql主从延迟：</p>
-<p>半同步复制<br>redis缓存<br>读主库</p>
-<p>dubbo:分布式服务框架</p>
-<p>cobar：基于MySQL的分布式数据库服务中间件</p>
-<p>面向切面的缺点</p>
-<p>hash索引和b-tree索引的区别</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>lvs+keepalived+MySQL</p>
-<p>DRBD + Heartbeat + MySQL</p>
-<p>MHA</p>
-<p>MMM</p>
-<p>NDB</p>
-<p>proxy</p>
-<p>zookeeper</p>
-<p>mysql主从延迟：</p>]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]Remove Element]]></title>
-    <link href="http://blog.noobsky.com/2016/09/08/LeetCode-Remove-Element/"/>
-    <id>http://blog.noobsky.com/2016/09/08/LeetCode-Remove-Element/</id>
-    <published>2016-09-08T02:54:54.000Z</published>
-    <updated>2016-09-17T03:08:58.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Given an array and a value, remove all instances of that value in place and return the new length.</p>
-<p>Do not allocate extra space for another array, you must do this in place with constant memory.</p>
-<p>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
-<p><strong>Example:</strong><br>Given input array nums = [3,2,2,3], val = 3</p>
-<p>Your function should return length = 2, with the first two elements of nums being 2.</p>
-<p><strong>Hint:</strong></p>
-<ol>
-<li>Try two pointers.</li>
-<li>Did you use the property of “the order of elements can be changed”?</li>
-<li>What happens when the elements to remove are rare?</li>
-</ol>
-<h2 id="解题思路与代码">解题思路与代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//并不需要真正删除元素，我们只需要返回“删除”元素后数组的新长度</span></span><br><span class="line">    <span class="comment">//时间复杂度：O(n),该方法关注于不等于val的元素，如果含有很多不等于val的元素，则浪费很多的移动次数</span></span><br><span class="line">    <span class="comment">//比如[1,2,3,5,4],val为4的时候</span></span><br><span class="line">    <span class="comment">// public int removeElement(int[] nums, int val) &#123;</span></span><br><span class="line">    <span class="comment">//     int begin = 0;</span></span><br><span class="line">    <span class="comment">//     //遍历数组，将所有不等于val元素依次放入原数组中（从index=0的地方依次往后放）</span></span><br><span class="line">    <span class="comment">//     for(int i = 0; i &lt; nums.length; i++)&#123;</span></span><br><span class="line">    <span class="comment">//         if(nums[i] != val) nums[begin++] = nums[i];</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     return begin;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">//上面的解法关注不等于val的元素，同理我们的关注点也可以是等于val的元素</span></span><br><span class="line">    <span class="comment">//我们可以将数组尾部的元素移动到等于val的元素的位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; n)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] == val)&#123;</span><br><span class="line">                nums[i] = nums[n-<span class="number">1</span>];</span><br><span class="line">                n--;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Given an array and a value, remove all instances of that value in place and return the new length.</p>
-<p>Do not a]]>
-    </summary>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="Two Pointers" scheme="http://blog.noobsky.com/tags/Two-Pointers/"/>
-    
-      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[LeetCode]Reverse Vowels of a String]]></title>
-    <link href="http://blog.noobsky.com/2016/09/08/LeetCode-Reverse-Vowels-of-a-String/"/>
-    <id>http://blog.noobsky.com/2016/09/08/LeetCode-Reverse-Vowels-of-a-String/</id>
-    <published>2016-09-08T01:59:35.000Z</published>
-    <updated>2016-09-08T02:06:35.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="题目描述">题目描述</h2><p>Write a function that takes a string as input and reverse only the vowels of a string.</p>
-<p><strong>Example 1:</strong><br>Given s = “hello”, return “holle”.</p>
-<p><strong>Example 2:</strong><br>Given s = “leetcode”, return “leotcede”.</p>
-<p><strong>Note:</strong><br>The vowels does not include the letter “y”.</p>
-<h2 id="解题思路与代码">解题思路与代码</h2><p>题意是让我们翻转字符串中的元音字母，元音字母有a、e、i、o、u，大小写总共10个。我们使用两个左右指针，左指针从左往右遍历直到找到元音字母，右指针从右往左遍历直到找到元音字母，然后交换左右指针指向的元音字母。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String vowels = <span class="string">"aeiouAEIOU"</span>;</span><br><span class="line">    <span class="comment">// public String reverseVowels(String s) &#123;</span></span><br><span class="line">    <span class="comment">//     if(s == null || s.length() == 0) return s;</span></span><br><span class="line">    <span class="comment">//     char[] chs = s.toCharArray();</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     int length = chs.length;</span></span><br><span class="line">    <span class="comment">//     int left = 0;</span></span><br><span class="line">    <span class="comment">//     int right = length - 1;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     char temp;</span></span><br><span class="line">    <span class="comment">//     while(left &lt; right)&#123;</span></span><br><span class="line">    <span class="comment">//         while(left &lt; right &amp;&amp; !isVowels(chs[left])) left++;</span></span><br><span class="line">    <span class="comment">//         while(left &lt; right &amp;&amp; !isVowels(chs[right])) right--;</span></span><br><span class="line">    <span class="comment">//         temp = chs[left];</span></span><br><span class="line">    <span class="comment">//         chs[left] = chs[right];</span></span><br><span class="line">    <span class="comment">//         chs[right] = temp;</span></span><br><span class="line">    <span class="comment">//         left++;</span></span><br><span class="line">    <span class="comment">//         right--;</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//     return new String(chs);</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// public boolean isVowels(char c)&#123;</span></span><br><span class="line">    <span class="comment">//     c = Character.toLowerCase(c);</span></span><br><span class="line">    <span class="comment">//     if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') return true;</span></span><br><span class="line">    <span class="comment">//     return false;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">reverseVowels</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">char</span>[] chs = s.toCharArray();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> length = chs.length;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right = length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> temp;</span><br><span class="line">        <span class="keyword">while</span>(left &lt; right)&#123;</span><br><span class="line">            <span class="keyword">while</span>(left &lt; right &amp;&amp; vowels.indexOf(chs[left])==-<span class="number">1</span>) left++;</span><br><span class="line">            <span class="keyword">while</span>(left &lt; right &amp;&amp; vowels.indexOf(chs[right])==-<span class="number">1</span>) right--;</span><br><span class="line">            temp = chs[left];</span><br><span class="line">            chs[left] = chs[right];</span><br><span class="line">            chs[right] = temp;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(chs);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="题目描述">题目描述</h2><p>Write a function that takes a string as input and reverse only the vowels of a string.</p>
-<p><strong>Example 1:</]]>
-    </summary>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/tags/Java/"/>
-    
-      <category term="String" scheme="http://blog.noobsky.com/tags/String/"/>
-    
-      <category term="Two Pointers" scheme="http://blog.noobsky.com/tags/Two-Pointers/"/>
-    
-      <category term="算法" scheme="http://blog.noobsky.com/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Leetcode" scheme="http://blog.noobsky.com/categories/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Java并发编程之线程池]]></title>
-    <link href="http://blog.noobsky.com/2016/09/05/Java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    <id>http://blog.noobsky.com/2016/09/05/Java并发编程之线程池/</id>
-    <published>2016-09-05T07:35:24.000Z</published>
-    <updated>2016-09-07T08:38:51.000Z</updated>
-    <content type="html"><![CDATA[<p>多线程可以最大限度的发挥多核处理器的计算能力，提高生成系统的吞吐量和性能。但是，若不加控制和管理地随意使用线程，对系统的性能反而会产生不利的影响。在真实的生产环境中，当线程数量过大时，有可能耗尽CPU和内存资源。</p>
-<p>首先，虽然与进程相比，线程是一种轻量级的工具，但其创建和关闭依然需要花费时间，如果为每一个小任务都创建一个线程，很有可能出现创建和销毁线程所占用的时间大于该线程真实工作所消耗时间的情况，反而会得不偿失。</p>
-<p>其次，线程本身也是要占用内存空间的，大量的线程会抢占宝贵的内存资源，如果处理不当，可能会导致Out of Memory异常。即便没有，大量的线程回收也会给GC带来很大的压力，延长GC的停顿时间。</p>
-<p>所以，对线程的使用要适度，在有限范围内，增加线程的数量可以明显提高系统吞吐量，但超出范围，大量线程只会拖垮应用系统。因此，在生产环境中使用线程，必须加以控制和管理。</p>
-<p>为了避免系统频繁地创建和销毁线程，我们可以让创建的线程进行复用。就是线程执行完一个任务，并不被销毁，而是可以继续执行其他的任务。Java中可以通过线程池来达到这样的效果。</p>
-<h2 id="JDK对线程池的支持">JDK对线程池的支持</h2><p>为了更好的控制多线程，JDK提供了一套Executor框架，帮助开发人员有效地进行线程控制，其本质就是一个线程池。核心成员的UML类图如下：<br><img src="http://7xonwi.com1.z0.glb.clouddn.com/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%B1%BB%E5%9B%BE.jpg" alt=""></p>
-<p>Executor是顶层接口，里面只有一个方法execute(Runnable command)，返回值为void，参数为Runnable类型，顾名思义，就是用来执行传进去的任务的。而ExecutorService接口继承了Executor接口，并声明了一些方法，包括shutdown、isShutdown、isTerminated、submit、invokeAll、invokeAny等方法。然后抽象类AbstractExecutorService实现了ExecutorService接口。ThreadPoolExecutor继承了抽象类AbstractExecutorService。ThreadPoolExecutor类中有几个非常重要的方法：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">submit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">shutdown</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">shutdownNow</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
-<p>execute方法实际上是接口Executor中声明的方法，在ThreadPoolExecutor中进行了具体的实现，这个方法是ThreadPoolExecutor的核心方法，这个方法可以向线程池提交一个任务，交由线程池去执行。</p>
-<p>submit方法是在ExecutorService中声明的方法，在AbstractExecutorService就已经有了具体的实现，在ThreadPoolExecutor并没有对其进行重写，这个方法也是用来向线程池提交任务的，但是它和execute()方法不同，它能够返回任务执行的结果，查看源码可以发现，会发现submit内部也是调用execute方法的，只不过它利用了Future来获取任务执行的结果。还有很多其他方法，这里就不一一介绍了。</p>
-<p>Executors则扮演着线程池工厂的角色，通过Executors可以取得一个拥有特定功能的线程池。ThreadPoolExecutor类实现了Executor接口，因此通过这个接口，任何Runable的对象都可以被ThreadPoolExecutor线程池调度。</p>
-<p>Executors主要提供了以下工厂方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newSingleThreadScheduledExecutor</span><span class="params">()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newScheduledThreadPool</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>以上工厂方法分别返回不同工作特性的线程池。这些线程池工厂方法具体说明如下：</p>
-<ul>
-<li><p>newFixedThreadPool()方法：该方法返回一个固定线程数量的线程池。该线程池的线程数量始终不变。当有一个新的任务提交时，线程池中若有空闲线程，则立即执行。若没有，则新的任务任务会被暂存在一个任务队列中，待有线程空闲时，便处理在任务队列中的任务。</p>
-</li>
-<li><p>newSingleThreadExecutor()方法：该方法返回只有一个线程的线程池。若多余一个任务被提交到该线程池，任务会被保存在一个任务队列中，待线程空闲，按先入先出的顺序执行任务中的队列。</p>
-</li>
-<li><p>newCachedThreadPool()方法：该方法返回一个可根据实际情况调整线程数量的线程池。线程池的线程数量不确定，但若有空闲线程可以复用，则会优先使用可复用的线程。若所有线程均在工作，又有新的任务提交，则会创建新的线程处理任务。所有线程在当前任务执行完毕后，将返回线程池复用。</p>
-</li>
-<li><p>newSingleThreadScheduledExecutor()方法：该方法返回一个ScheduleExecutorService对象，线程池大小为1。ScheduledExecutorService 接口在ExecutorService接口之上扩展了在给定时间执行某任务的功能，如在某个固定的延时之后执行，或者周期性执行某个任务。</p>
-</li>
-<li><p>newScheduledThreadPool()方法：该方法也返回一个ScheduleExecutorService对象，但该线程池可以指定线程数量。</p>
-</li>
-</ul>
-<h2 id="深入理解线程池内部实现">深入理解线程池内部实现</h2><p>对于核心的几个线程池，无论是newFixedThreadPool()方法、newSingleThreadExecutor()还是newCachedThreadPool()方法，虽然看起来创建的线程有着完全不同的功能特点，但其内部实现均使用ThreadPoolExecutor来实现的。这三种线程池的实现方式如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                      <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                      <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FinalizableDelegatedExecutorService</span><br><span class="line">            (<span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">                                    <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                    <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                     <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                     <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由以上源码可知，它们都是ThreadPoolExecutor类的封装。我们首先来看一下ThreadPoolExecutor的实现</p>
-<h3 id="线程池状态">线程池状态</h3><h3 id="线程池状态-1">线程池状态</h3><p>定义了几个static final变量表示线程池的各个状态：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> final AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> COUNT_BITS = Integer.SIZE - <span class="number">3</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> CAPACITY   = (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// runState is stored in the high-order bits</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure></p>
-<p>先看看文档：<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">The runState provides the main lifecyle control, taking <span class="keyword">on</span> values:</span><br><span class="line"></span><br><span class="line">RUNNING:  Accept <span class="keyword">new</span> tasks <span class="keyword">and</span> <span class="keyword">process</span> queued tasks</span><br><span class="line">SHUTDOWN: Don<span class="attribute">'t</span> accept <span class="keyword">new</span> tasks, but <span class="keyword">process</span> queued tasks</span><br><span class="line">STOP:     Don<span class="attribute">'t</span> accept <span class="keyword">new</span> tasks, don<span class="attribute">'t</span> <span class="keyword">process</span> queued tasks,<span class="keyword">and</span> interrupt <span class="keyword">in</span>-progress tasks</span><br><span class="line">TIDYING:  <span class="keyword">All</span> tasks have terminated, workerCount <span class="keyword">is</span> zero,the thread transitioning <span class="keyword">to</span> state TIDYING will run the terminated() hook method</span><br><span class="line">TERMINATED: terminated() has completed</span><br></pre></td></tr></table></figure></p>
-<p>ThreadPoolExecutor线程池有五个状态，分别为：</p>
-<ul>
-<li>RUNNING: 可以接受新的任务，也可以处理阻塞队列里的任务</li>
-<li>SHUTDOWN: 不接受新的任务，但是可以处理阻塞队列里的任务</li>
-<li>STOP: 不接受新的任务，不处理阻塞队列里的任务，中断正在处理的任务</li>
-<li>TIDYING: 过渡状态，也就是说所有的任务都执行完了，当前线程池已经没有有效线程，此时线程池的状态将会为TIDYING，并且将要调用terminated方法</li>
-<li>TERMINATED: 终止状态。terminated方法调用完成以后的方法</li>
-</ul>
-<p>各状态的相互转换如下：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RUNNING</span> -&gt; <span class="type">SHUTDOWN</span></span><br><span class="line">    <span class="type">On</span> invocation <span class="keyword">of</span> shutdown(), perhaps implicitly <span class="keyword">in</span> finalize()</span><br><span class="line">(<span class="type">RUNNING</span> <span class="keyword">or</span> <span class="type">SHUTDOWN</span>) -&gt; <span class="type">STOP</span></span><br><span class="line">    <span class="type">On</span> invocation <span class="keyword">of</span> shutdownNow()</span><br><span class="line"><span class="type">SHUTDOWN</span> -&gt; <span class="type">TIDYING</span></span><br><span class="line">    <span class="type">When</span> both queue <span class="keyword">and</span> pool are empty</span><br><span class="line"><span class="type">STOP</span> -&gt; <span class="type">TIDYING</span></span><br><span class="line">    <span class="type">When</span> pool <span class="keyword">is</span> empty</span><br><span class="line"><span class="type">TIDYING</span> -&gt; <span class="type">TERMINATED</span></span><br><span class="line">    <span class="type">When</span> the terminated() hook <span class="keyword">method</span> has completed</span><br></pre></td></tr></table></figure></p>
-<p>ThreadPoolExecutor内部还保存着线程池的有效线程个数，状态和线程数在ThreadPoolExecutor内部使用一个原子整形变量保存。那么是如何做到的呢？</p>
-<p>java中整型占四个字节，即32位，在ThreadPoolExecutor，整形32位的前三位用来表示线程池的状态，后29位用来表示线程池中有效的线程个数。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//前3位表示状态，后29位用来表示线程数</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COUNT_BITS = Integer.<span class="keyword">SIZE</span> - <span class="number">3</span>;</span><br></pre></td></tr></table></figure></p>
-<p>线程池的容量为(1&lt;<29)-1= 00011111111111111111111111111111(二进制，约500="" million)，代码如下：="" <figure="" class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> CAPACITY   = (<span class="number">1</span> &lt;&lt; COUNT_BITS) - <span class="number">1</span>;</span><br></pre></td></tr></table></29)-1=></p>
-<p>表示RUNNING状态的代码如下：</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure>
-<p>-1用二进制表示是：11111111111111111111111111111111(这是补码表示，不明白可以补补原码，反码，补码的知识)<br>则 -1 &lt;&lt; 29 = 11111111111111111111111111111111 &lt;&lt; 29 = 11100000000000000000000000000000(前3位为111)</p>
-<p>表示SHUTDOWN状态的代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure></p>
-<p>即0 &lt;&lt; 29 = 00000000000000000000000000000000 &lt;&lt; 29 = 00000000000000000000000000000000(前3位为000)</p>
-<p>表示STOP状态的代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure></p>
-<p>即 1 &lt;&lt; 29 = 00000000000000000000000000000001 &lt;&lt; 29 = 00100000000000000000000000000000(前3位为001)</p>
-<p>表示TIDYING状态的代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure></p>
-<p>即 2 &lt;&lt; 29 = 00000000000000000000000000000010 &lt;&lt; 29 = 01000000000000000000000000000000(前3位为010)</p>
-<p>表示TERMINATED状态的代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure></p>
-<p>即 3 &lt;&lt; 29 = 00000000000000000000000000000011 &lt;&lt; 29 = 01100000000000000000000000000000(前3位为011)</p>
-<p>所以我们可以通过整数的二进制中后29位来获取线程数，前3位来获取线程的状态：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Packing and unpacking ctl</span></span><br><span class="line"><span class="comment">//该方法获取状态，CAPACITY的非操作得到的二进制位11100000000000000000000000000000，然后做在一个与操作，相当于直接取前3位的的值</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">runStateOf</span><span class="params">(<span class="keyword">int</span> c)</span>     </span>&#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="comment">//该方法获取线程数，取后29位。CAPACITY常量值为(1&lt;&lt;29)-1= 00011111111111111111111111111111。与CAPACITY相与的话，前三位相与为0，即可得后29位。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">workerCountOf</span><span class="params">(<span class="keyword">int</span> c)</span>  </span>&#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="comment">// 或操作。更新代表线程数量和状态的整形变量。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">ctlOf</span><span class="params">(<span class="keyword">int</span> rs, <span class="keyword">int</span> wc)</span> </span>&#123; <span class="keyword">return</span> rs | wc; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>ThreadPoolExecutor还有一些重要的成员变量：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">private final BlockingQueue<span class="variable">&lt;Runnable&gt;</span> workQueue;//任务阻塞队列，用来存放等待执行的任务</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Lock held on access to workers set and related bookkeeping.</span><br><span class="line"> <span class="keyword">*</span> While we could use a concurrent set of some sort, it turns out</span><br><span class="line"> <span class="keyword">*</span> to be generally preferable to use a lock. Among the reasons is</span><br><span class="line"> <span class="keyword">*</span> that this serializes interruptIdleWorkers, which avoids</span><br><span class="line"> <span class="keyword">*</span> unnecessary interrupt storms, especially during shutdown.</span><br><span class="line"> <span class="keyword">*</span> Otherwise exiting threads would concurrently interrupt those</span><br><span class="line"> <span class="keyword">*</span> that have not yet interrupted. It also simplifies some of the</span><br><span class="line"> <span class="keyword">*</span> associated statistics bookkeeping of largestPoolSize etc. We</span><br><span class="line"> <span class="keyword">*</span> also hold mainLock on shutdown and shutdownNow, for the sake of</span><br><span class="line"> <span class="keyword">*</span> ensuring workers set is stable while separately checking</span><br><span class="line"> <span class="keyword">*</span> permission to interrupt and actually interrupting.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private final ReentrantLock mainLock = new ReentrantLock();//线程池的状态锁，对线程状态（如线程池大小、runState等）的改变都要使用这个锁</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Set containing all worker threads in pool. Accessed only when</span><br><span class="line"> <span class="keyword">*</span> holding mainLock.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private final HashSet<span class="variable">&lt;Worker&gt;</span> workers = new HashSet<span class="variable">&lt;Worker&gt;</span>();//用来存放工作集</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Wait condition to support awaitTermination</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private final Condition termination = mainLock.newCondition();</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Tracks largest attained pool size. Accessed only under</span><br><span class="line"> <span class="keyword">*</span> mainLock.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private int largestPoolSize;//用来记录线程池曾出现过的最大线程数</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Counter for completed tasks. Updated only on termination of</span><br><span class="line"> <span class="keyword">*</span> worker threads. Accessed only under mainLock.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private long completedTaskCount;//已完成任务计数器</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> All user control parameters are declared as volatiles so that</span><br><span class="line"> <span class="keyword">*</span> ongoing actions are based on freshest values, but without need</span><br><span class="line"> <span class="keyword">*</span> for locking, since no internal invariants depend on them</span><br><span class="line"> <span class="keyword">*</span> changing synchronously with respect to other actions.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Factory for new threads. All threads are created using this</span><br><span class="line"> <span class="keyword">*</span> factory (via method addWorker).  All callers must be prepared</span><br><span class="line"> <span class="keyword">*</span> for addWorker to fail, which may reflect a system or user's</span><br><span class="line"> <span class="keyword">*</span> policy limiting the number of threads.  Even though it is not</span><br><span class="line"> <span class="keyword">*</span> treated as an error, failure to create threads may result in</span><br><span class="line"> <span class="keyword">*</span> new tasks being rejected or existing ones remaining stuck in</span><br><span class="line"> <span class="keyword">*</span> the queue.</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> We go further and preserve pool invariants even in the face of</span><br><span class="line"> <span class="keyword">*</span> errors such as OutOfMemoryError, that might be thrown while</span><br><span class="line"> <span class="keyword">*</span> trying to create threads.  Such errors are rather common due to</span><br><span class="line"> <span class="keyword">*</span> the need to allocate a native stack in Thread<span class="comment">#start, and users</span></span><br><span class="line"> <span class="keyword">*</span> will want to perform clean pool shutdown to clean up.  There</span><br><span class="line"> <span class="keyword">*</span> will likely be enough memory available for the cleanup code to</span><br><span class="line"> <span class="keyword">*</span> complete without encountering yet another OutOfMemoryError.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile ThreadFactory threadFactory;//线程工厂，用来创建线程</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Handler called when saturated or shutdown in execute.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile RejectedExecutionHandler handler;//任务拒绝策略</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Timeout in nanoseconds for idle threads waiting for work.</span><br><span class="line"> <span class="keyword">*</span> Threads use this timeout when there are more than corePoolSize</span><br><span class="line"> <span class="keyword">*</span> present or if allowCoreThreadTimeOut. Otherwise they wait</span><br><span class="line"> <span class="keyword">*</span> forever for new work.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile long keepAliveTime; //闲置线程的存活时间</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> If false (default), core threads stay alive even when idle.</span><br><span class="line"> <span class="keyword">*</span> If true, core threads use keepAliveTime to time out waiting</span><br><span class="line"> <span class="keyword">*</span> for work.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile boolean allowCoreThreadTimeOut;//是否允许为核心线程设置存活时间</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Core pool size is the minimum number of workers to keep alive</span><br><span class="line"> <span class="keyword">*</span> (and not allow to time out etc) unless allowCoreThreadTimeOut</span><br><span class="line"> <span class="keyword">*</span> is set, in which case the minimum is zero.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile int corePoolSize;//核心池的大小，当线程池中的线程数目大于这个参数时，提交的任务会被放进任务阻塞队列中</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span> Maximum pool size. Note that the actual maximum is internally</span><br><span class="line"> <span class="keyword">*</span> bounded by CAPACITY.</span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">private volatile int maximumPoolSize;//线程池最大能容忍的线程数</span><br></pre></td></tr></table></figure></p>
-<h3 id="构造函数">构造函数</h3><p>ThreadPoolExecutor最重要的构造函数：</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ThreadPoolExecutor(<span class="keyword">int</span> corePoolSize,</span><br><span class="line">                              <span class="keyword">int</span> maximumPoolSize,</span><br><span class="line">                              <span class="keyword">long</span> keepAliveTime,</span><br><span class="line">                              TimeUnit unit,</span><br><span class="line">                              BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                              ThreadFactory threadFactory,</span><br><span class="line">                              RejectedExecutionHandler <span class="keyword">handler</span>)</span><br></pre></td></tr></table></figure>
-<p>函数的参数含义如下：</p>
-<ul>
-<li>corePoolSize: 指定线程池中的线程数量</li>
-<li>maximumPoolSize: 指定了线程池中的最大线程数量</li>
-<li>keepAliveTime: 当线程池线程数量超过corePoolSize时，多余的空闲线程的存活时间。即，超过corePoolSize的空闲线程，在多长时间内，会被销毁。</li>
-<li>unit: keepAliveTime的单位</li>
-<li>workQueue: 任务队列，被提交但尚未被执行的任务。</li>
-<li>threadFactory: 线程工厂，用于创建线程，一般用默认的即可。</li>
-<li>handler: 拒绝策略。当任务太多来不及处理，如何拒绝任务。</li>
-</ul>
-<h3 id="任务执行">任务执行</h3><p>在ThreadPoolExecutor类中，最核心的任务执行方法是execute和submit，submit方法也是通过调用execute方法来完成任务的执行。execute方法的源码如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span>(<span class="params">Runnable command</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="comment">/*</span><br><span class="line">         * Proceed in 3 steps:</span><br><span class="line">         *</span><br><span class="line">         * 1. If fewer than corePoolSize threads are running, try to</span><br><span class="line">         * start a new thread with the given command as its first</span><br><span class="line">         * task.  The call to addWorker atomically checks runState and</span><br><span class="line">         * workerCount, and so prevents false alarms that would add</span><br><span class="line">         * threads when it shouldn't, by returning false.</span><br><span class="line">         *</span><br><span class="line">         * 2. If a task can be successfully queued, then we still need</span><br><span class="line">         * to double-check whether we should have added a thread</span><br><span class="line">         * (because existing ones died since last checking) or that</span><br><span class="line">         * the pool shut down since entry into this method. So we</span><br><span class="line">         * recheck state and if necessary roll back the enqueuing if</span><br><span class="line">         * stopped, or start a new thread if there are none.</span><br><span class="line">         *</span><br><span class="line">         * 3. If we cannot queue task, then we try to add a new</span><br><span class="line">         * thread.  If it fails, we know we are shut down or saturated</span><br><span class="line">         * and so reject the task.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="keyword">int</span> c = ctl.<span class="keyword">get</span>();</span><br><span class="line">        <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;<span class="comment">//第1步，线程池中的线程大小小于corePoolSize</span></span><br><span class="line">            <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))<span class="comment">//true表示使用corePoolSize,false表示使用maximumPoolSize</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            c = ctl.<span class="keyword">get</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;<span class="comment">//第2步，线程池的线程大小大于corePoolSize，而且线程池是RUNNING状态，阻塞队列也没满，加入到阻塞队列中</span></span><br><span class="line">            <span class="keyword">int</span> recheck = ctl.<span class="keyword">get</span>();</span><br><span class="line">            <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))<span class="comment">//需要进行第二次判断，防止线程池被关闭了</span></span><br><span class="line">                reject(command);</span><br><span class="line">            <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">workerCountOf(recheck</span>) </span>== <span class="number">0</span>)</span><br><span class="line">                addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">!addWorker(command, <span class="keyword">false</span></span>))<span class="comment">//第3步，使用线程池maximumPoolSize(最大大小)</span></span><br><span class="line">            <span class="title">reject</span>(<span class="params">command</span>)</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>由代码中的注释可知，execute方法分三步处理：</p>
-<ol>
-<li>如果当前正在执行的Worker数量比corePoolSize小，则直接通过addWorker方法创建一个新的Worker执行任务。</li>
-<li>如果当前正在执行的Worker数量大于等于corePoolSize。将任务放到阻塞队列里，如果阻塞队列没满并且状态是RUNNING时，直接加入到阻塞队列中，否则跳到第三步。加入到阻塞队列后，还需要再验证一次（加入到聚在队列之后可能另外一个线程关闭了线程池或者刚加入到队列的线程死了）。如果此时线程池不是RUNNING状态，则把刚加入到阻塞队列中的任务remove掉，然后调用reject方法，否则查看Worker数量，如果Worker数量为0，起一个新的Worker去阻塞队列里拿任务执行。</li>
-<li>加入阻塞队列失败时，会调用addWorker方法尝试起一个新的Worker去阻塞队列中拿任务并执行任务，如果addWorker调用失败，调用reject方法。</li>
-</ol>
-<h3 id="任务缓存队列">任务缓存队列</h3><ul>
-<li><p>同步队列(SynchronousQueue)：该队列是直接提交的，是一个特殊的BlockingQueue。SynchronousQueue没有容量，每一个插入操作都要等待一个相应的删除操作，反之，每一个删除操作都要等待对应的插入操作。如果使用SynchronousQueue，提交的任务不会被真实的保存，而总是将新任务提交给线程执行，如果没有空闲的线程，则尝试创建新的线程，如果线程数已经达到最大值，则执行拒绝策略。因此，使用SynchronousQueue队列，通常需要设置很大的maximumPoolSize，否则很容易执行拒绝策略。</p>
-</li>
-<li><p>ArrayBlockingQueue</p>
-</li>
-<li><p>LinkedBlockingQueue：是无界任务队列，除非系统资源耗尽，否则无界的任务队列不存在入队失败的情况。当有新的任务到来，系统的线程数小于corePoolSize时，线程池会生成新的线程执行任务，但当系统的线程数达到corePoolSize后，就不会继续增加。若后续仍有新的任务加入，而又没有空闲的线程资源，则任务直接进入队列等待。若任务创建失败和处理的速度差异很大，无界队列会保持快速增长，直到耗尽系统内存。</p>
-</li>
-<li><p>PriorityBlockingQueue：优先任务队列带有执行优先级，可以控制任务执行的先后顺序。ArrayBlockingQueue和LinkedBlockingQueue都是按照先进先出算法处理任务。而PriorityBlockingQueue则可以根据任务自身的优先级顺序先后执行。</p>
-</li>
-</ul>
-<h3 id="任务拒绝策略">任务拒绝策略</h3><ul>
-<li>AbortPolicy策略：丢弃任务并抛出RejectedExecutionException异常</li>
-<li>CallerRunsPolicy策略：在调用者线程中运行当前被丢弃的任务</li>
-<li>DiscardOldestPolicy策略：丢弃最老的任务，也就是即将被执行的一个任务，并尝试再次提交当前任务。</li>
-<li>DiscardPolicy策略：丢弃任务，但不抛出异常。</li>
-</ul>
-<h3 id="线程池的关闭">线程池的关闭</h3><p>ThreadPoolExecutor提供了两个方法，用于线程池的关闭，分别是shutdown()和shutdownNow()，其中：</p>
-<ul>
-<li>shutdown()：不会立即终止线程池，而是要等所有任务缓存队列中的任务都执行完后才终止，但再也不会接受新的任务</li>
-<li>shutdownNow()：立即终止线程池，并尝试打断正在执行的任务，并且清空任务缓存队列，返回尚未执行的任务</li>
-</ul>
-<h3 id="线程工厂">线程工厂</h3><h3 id="扩展线程池">扩展线程池</h3><h3 id="线程池的大小">线程池的大小</h3><h2 id="参考文献">参考文献</h2><p><a href="http://fangjian0423.github.io/2016/03/22/java-threadpool-analysis/" target="_blank" rel="external">Java线程池ThreadPoolExecutor源码分析</a><br><a href="http://www.cnblogs.com/dolphin0520/p/3932921.html" target="_blank" rel="external">Java并发编程：线程池的使用</a><br><a href="http://www.ticmy.com/?p=243" target="_blank" rel="external">hotspot1.7 ThreadPoolExecutor代码解析</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>多线程可以最大限度的发挥多核处理器的计算能力，提高生成系统的吞吐量和性能。但是，若不加控制和管理地随意使用线程，对系统的性能反而会产生不利的影响。在真实的生产环境中，当线程数量过大时，有可能耗尽CPU和内存资源。</p>
-<p>首先，虽然与进程相比，线程是一种轻量级的工具，]]>
-    </summary>
-    
-      <category term="Java线程池" scheme="http://blog.noobsky.com/tags/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    
-      <category term="Java" scheme="http://blog.noobsky.com/categories/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[实战Java虚拟机之锁与并发]]></title>
-    <link href="http://blog.noobsky.com/2016/09/05/%E5%AE%9E%E6%88%98Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B9%8B%E9%94%81%E4%B8%8E%E5%B9%B6%E5%8F%91/"/>
-    <id>http://blog.noobsky.com/2016/09/05/实战Java虚拟机之锁与并发/</id>
-    <published>2016-09-05T02:17:39.000Z</published>
-    <updated>2016-09-16T09:22:28.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="对象头和锁">对象头和锁</h2><p>在JVM的实现中每个对象都有一个对象头，用于保存对象的系统信息。对象头中有一个成为Mark Word的部分，它是实现锁的关键。在32位系统中，Mark Word为一个32位的数据，在64位系统中，它占64位。它是一个多功能的数据区，可以存放对象的哈希值、对象年龄、锁的指针等信息。一个对象是否占用锁，占有哪个锁，就记录在这个Mark Word中。</p>
-<p>以32位系统为例，普通对象头如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash:<span class="number">25</span> ------------&gt; | age:<span class="number">4</span>   biased_lock:<span class="number">1</span> lock:<span class="number">2</span></span><br></pre></td></tr></table></figure></p>
-<p>它表示Mark Word中有25位比特表示对象的哈希值，4位比特表示对象的年龄，1位比特表示是否为偏向锁，2位比特表示锁的信息。</p>
-<p>对于偏向锁的对象，它的格式表示如下：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[JavaThread<span class="keyword">*</span> |<span class="string"> epoch </span>|<span class="string"> age </span>|<span class="string"> 1 </span>|<span class="string"> 01]</span></span><br></pre></td></tr></table></figure></p>
-<p>前23位表示持有偏向锁的线程，后续2位比特表示偏向锁的时间戳（epoch），4位比特表示对象年龄，年龄后1位比特固定为1，表示偏向锁，最后两位为01表示可偏向/未锁定。</p>
-<p>当对象处于轻量级锁定时，其Mark Word如下（00表示最后2位的值）：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">[ptr               | 00]</span> <span class="keyword">locked</span></span><br></pre></td></tr></table></figure></p>
-<p>此时，它指向存放在获得锁的线程栈中的该对象真实对象头。</p>
-<p>当对象处于重量级锁定时，其Mark Word如下：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="preprocessor">ptr</span>               | <span class="number">10</span>] <span class="keyword">monitor</span></span><br></pre></td></tr></table></figure></p>
-<p>此时，最后2位为10，整个Mark Word表示指向Monitor的指针。</p>
-<p>当对象处于普通的未锁定状态时，其格式如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Header        | <span class="number">0</span> | <span class="number">01</span>] unlocked</span><br></pre></td></tr></table></figure></p>
-<p>前29位表示对象的哈希值、年龄信息。倒数第3位为0，最后两位为01，表示未锁定。可以发现，最后两位的值和偏向状态时是一样的，此时，虚拟机正是通过倒数第3位比特来区分是否为偏向锁。</p>
-<h2 id="所在Java虚拟机中的实现和优化">所在Java虚拟机中的实现和优化</h2><h3 id="偏向锁">偏向锁</h3><p>偏向锁是JDK 1.6提出的一种锁优化方式。其核心思想是，如果程序没有竞争，则取消之前已经取得锁的线程同步操作。也就说，若某一锁被线程获取后，便进入偏向模式，当线程再次请求这个锁时，无需再进行相关的同步操作，从而节省了操作时间。如果在此之间有其他线程进行了锁请求，则锁退出偏向模式。在JVM中使用-XX:+UseBiasedLocking可以设置启用偏向锁。</p>
-<p>当锁对象处于偏向模式时，对象头会记录获得锁的线程：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[JavaThread<span class="keyword">*</span> |<span class="string"> epoch </span>|<span class="string"> age </span>|<span class="string"> 1 </span>|<span class="string"> 01]</span></span><br></pre></td></tr></table></figure></p>
-<p>这样，当线程再次尝试获得锁的时候，通过Mark Word的线程信息就可以判断当前线程是否持有偏向锁。</p>
-<p>以下代码展示使用偏向锁带来的性能提升：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.jaye.jvm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Created by Jaye on 16/9/16.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Biased</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; numberList = <span class="keyword">new</span> Vector&lt;&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> startnum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (count &lt; <span class="number">10000000</span>)&#123;</span><br><span class="line">            numberList.add(startnum);</span><br><span class="line">            startnum += <span class="number">2</span>;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">        System.out.println(end - begin);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用以下参数执行这段程序：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"><span class="constant">XX</span><span class="symbol">:+UseBiasedLocking</span> -<span class="constant">XX</span><span class="symbol">:BiasedLockingStartupDelay=</span><span class="number">0</span> -client -<span class="constant">Xmx512m</span> -<span class="constant">Xms512m</span></span></span><br></pre></td></tr></table></figure></p>
-<p>程序输出结果如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">468</span></span><br></pre></td></tr></table></figure></p>
-<p>参数-XX:BiasedLockingStartupDelay=0表示虚拟机启动后，立即启用偏向锁。如不设置该参数，虚拟机默认会在启动后4秒后，才启用偏向锁。</p>
-<p>若禁用偏向锁，使用以下参数：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"><span class="constant">XX</span><span class="symbol">:+UseBiasedLocking</span> -client -<span class="constant">Xmx512m</span> -<span class="constant">Xms512m</span></span></span><br></pre></td></tr></table></figure></p>
-<p>程序输出结果如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">743</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看到，偏向锁在少竞争的情况下，对系统性能有一定帮助。</p>
-<p>偏向锁在锁竞争激烈得场合没有太强的优化效果，因为大量的竞争会导致持有锁的线程不停地切换，锁也很难一直保持在偏向模式，此时，使用锁偏向不仅得不到性能的优化，反而有可能降低系统性能。因此在竞争激烈得场合，可以尝试使用-XX:-UseBiasedLocking参数禁用偏向锁。</p>
-<h3 id="轻量级锁">轻量级锁</h3><p>如果偏向失败，JVM会让现场申请轻量级锁。轻量级锁在虚拟机内部，使用一个称为BasicObjectLock的对象实现，这个对象内部由一个BasicLock对象和一个持有该锁的Java对象指针组成。BasicObjectLock对象放置在Java栈的栈帧中。在BasicLock对象内部还维护着displaced_header字段，它用于备份对象头部的Mark Word。</p>
-<p>当一个线程持有一个对象的锁时，对象头部Mark Word如下所示：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">[ptr               | 00]</span> <span class="keyword">locked</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="锁膨胀">锁膨胀</h3><p>当轻量级锁失败，虚拟机就会使用重量级锁。在使用重量级锁时，对象的Mark Word如下：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="preprocessor">ptr</span>               | <span class="number">10</span>] <span class="keyword">monitor</span></span><br></pre></td></tr></table></figure></p>
-<p>末尾的2比特标记位被置为10。整个Mark Word表示指向monitor对象的指针。在轻量级锁处理失败后，虚拟机会执行以下操作：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lock-&gt;<span class="function">set_displaced_header</span>(markOopDesc<span class="value">::<span class="function">unused_mark</span>());</span></span><br><span class="line">ObjectSynchronizer<span class="value">::<span class="function">inflate</span>(THREAD, <span class="function">obj</span>())-&gt;<span class="function">enter</span>(THREAD);</span></span><br></pre></td></tr></table></figure></p>
-<p>第1步是废弃前面的BasicLock备份的对象头信息。第2步则正式启用重量级锁。启用过程分为两步：首先通过inflate()方法进行锁膨胀，其目的是获得对象的ObjectMonitor；然后使用enter()方法尝试进入该锁。</p>
-<p>在enter()方法调用中，线程很可能会在操作系统层面被挂起。如果这样，线程间切换和调度的成本就会比较高。</p>
-<h3 id="自旋锁">自旋锁</h3><p>上面说到，锁膨胀后进入ObjectMonitor的enter()，线程很可能会在操作系统层面被挂起，这样线程上下文切换的性能损失就比较大。因此在锁膨胀之后，虚拟机会做最后的争取，希望线程可以尽快进入临界区而避免被操作系统挂起。一种较为有效的手段就是使用自旋锁。</p>
-<p>自旋锁可以使线程在没有取得锁时，不被挂起，而转而去执行一个空循环（即所谓的自旋），在若干个空循环后，线程如果可以获得锁，则继续执行。若线程依然不能获得锁，才会被挂起。</p>
-<p>使用自旋锁后线程挂起的几率相对减少，线程执行的连贯性相对加强。因此，对于那些锁竞争不是很激烈，锁占用时间很短的并发线程，具有一定的积极意义，但对于锁竞争激烈，单线程锁占用时间长的并发程序，自旋锁在自旋等待后，往往依然无法获得对应的锁，不仅仅白白浪费CPU时间，最终还免不了被挂起的操作，反而浪费了系统资源。</p>
-<p>在JDK1.6中，Java虚拟机提供-XX:+UseSpinning参数来开启自旋锁，使用-XX:PreBlockSpin参数来设置自旋锁的等待次数。在JDK1.7中，自旋锁的参数被取消，虚拟机不再支持由用户配置自旋锁。自旋锁总是会执行，自旋次数也是由虚拟机自行调整。</p>
-<h3 id="锁消除">锁消除</h3><h2 id="锁在应用层的优化思路">锁在应用层的优化思路</h2><h3 id="减少锁的持有时间">减少锁的持有时间</h3><p>以下面的代码为例：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="function"><span class="keyword">void</span> <span class="title">syncMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">  othercode1();</span><br><span class="line">  mutextMethod();</span><br><span class="line">  othercode2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在sync方法中，假设othercode1()和othercode2()方法并不需要同步控制，而且它们两又是重量级的方法，则会花费较长的CPU时间。</p>
-<p>一个较为优化的解决方案是，只在必要时进行同步，这样就能明显减少线程持有锁的时间，提高系统的吞吐量。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">syncMethod2</span><span class="params">()</span></span>&#123;</span><br><span class="line">  othercode1();</span><br><span class="line">  <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">    mutextMethod();</span><br><span class="line">  &#125;</span><br><span class="line">  othercode2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="减少锁的粒度">减少锁的粒度</h3><p>典型的使用场景就是ConcurrentHashMap类的实现。</p>
-<h3 id="锁分离">锁分离</h3><p>依据应用程序的功能特点，将一个独占锁分成多个锁。一个典型的案例就是LinkedBlockingQueue的实现。</p>
-<p>在LinkedBlockingQueue的实现中，take函数和put函数分别实现了从队列中取得数据和往队列中增加数据的功能。虽然两个函数都对当前队列进行了修改，但由于基于链表，所以两个操作分别作用于队列的前端和尾端，从理论上来说，两者并不冲突。如果使用独占锁，则要求在两个操作进行时获取当前队列的独占锁，那么take和put操作就不可能真正并发执行。这样，锁竞争会相对比较激烈，从而影响程序在高并发时的性能。因此，在JDK的实现中，并没有采用这样的方式，取而代之的是两把不同的锁，分离了take和put操作。</p>
-<h3 id="锁粗化">锁粗化</h3><h2 id="无锁">无锁</h2><h3 id="理解CAS">理解CAS</h3><h3 id="原子操作">原子操作</h3><h3 id="新宠儿LongAddr">新宠儿LongAddr</h3><h2 id="将随机变为可控：理解Java内存模型">将随机变为可控：理解Java内存模型</h2><h3 id="原子性">原子性</h3><h3 id="有序性">有序性</h3><h3 id="可见性">可见性</h3>]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="对象头和锁">对象头和锁</h2><p>在JVM的实现中每个对象都有一个对象头，用于保存对象的系统信息。对象头中有一个成为Mark Word的部分，它是实现锁的关键。在32位系统中，Mark Word为一个32位的数据，在64位系统中，它占64位。它是一个多功能的]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[实战Java虚拟机之Class装载系统]]></title>
-    <link href="http://blog.noobsky.com/2016/09/05/%E5%AE%9E%E6%88%98Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B9%8BClass%E8%A3%85%E8%BD%BD%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://blog.noobsky.com/2016/09/05/实战Java虚拟机之Class装载系统/</id>
-    <published>2016-09-05T02:03:08.000Z</published>
-    <updated>2016-09-16T09:22:32.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Class文件装载流程">Class文件装载流程</h2><p>装载Class类型可以分为加载、连接、和初始化三个步骤。其中连接又可分为验证、准备和解析3步。</p>
-<h3 id="加载">加载</h3><p>加载类时，JVM完成以下工作：</p>
-<ul>
-<li>通过类的全民，获取类的二进制数据流</li>
-<li>解析类的二进制数据流为方法区内的数据结构</li>
-<li>创建java.lang.Class类的实例，表示该类型</li>
-</ul>
-<h3 id="连接">连接</h3><h4 id="验证">验证</h4><p>目的是保证加载的类的字节码是合法、合理并符合规范的。包括：</p>
-<ul>
-<li>格式检查: 魔数检查，版本检查、长度检查</li>
-<li>语义检查：是否继承final、是否有父类、抽象方法是否有实现</li>
-<li>字节码验证：跳转指令是否指向正确位置、操作数类型是否合理</li>
-<li>符号引用验证：符号引用的直接引用是否存在</li>
-</ul>
-<h4 id="准备">准备</h4><p>分配内存空间，并设置初始值。<br>jvm为各类型变量默认的初始值如下表：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类型</th>
-<th style="text-align:left">默认初始值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">int</td>
-<td style="text-align:left">0</td>
-</tr>
-<tr>
-<td style="text-align:left">long</td>
-<td style="text-align:left">0L</td>
-</tr>
-<tr>
-<td style="text-align:left">short</td>
-<td style="text-align:left">(short)0</td>
-</tr>
-<tr>
-<td style="text-align:left">char</td>
-<td style="text-align:left">\u0000</td>
-</tr>
-<tr>
-<td style="text-align:left">boolean</td>
-<td style="text-align:left">false</td>
-</tr>
-<tr>
-<td style="text-align:left">reference</td>
-<td style="text-align:left">null</td>
-</tr>
-<tr>
-<td style="text-align:left">float</td>
-<td style="text-align:left">0f</td>
-</tr>
-<tr>
-<td style="text-align:left">double</td>
-<td style="text-align:left">0f</td>
-</tr>
-</tbody>
-</table>
-<h4 id="解析">解析</h4><p>将符号引用转为直接引用，也就是得到类或者字段、方法在内存中的指针或者偏移量。</p>
-<h3 id="初始化">初始化</h3><p>初始化阶段的重要工作是执行类的初始化方法<clinit>。方法<clinit>是由编译器自动生成的，它是由类静态成员的赋值语句以及static语句块合并产生的。</clinit></clinit></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="Class文件装载流程">Class文件装载流程</h2><p>装载Class类型可以分为加载、连接、和初始化三个步骤。其中连接又可分为验证、准备和解析3步。</p>
-<h3 id="加载">加载</h3><p>加载类时，JVM完成以下工作：</p>
-<ul>
-<]]>
-    </summary>
     
   </entry>
   
