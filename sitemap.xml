@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.noobsky.com/2016/10/09/Java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2016-10-09T01:54:17.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/10/09/LeetCode-Implement-strStr/</loc>
+    <lastmod>2016-10-09T01:22:27.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.noobsky.com/2016/10/09/%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</loc>
+    <lastmod>2016-10-08T16:31:13.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.noobsky.com/2016/10/08/LeetCode-Permutations-I-II/</loc>
     <lastmod>2016-10-08T16:15:35.000Z</lastmod>
   </url>
@@ -379,11 +394,6 @@
   <url>
     <loc>http://blog.noobsky.com/2016/08/16/SimpleDateFormat%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2016-08-16T12:17:50.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.noobsky.com/2016/05/17/Java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2016-08-16T10:48:05.000Z</lastmod>
   </url>
   
   <url>
