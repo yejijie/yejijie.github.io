@@ -3,7 +3,7 @@
 <p>Redis-Sentinel是Redis官方推荐的高可用性(HA)解决方案，当用Redis做Master-slave的高可用方案时，假如master宕机了，Redis本身(包括它的很多客户端)都没有实现自动进行主备切换，而Redis-sentinel本身也是一个独立运行的进程，它能监控多个master-slave集群，发现master宕机后能进行自懂切换。</p>
 <p>它的主要功能有以下几点</p>
 <p>不时地监控redis是否按照预期良好地运行;<br>如果发现某个redis节点运行出现状况，能够通知另外一个进程(例如它的客户端);<br>能够进行自动切换。当一个master节点不可用时，能够选举出master的多个slave(如果有超过一个slave的话)中的一个来作为新的master,其它的slave节点会将它所追随的master的地址改为被提升为master的slave的新地址。</p>
-<h2 id="扩展写性能和内存容量">扩展写性能和内存容量</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/08/31/Redis实战之扩展Redis/" data-id="cj730pptl003jl8c1jkoyp7lp" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/09/01/LeetCode-Find-the-Difference/" class="pre">[LeetCode]Find the Difference</a><a href="/2016/08/31/Redis实战之降低内存占用/" class="next">Redis实战之降低内存占用</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
+<h2 id="扩展写性能和内存容量">扩展写性能和内存容量</h2></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://blog.noobsky.com/2016/08/31/Redis实战之扩展Redis/" data-id="cj730zosz003ji2c1lq7jpavt" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/09/01/LeetCode-Find-the-Difference/" class="pre">[LeetCode]Find the Difference</a><a href="/2016/08/31/Redis实战之降低内存占用/" class="next">Redis实战之降低内存占用</a></div><div id="disqus_thread"><script>var disqus_shortname = 'noobsky';
 var disqus_identifier = '2016/08/31/Redis实战之扩展Redis/';
 var disqus_title = 'Redis实战之扩展Redis';
 var disqus_url = 'http://blog.noobsky.com/2016/08/31/Redis实战之扩展Redis/';
